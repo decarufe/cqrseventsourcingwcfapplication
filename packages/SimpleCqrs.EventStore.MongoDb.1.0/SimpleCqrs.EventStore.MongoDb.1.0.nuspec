@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>SimpleCqrs.EventStore.MongoDb</id>
+    <version>1.0</version>
+    <title>SimpleCqrs.EventStore.MongoDb</title>
+    <authors>Tyrone Groves, Darren Cauthon</authors>
+    <owners>Tyrone Groves, Darren Cauthon</owners>
+    <projectUrl>https://github.com/tyronegroves/SimpleCQRS#readme</projectUrl>
+    <iconUrl>https://nugetgallery.blob.core.windows.net/icons/SimpleCqrs.EventStore.MongoDb.1.0.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>A framework for building applications using the CQRS and Event Sourcing patterns</description>
+    <summary>A framework for building applications using the CQRS and Event Sourcing patterns</summary>
+    <releaseNotes />
+    <copyright />
+    <language />
+    <dependencies>
+      <dependency id="SimpleCqrs" version="1.0" />
+    </dependencies>
+  </metadata>
+</package>

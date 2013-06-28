@@ -6,7 +6,12 @@ namespace Server.Engine.Domain
 {
   public class Architecture : AggregateRoot
   {
-    public string Name;
+    private string _name;
+
+    public Architecture()
+    {
+      
+    }
 
     public Architecture(Guid id, string name)
     {
@@ -14,7 +19,7 @@ namespace Server.Engine.Domain
       ChangeName(name);
     }
 
-    private void CreateArchitecture(Guid id)
+    public void CreateArchitecture(Guid id)
     {
       Apply(new ArchitectureCreatedEvent(id));
     }
@@ -23,14 +28,15 @@ namespace Server.Engine.Domain
     {
       Id = archArchitectureCreatedEvent.AggregateRootId;
     }
+
     public void ChangeName(string newName)
     {
       Apply(new NameChangedEvent { NewName = newName });
     }
 
-    public void OnNameChanged(NameChangedEvent nameChangedEvent)
+    private void OnNameChanged(NameChangedEvent nameChangedEvent)
     {
-      Name = nameChangedEvent.NewName;
+      _name = nameChangedEvent.NewName;
     }
   }
 }
