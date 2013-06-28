@@ -108,6 +108,10 @@
       <Project>{EAC90361-73E0-4E01-9699-8D6FA0CA5F83}</Project>
       <Name>Server.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Server.ReadModels\Server.ReadModels.csproj">
+      <Project>{7914E13F-249E-420D-99CF-F6A4EC86315E}</Project>
+      <Name>Server.ReadModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

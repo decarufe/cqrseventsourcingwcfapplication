@@ -2,6 +2,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
+using Server.ReadModels;
 using SimpleCqrs.Commanding;
 
 namespace Server.Engine
@@ -18,6 +19,12 @@ namespace Server.Engine
     public void SetName(Guid id, string name)
     {
       _commandBus.Send(new SetNameCommand(id, name));
+    }
+
+    public string GetName(Guid id)
+    {
+      var architectureView = Persistance.Instance.Get(id);
+      return architectureView.Name;
     }
   }
 }
