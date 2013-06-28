@@ -2,6 +2,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
+using Server.ReadModels;
 using SimpleCqrs.Commanding;
 
 namespace Server.Engine
