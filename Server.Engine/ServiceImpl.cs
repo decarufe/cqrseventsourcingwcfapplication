@@ -2,6 +2,7 @@ using System;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
+using Server.ReadModel;
 using SimpleCqrs.Commanding;
 
 namespace Server.Engine
@@ -13,11 +14,17 @@ namespace Server.Engine
     public ServiceImpl(IUnityContainer container)
     {
       _commandBus = container.Resolve<ICommandBus>();
+      container.RegisterType<IPersistance, Persistance>(new ContainerControlledLifetimeManager());
     }
 
-    public void SetName(string name)
+    public void SetName(Guid id, string name)
     {
-      _commandBus.Send(new SetNameCommand(Guid.NewGuid(), name));
+      _commandBus.Send(new SetNameCommand(id, name));
+    }
+
+    public string GetName(Guid id)
+    {
+      return Persistance.Instance.Get(id).Name;
     }
   }
 }

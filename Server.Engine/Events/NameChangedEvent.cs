@@ -6,7 +6,7 @@ using SimpleCqrs.Eventing;
 
 namespace Server.Engine.Events
 {
-  class NameChangedEvent : DomainEvent
+  public class NameChangedEvent : DomainEvent
   {
     public string NewName { set; get; }
   }

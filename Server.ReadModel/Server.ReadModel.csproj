@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{EAC90361-73E0-4E01-9699-8D6FA0CA5F83}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{122F78DD-25B1-4E8D-AC6D-666C5F03EF3B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Server.Engine</RootNamespace>
-    <AssemblyName>Server.Engine</AssemblyName>
+    <RootNamespace>Server.ReadModel</RootNamespace>
+    <AssemblyName>Server.ReadModel</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -30,12 +31,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="SimpleCqrs">
-      <HintPath>..\packages\SimpleCqrs.1.0\lib\SimpleCqrs.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleCqrs.Unity">
-      <HintPath>..\packages\SimpleCqrs.Unity.1.0\lib\SimpleCqrs.Unity.dll</HintPath>
+      <HintPath>..\Server.Wcf\bin\SimpleCqrs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -46,31 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlers\ArchitectureCommandHandler.cs" />
-    <Compile Include="Commands\SetNameCommand.cs" />
-    <Compile Include="Domain\Architecture.cs" />
-    <Compile Include="EventHandlers\ArchitectureEventHandler.cs" />
-    <Compile Include="EventRepository\EventRepository.cs" />
-    <Compile Include="Events\ArchitectureCreatedEvent.cs" />
-    <Compile Include="Events\NameChangedEvent.cs" />
+    <Compile Include="Architecture\ArchitectureView.cs" />
+    <Compile Include="IPersistance.cs" />
+    <Compile Include="Persistance.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceImpl.cs" />
-    <Compile Include="TrainingRuntime.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
-      <Project>{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}</Project>
-      <Name>Server.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server.ReadModel\Server.ReadModel.csproj">
-      <Project>{122F78DD-25B1-4E8D-AC6D-666C5F03EF3B}</Project>
-      <Name>Server.ReadModel</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
