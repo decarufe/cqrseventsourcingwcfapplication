@@ -5,8 +5,8 @@ namespace Server.Engine.Commands
 {
   public class SetNameCommand : ICommand
   {
-    private Guid _id;
-    private string _name;
+    private readonly string _name;
+    private readonly Guid _id;
 
     public SetNameCommand(Guid id, string name)
     {
