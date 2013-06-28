@@ -6,12 +6,12 @@ using SimpleCqrs.Domain;
 
 namespace Server.Engine.CommandHandlers
 {
-  public class CommandHandler :
+  public class ArchitectureCommandHandler :
     IHandleCommands<SetNameCommand>
   {
     private readonly IDomainRepository _repository;
 
-    public CommandHandler(IDomainRepository repository)
+    public ArchitectureCommandHandler(IDomainRepository repository)
     {
       _repository = repository;
     }

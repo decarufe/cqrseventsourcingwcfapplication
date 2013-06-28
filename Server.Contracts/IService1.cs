@@ -1,3 +1,4 @@
+using System;
 using System.ServiceModel;
 
 namespace Server.Contracts
@@ -7,6 +8,9 @@ namespace Server.Contracts
   public interface IService1
   {
     [OperationContract]
-    void SetName(string name);
+    void SetName(Guid id, string name);
+
+    [OperationContract]
+    string GetName(Guid id);
   }
 }
