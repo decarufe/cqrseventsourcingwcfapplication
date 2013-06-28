@@ -15,16 +15,15 @@ namespace Server.Engine.Domain
     {
     }
 
-    public Architecture(string name)
+    public Architecture(Guid id, string name)
     {
-      CreateArchitecture();
+      CreateArchitecture(id);
       ChangeName(name);
     }
 
-    private void CreateArchitecture()
+    private void CreateArchitecture(Guid id)
     {
-      Id = new Guid("bozo");
-      Apply(new ArchitectureCreatedEvent());
+      Apply(new ArchitectureCreatedEvent(id));
     }
 
     public void OnArchitectureCreated(ArchitectureCreatedEvent architectureCreatedEvent)
