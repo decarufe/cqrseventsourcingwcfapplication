@@ -48,6 +48,9 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\CommandHandler.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
+    <Compile Include="Domain\Architecture.cs" />
+    <Compile Include="Events\ArchitectureCreatedEvent.cs" />
+    <Compile Include="Events\NameChangedEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServiceImpl.cs" />
     <Compile Include="TrainingRuntime.cs" />
