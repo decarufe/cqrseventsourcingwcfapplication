@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
@@ -16,7 +17,7 @@ namespace Server.Engine
 
     public void SetName(string name)
     {
-      _commandBus.Send(new SetNameCommand() {Name = name});
+      _commandBus.Send(new SetNameCommand(Guid.NewGuid(), name));
     }
   }
 }

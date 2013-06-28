@@ -18,7 +18,7 @@ namespace Server.Engine.CommandHandlers
 
     public void Handle(ICommandHandlingContext<SetNameCommand> handlingContext)
     {
-      var architecture = new Architecture(handlingContext.Command.Name);
+      var architecture = new Architecture(handlingContext.Command.Id, handlingContext.Command.Name);
       _repository.Save(architecture);
     }
   }
