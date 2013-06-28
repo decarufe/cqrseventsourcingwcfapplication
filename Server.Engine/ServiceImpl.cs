@@ -1,3 +1,4 @@
+using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
 using SimpleCqrs.Commanding;
@@ -8,9 +9,9 @@ namespace Server.Engine
   {
     private readonly ICommandBus _commandBus;
 
-    public ServiceImpl(ICommandBus commandBus)
+    public ServiceImpl(IUnityContainer container)
     {
-      _commandBus = commandBus;
+      _commandBus = container.Resolve<ICommandBus>();
     }
 
     public void SetName(string name)
