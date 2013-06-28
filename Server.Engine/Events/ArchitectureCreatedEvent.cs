@@ -1,0 +1,13 @@
+﻿using System;
+using SimpleCqrs.Eventing;
+
+namespace Server.Engine.Events
+{
+  public class ArchitectureCreatedEvent : DomainEvent
+  {
+    public ArchitectureCreatedEvent(Guid id)
+    {
+      AggregateRootId = id;
+    }
+  }
+}

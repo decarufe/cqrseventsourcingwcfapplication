@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
@@ -14,9 +15,9 @@ namespace Server.Engine
       _commandBus = container.Resolve<ICommandBus>();
     }
 
-    public void SetName(string name)
+    public void SetName(Guid id, string name)
     {
-      _commandBus.Send(new SetNameCommand() {Name = name});
+      _commandBus.Send(new SetNameCommand(id, name));
     }
   }
 }
