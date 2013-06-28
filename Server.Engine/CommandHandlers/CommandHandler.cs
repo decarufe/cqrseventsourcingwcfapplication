@@ -1,5 +1,6 @@
 using System;
 using Server.Engine.Commands;
+using Server.Engine.Domain;
 using SimpleCqrs.Commanding;
 using SimpleCqrs.Domain;
 
