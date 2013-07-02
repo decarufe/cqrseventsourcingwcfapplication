@@ -108,6 +108,10 @@
       <Project>{EAC90361-73E0-4E01-9699-8D6FA0CA5F83}</Project>
       <Name>Server.Engine</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Server.ReadModels\Server.ReadModels.csproj">
+      <Project>{acf583ea-83fc-4445-8ca4-7a828d60da0d}</Project>
+      <Name>Server.ReadModels</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
@@ -130,7 +134,6 @@
           <CustomServerUrl>
           </CustomServerUrl>
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
-          <EnableWcfTestClientForSVCDefaultValue>True</EnableWcfTestClientForSVCDefaultValue>
         </WebProjectProperties>
       </FlavorProperties>
     </VisualStudio>

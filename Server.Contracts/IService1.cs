@@ -9,5 +9,8 @@ namespace Server.Contracts
   {
     [OperationContract]
     void SetName(Guid id, string name);
+
+    [OperationContract]
+    string GetName(Guid id);
   }
 }
