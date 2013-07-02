@@ -20,5 +20,12 @@ namespace Server.Engine
     {
       _commandBus.Send(new SetNameCommand(id, name));
     }
+
+    public string GetName(Guid id)
+    {
+      ArchitectureView architectureView = Persistance.Instance.Get(id);
+
+      return architectureView.Name;
+    }
   }
 }

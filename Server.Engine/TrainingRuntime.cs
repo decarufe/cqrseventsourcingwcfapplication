@@ -1,3 +1,4 @@
+using System;
 using SimpleCqrs;
 using SimpleCqrs.Eventing;
 
@@ -7,7 +8,24 @@ namespace Server.Engine
   {
     protected override IEventStore GetEventStore(IServiceLocator serviceLocator)
     {
-      return new MemoryEventStore();
+      //return new MemoryEventStore();
+
+      return new SimpleCqrs
+        .EventStore
+        .MongoDb
+        .MongoEventStore(
+          "mongodb://localhost/",
+          serviceLocator.Resolve<ITypeCatalog>());
+    }
+
+    protected override ISnapshotStore GetSnapshotStore(IServiceLocator serviceLocator)
+    {
+      return new SimpleCqrs
+        .EventStore
+        .MongoDb
+        .MongoSnapshotStore(
+          "mongodb://localhost/",
+          serviceLocator.Resolve<ITypeCatalog>());
     }
   }
 }
