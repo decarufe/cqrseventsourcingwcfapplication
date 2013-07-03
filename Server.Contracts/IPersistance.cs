@@ -1,7 +1,7 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace Server.ReadModels
+namespace Server.Contracts
 {
   public interface IPersistance
   {
