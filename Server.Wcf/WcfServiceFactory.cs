@@ -23,7 +23,7 @@ namespace Server.Wcf
 
     protected override void ConfigureContainer(IUnityContainer container)
     {
-      container.RegisterType<IService1, ServiceImpl>();
+      container.RegisterType<ICqrsService, ServiceImpl>();
     }
   }
 }

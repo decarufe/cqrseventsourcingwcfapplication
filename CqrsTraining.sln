@@ -16,6 +16,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42F658
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.ReadModel.Endpoint", "Server.ReadModel.Endpoint\Server.ReadModel.Endpoint.csproj", "{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -38,6 +40,10 @@ Global
 		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

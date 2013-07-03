@@ -45,7 +45,7 @@
     <Compile Include="Events\ArchitectureCreatedEvent.cs" />
     <Compile Include="Events\NameChangedEvent.cs" />
     <Compile Include="IPersistance.cs" />
-    <Compile Include="IService1.cs" />
+    <Compile Include="ICqrsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

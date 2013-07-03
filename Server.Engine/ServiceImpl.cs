@@ -9,7 +9,7 @@ using SimpleCqrs.Commanding;
 
 namespace Server.Engine
 {
-  public class ServiceImpl : IService1
+  public class ServiceImpl : ICqrsService
   {
     private readonly ICommandBus _commandBus;
 
