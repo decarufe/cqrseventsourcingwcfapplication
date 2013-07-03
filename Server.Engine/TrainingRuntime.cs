@@ -1,7 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using Server.Contracts.Events;
 using SimpleCqrs;
 using SimpleCqrs.Eventing;
+using SimpleCqrs.Unity;
 
 namespace Server.Engine
 {
@@ -30,5 +33,19 @@ namespace Server.Engine
     //      "mongodb://localhost/",
     //      serviceLocator.Resolve<ITypeCatalog>());
     //}
+
+    protected override void OnStarted(UnityServiceLocator serviceLocator)
+    {
+      base.OnStarted(serviceLocator);
+
+      var eventStore = serviceLocator.Resolve<IEventStore>();
+      var eventBus = serviceLocator.Resolve<IEventBus>();
+      IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(new[]
+      {
+        typeof (ArchitectureCreatedEvent), 
+        typeof (NameChangedEvent)
+      });
+      eventBus.PublishEvents(events);
+    }
   }
 }
