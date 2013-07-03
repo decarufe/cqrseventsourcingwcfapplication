@@ -25,12 +25,13 @@ namespace Server.Engine.CommandHandlers
         if (architecture == null)
           architecture = Architecture.Create(handlingContext.Command.Id, handlingContext.Command.Name);
         architecture.ChangeName(handlingContext.Command.Name);
+
+        _repository.Save(architecture);
       }
       catch (AggregateRootNotFoundException e)
       {
         architecture = Architecture.Create(handlingContext.Command.Id, handlingContext.Command.Name);
       }
-      _repository.Save(architecture);
     }
   }
 }
