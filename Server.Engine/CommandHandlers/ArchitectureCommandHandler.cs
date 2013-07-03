@@ -21,12 +21,14 @@ namespace Server.Engine.CommandHandlers
       Architecture architecture;
       try
       {
-        architecture = _repository.GetExistingById<Architecture>(handlingContext.Command.Id);
+        architecture = _repository.GetById<Architecture>(handlingContext.Command.Id);
+        if (architecture == null)
+          architecture = Architecture.Create(handlingContext.Command.Id, handlingContext.Command.Name);
         architecture.ChangeName(handlingContext.Command.Name);
       }
       catch (AggregateRootNotFoundException e)
       {
-        architecture = new Architecture(handlingContext.Command.Id, handlingContext.Command.Name);
+        architecture = Architecture.Create(handlingContext.Command.Id, handlingContext.Command.Name);
       }
       _repository.Save(architecture);
     }
