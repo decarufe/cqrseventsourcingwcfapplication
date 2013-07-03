@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using EventStore;
+using EventStore.Dispatcher;
 using EventStore.Serialization;
 using MongoDB.Bson.Serialization;
 using Server.Contracts.Events;
@@ -15,17 +17,16 @@ namespace Server.Engine
 
     public NEventStore()
     {
-      BsonClassMap.RegisterClassMap(new BsonClassMap<ArchitectureCreatedEvent>());
-      BsonClassMap.RegisterClassMap(new BsonClassMap<NameChangedEvent>());
+      BsonClassMap.RegisterClassMap<ArchitectureCreatedEvent>();
+      BsonClassMap.RegisterClassMap<NameChangedEvent>();
 
       _store = Wireup
         .Init()
         .UsingMongoPersistence("EventStore", new DocumentObjectSerializer())
         .InitializeStorageEngine()
-        .UsingBinarySerialization()
-        .Compress()
-        //.UsingAsynchronousDispatchScheduler()
-        //.DispatchTo(new DelegateMessageDispatcher(Dispatch))
+        .UsingBsonSerialization()
+        .UsingAsynchronousDispatchScheduler()
+        .DispatchTo(new DelegateMessageDispatcher(Dispatch))
         .Build();
     }
 
@@ -33,7 +34,7 @@ namespace Server.Engine
     {
       foreach (var eventMessage in commit.Events)
       {
-        Console.WriteLine("Async: " + eventMessage.Body);
+        Debug.WriteLine("Async: " + eventMessage.Body);
       }
     }
 

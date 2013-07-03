@@ -73,7 +73,6 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\ArchitectureCommandHandler.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
-    <Compile Include="DispatchPipelineHook.cs" />
     <Compile Include="Domain\Architecture.cs" />
     <Compile Include="EventHandlers\ArchitcetureEventHandler.cs" />
     <Compile Include="NEventStore.cs" />
