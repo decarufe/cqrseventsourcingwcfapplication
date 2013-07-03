@@ -17,6 +17,7 @@ namespace Server.Engine.EventHandlers
     public void Handle(NameChangedEvent domainEvent)
     {
       ArchitectureView architectureView = Persistance.Instance.Get(domainEvent.AggregateRootId);
+      architectureView.Id = domainEvent.AggregateRootId;
       architectureView.Name = domainEvent.NewName;
       Persistance.Instance.Save(domainEvent.AggregateRootId, architectureView);
     }

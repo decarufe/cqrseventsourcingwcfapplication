@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.Practices.Unity;
 using Server.Contracts;
 using Server.Engine.Commands;
@@ -26,6 +28,12 @@ namespace Server.Engine
       ArchitectureView architectureView = Persistance.Instance.Get(id);
 
       return architectureView.Name;
+    }
+
+    public IEnumerable<KeyValuePair<Guid, string>> GetList()
+    {
+      return from a in Persistance.Instance.GetAll()
+               select new KeyValuePair<Guid, string>(a.Id, a.Name);
     }
   }
 }
