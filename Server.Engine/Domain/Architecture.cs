@@ -1,21 +1,28 @@
 ﻿using System;
-using Server.Engine.Events;
+using Server.Contracts.Events;
 using SimpleCqrs.Domain;
 
 namespace Server.Engine.Domain
 {
   public class Architecture : AggregateRoot
   {
-    public string _name;
+    private string _name;
+
+    // af2b57e3-27bd-4750-85ba-0e456ad497bc
 
     public Architecture()
     {
     }
 
-    public Architecture(Guid id, string name)
+    private Architecture(Guid id, string name)
     {
       CreateArchitecture(id);
       ChangeName(name);
+    }
+
+    public static Architecture Create(Guid id, string name)
+    {
+      return new Architecture(id, name);
     }
 
     private void CreateArchitecture(Guid id)
@@ -35,10 +42,13 @@ namespace Server.Engine.Domain
 
     public void ChangeName(string newName)
     {
-      Apply(new NameChangedEvent()
+      if (newName != _name)
       {
-        NewName = newName
-      });
+        Apply(new NameChangedEvent
+        {
+          NewName = newName
+        });
+      }
     }
   }
 }

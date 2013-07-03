@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using SimpleCqrs;
 using SimpleCqrs.Eventing;
 
@@ -10,22 +11,24 @@ namespace Server.Engine
     {
       //return new MemoryEventStore();
 
-      return new SimpleCqrs
-        .EventStore
-        .MongoDb
-        .MongoEventStore(
-          "mongodb://localhost/",
-          serviceLocator.Resolve<ITypeCatalog>());
+      return new NEventStore();
+
+      //return new SimpleCqrs
+      //  .EventStore
+      //  .MongoDb
+      //  .MongoEventStore(
+      //    "mongodb://localhost/",
+      //    serviceLocator.Resolve<ITypeCatalog>());
     }
 
-    protected override ISnapshotStore GetSnapshotStore(IServiceLocator serviceLocator)
-    {
-      return new SimpleCqrs
-        .EventStore
-        .MongoDb
-        .MongoSnapshotStore(
-          "mongodb://localhost/",
-          serviceLocator.Resolve<ITypeCatalog>());
-    }
+    //protected override ISnapshotStore GetSnapshotStore(IServiceLocator serviceLocator)
+    //{
+    //  return new SimpleCqrs
+    //    .EventStore
+    //    .MongoDb
+    //    .MongoSnapshotStore(
+    //      "mongodb://localhost/",
+    //      serviceLocator.Resolve<ITypeCatalog>());
+    //}
   }
 }

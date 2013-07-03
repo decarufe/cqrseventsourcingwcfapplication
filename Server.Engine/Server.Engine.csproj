@@ -30,23 +30,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="FluentMongo">
-      <HintPath>..\packages\FluentMongo.1.3.1.1\lib\FluentMongo.dll</HintPath>
+    <Reference Include="EventStore">
+      <HintPath>..\packages\EventStore.3.2.0.28\lib\net40\EventStore.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Persistence.MongoPersistence">
+      <HintPath>..\packages\EventStore.Persistence.MongoPersistence.3.2.0.28\lib\net40\EventStore.Persistence.MongoPersistence.dll</HintPath>
+    </Reference>
+    <Reference Include="EventStore.Serialization.Json">
+      <HintPath>..\packages\EventStore.Serialization.Json.3.2.0.28\lib\net40\EventStore.Serialization.Json.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity, Version=2.1.505.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
     <Reference Include="MongoDB">
       <HintPath>..\Libs\Mongo\MongoDB.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.3.1\lib\net35\MongoDB.Bson.dll</HintPath>
+      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Bson.dll</HintPath>
     </Reference>
     <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.3.1\lib\net35\MongoDB.Driver.dll</HintPath>
+      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="Simple.Data">
+      <HintPath>..\packages\Simple.Data.Core.0.18.3.1\lib\net40\Simple.Data.dll</HintPath>
     </Reference>
     <Reference Include="SimpleCqrs">
       <HintPath>..\packages\SimpleCqrs.1.0\lib\SimpleCqrs.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleCqrs.EventStore.MongoDb">
+    <Reference Include="SimpleCqrs.EventStore.MongoDb, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\SimpleCqrs.EventStore.MongoDb.1.0\lib\SimpleCqrs.EventStore.MongoDb.dll</HintPath>
     </Reference>
     <Reference Include="SimpleCqrs.Unity">
@@ -63,11 +73,16 @@
   <ItemGroup>
     <Compile Include="CommandHandlers\ArchitectureCommandHandler.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
+    <Compile Include="DispatchPipelineHook.cs" />
     <Compile Include="Domain\Architecture.cs" />
     <Compile Include="EventHandlers\ArchitcetureEventHandler.cs" />
-    <Compile Include="Events\ArchitectureCreatedEvent.cs" />
-    <Compile Include="Events\NameChangedEvent.cs" />
+    <Compile Include="NEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="ServiceImpl.cs" />
     <Compile Include="TrainingRuntime.cs" />
   </ItemGroup>
@@ -82,7 +97,12 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
