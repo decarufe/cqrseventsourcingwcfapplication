@@ -37,7 +37,7 @@ namespace Server.Engine
       //   BsonClassMap.RegisterClassMap<ArchitectureCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
 
-      Assembly assembly = typeof (IService1).Assembly;
+      Assembly assembly = typeof (ICqrsService).Assembly;
       var types = from t in assembly.GetTypes()
                   where t.IsPublic
                         && typeof (DomainEvent).IsAssignableFrom(t)
