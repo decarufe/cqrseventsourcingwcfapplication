@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ServiceModel;
 
 namespace Server.Contracts
@@ -12,5 +13,8 @@ namespace Server.Contracts
 
     [OperationContract]
     string GetName(Guid id);
+
+    [OperationContract]
+    IEnumerable<KeyValuePair<Guid, string>> GetList();
   }
 }

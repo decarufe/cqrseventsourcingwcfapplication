@@ -5,15 +5,18 @@ namespace Server.ReadModels
 {
   public class Persistance : IPersistance
   {
-    private Dictionary<Guid, ArchitectureView> _architectureTable = new Dictionary<Guid, ArchitectureView>();
+    private readonly Dictionary<Guid, ArchitectureView> _architectureTable = new Dictionary<Guid, ArchitectureView>();
 
     private static IPersistance _persistance;
 
     public static IPersistance Instance
     {
-      get { 
+      get
+      {
         if (_persistance == null)
+        {
           _persistance = new Persistance();
+        }
 
         return _persistance;
       }
@@ -30,6 +33,11 @@ namespace Server.ReadModels
     public ArchitectureView Get(Guid id)
     {
       return _architectureTable[id];
+    }
+
+    public IEnumerable<ArchitectureView> GetAll()
+    {
+      return _architectureTable.Values;
     }
   }
 }
