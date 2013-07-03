@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Server.Contracts;
 using Server.Contracts.Events;
 using SimpleCqrs;
 using SimpleCqrs.Eventing;
@@ -40,11 +42,12 @@ namespace Server.Engine
 
       var eventStore = serviceLocator.Resolve<IEventStore>();
       var eventBus = serviceLocator.Resolve<IEventBus>();
-      IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(new[]
-      {
-        typeof (ArchitectureCreatedEvent), 
-        typeof (NameChangedEvent)
-      });
+      Assembly assembly = typeof(IService1).Assembly;
+      var types = from t in assembly.GetTypes()
+                  where t.IsPublic
+                        && typeof(DomainEvent).IsAssignableFrom(t)
+                  select t;
+      IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(types);
       eventBus.PublishEvents(events);
     }
   }

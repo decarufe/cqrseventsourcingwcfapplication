@@ -1,4 +1,5 @@
-﻿using Server.Contracts.Events;
+﻿using Server.Contracts;
+using Server.Contracts.Events;
 using Server.ReadModels;
 using SimpleCqrs.Eventing;
 
