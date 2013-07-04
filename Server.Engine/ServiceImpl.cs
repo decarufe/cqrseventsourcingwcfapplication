@@ -6,6 +6,8 @@ using Server.Contracts;
 using Server.Engine.Commands;
 using Server.ReadModels;
 using SimpleCqrs.Commanding;
+using Rhino.ServiceBus.Hosting;
+using Rhino.ServiceBus.Msmq;
 
 namespace Server.Engine
 {
