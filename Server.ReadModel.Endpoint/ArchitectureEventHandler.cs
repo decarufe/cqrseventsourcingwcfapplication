@@ -1,11 +1,13 @@
-﻿using Server.Contracts.Events;
+﻿using System.Diagnostics;
+using Rhino.ServiceBus;
+using Server.Contracts.Events;
 using SimpleCqrs.Eventing;
 
 namespace Server.ReadModel.Endpoint
 {
   public class ArchitectureEventHandler : 
-    IHandleDomainEvents<ArchitectureCreatedEvent>,
-    IHandleDomainEvents<NameChangedEvent>
+    ConsumerOf<ArchitectureCreatedEvent>,
+    ConsumerOf<NameChangedEvent>
   {
     private readonly ArchitectureRepository _repository;
 
@@ -14,18 +16,19 @@ namespace Server.ReadModel.Endpoint
       _repository = repository;
     }
 
-    public void Handle(ArchitectureCreatedEvent domainEvent)
+    public void Consume(ArchitectureCreatedEvent message)
     {
+      Debug.WriteLine("Message: {0}", message.AggregateRootId);
       _repository.Add(new Architecture
       {
-        Id = domainEvent.AggregateRootId.ToString()
+        Id = message.AggregateRootId.ToString()
       });
     }
 
-    public void Handle(NameChangedEvent domainEvent)
+    public void Consume(NameChangedEvent message)
     {
-      Architecture architecture = _repository.GetById(domainEvent.AggregateRootId.ToString());
-      architecture.Name = domainEvent.NewName;
+      Architecture architecture = _repository.GetById(message.AggregateRootId.ToString());
+      architecture.Name = message.NewName;
       _repository.Update(architecture);
     }
   }

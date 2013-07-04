@@ -1,54 +1,51 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Rhino.ServiceBus;
 using Server.Contracts;
-using Server.Contracts.Events;
 using SimpleCqrs;
 using SimpleCqrs.Eventing;
-using SimpleCqrs.Unity;
+using UnityServiceLocator = SimpleCqrs.Unity.UnityServiceLocator;
 
 namespace Server.Engine
 {
-  public class TrainingRuntime : SimpleCqrsRuntime<SimpleCqrs.Unity.UnityServiceLocator>
+  public class TrainingRuntime : SimpleCqrsRuntime<UnityServiceLocator>
   {
-    protected override IEventStore GetEventStore(IServiceLocator serviceLocator)
+    private readonly IEventBus _bus;
+
+    public TrainingRuntime()
     {
-      //return new MemoryEventStore();
-
-      return new NEventStore();
-
-      //return new SimpleCqrs
-      //  .EventStore
-      //  .MongoDb
-      //  .MongoEventStore(
-      //    "mongodb://localhost/",
-      //    serviceLocator.Resolve<ITypeCatalog>());
     }
 
-    //protected override ISnapshotStore GetSnapshotStore(IServiceLocator serviceLocator)
-    //{
-    //  return new SimpleCqrs
-    //    .EventStore
-    //    .MongoDb
-    //    .MongoSnapshotStore(
-    //      "mongodb://localhost/",
-    //      serviceLocator.Resolve<ITypeCatalog>());
-    //}
+    public TrainingRuntime(IEventBus bus)
+    {
+      _bus = bus;
+    }
 
-    //protected override void OnStarted(UnityServiceLocator serviceLocator)
-    //{
-    //  base.OnStarted(serviceLocator);
+    protected override IEventStore GetEventStore(IServiceLocator serviceLocator)
+    {
+      return new NEventStore();
+    }
 
-    //  var eventStore = serviceLocator.Resolve<IEventStore>();
-    //  var eventBus = serviceLocator.Resolve<IEventBus>();
-    //  Assembly assembly = typeof(ICqrsService).Assembly;
-    //  var types = from t in assembly.GetTypes()
-    //              where t.IsPublic
-    //                    && typeof(DomainEvent).IsAssignableFrom(t)
-    //              select t;
-    //  IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(types);
-    //  eventBus.PublishEvents(events);
-    //}
+    protected override IEventBus GetEventBus(IServiceLocator serviceLocator)
+    {
+      return _bus;
+    }
+
+    protected override void OnStarted(UnityServiceLocator serviceLocator)
+    {
+      //base.OnStarted(serviceLocator);
+
+      //var eventStore = serviceLocator.Resolve<IEventStore>();
+      //var eventBus = serviceLocator.Resolve<IEventBus>();
+      //Assembly assembly = typeof (ICqrsService).Assembly;
+      //var types = from t in assembly.GetTypes()
+      //            where t.IsPublic
+      //                  && typeof (DomainEvent).IsAssignableFrom(t)
+      //            select t;
+      //var events = eventStore.GetEventsByEventTypes(types).ToArray();
+      //if (events.Any())
+      //  eventBus.PublishEvents(events);
+    }
   }
 }
