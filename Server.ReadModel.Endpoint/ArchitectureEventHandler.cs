@@ -1,11 +1,17 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using Rhino.ServiceBus;
+using Server.Contracts;
 using Server.Contracts.Events;
+using Server.Engine.Domain;
+using Server.ReadModels;
 using SimpleCqrs.Eventing;
 
 namespace Server.ReadModel.Endpoint
 {
-  public class ArchitectureEventHandler : 
+  public class ArchitectureEventHandler :
+    IHandleDomainEvents<ArchitectureCreatedEvent>,
+    IHandleDomainEvents<NameChangedEvent>,
     ConsumerOf<ArchitectureCreatedEvent>,
     ConsumerOf<NameChangedEvent>
   {
@@ -18,18 +24,32 @@ namespace Server.ReadModel.Endpoint
 
     public void Consume(ArchitectureCreatedEvent message)
     {
-      Debug.WriteLine("Message: {0}", message.AggregateRootId);
-      _repository.Add(new Architecture
+      Console.WriteLine("{0}: {1}", message.GetType().Name, message.AggregateRootId);
+      var architectureView = new ArchitectureView
       {
-        Id = message.AggregateRootId.ToString()
-      });
+        AggregateRootId = message.AggregateRootId
+      };
+      Persistance.Instance.Add(architectureView);
     }
 
     public void Consume(NameChangedEvent message)
     {
-      Architecture architecture = _repository.GetById(message.AggregateRootId.ToString());
+      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.NewName);
+      ArchitectureView architecture = Persistance.Instance.Get(message.AggregateRootId);
       architecture.Name = message.NewName;
-      _repository.Update(architecture);
+      Persistance.Instance.Update(architecture);
+    }
+
+    public void Handle(ArchitectureCreatedEvent domainEvent)
+    {
+      // todo: Fix brigde between SimpleCqrs and Rhino.ServiceBus
+      Consume(domainEvent);
+    }
+
+    public void Handle(NameChangedEvent domainEvent)
+    {
+      // todo: Fix brigde between SimpleCqrs and Rhino.ServiceBus
+      Consume(domainEvent);
     }
   }
 }

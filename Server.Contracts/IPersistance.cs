@@ -5,8 +5,9 @@ namespace Server.Contracts
 {
   public interface IPersistance
   {
-    void Save(Guid id, ArchitectureView architectureView);
+    void Add(ArchitectureView architectureView);
     ArchitectureView Get(Guid id);
+    void Update(ArchitectureView architecture);
     IEnumerable<ArchitectureView> GetAll();
   }
 }

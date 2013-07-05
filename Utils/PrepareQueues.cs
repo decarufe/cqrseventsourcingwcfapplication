@@ -23,7 +23,8 @@ namespace Utils
     {
       if (!MessageQueue.Exists(queuePath))
       {
-        MessageQueue.Create(queuePath);
+        MessageQueue messageQueue = MessageQueue.Create(queuePath);
+        messageQueue.UseJournalQueue = true;
       }
     }
 

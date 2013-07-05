@@ -29,6 +29,7 @@ namespace Server.Engine
 
     protected override IEventBus GetEventBus(IServiceLocator serviceLocator)
     {
+      if (_bus == null) return base.GetEventBus(serviceLocator);
       return _bus;
     }
 

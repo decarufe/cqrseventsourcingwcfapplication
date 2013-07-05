@@ -8,8 +8,6 @@ namespace Server.Engine.Domain
   {
     private string _name;
 
-    // af2b57e3-27bd-4750-85ba-0e456ad497bc
-
     public Architecture()
     {
     }
@@ -27,7 +25,7 @@ namespace Server.Engine.Domain
 
     private void CreateArchitecture(Guid id)
     {
-      Apply(new ArchitectureCreatedEvent(id));
+      Apply(new ArchitectureCreatedEvent() { AggregateRootId = id });
     }
 
     public void OnArchitectureCreated(ArchitectureCreatedEvent architectureCreatedEvent)
