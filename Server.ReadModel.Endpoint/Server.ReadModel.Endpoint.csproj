@@ -94,7 +94,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Architecture.cs" />
     <Compile Include="ArchitectureEventHandler.cs" />
     <Compile Include="ArchitectureRepository.cs" />
     <Compile Include="Program.cs" />

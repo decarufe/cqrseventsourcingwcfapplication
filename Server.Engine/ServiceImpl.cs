@@ -35,7 +35,7 @@ namespace Server.Engine
     public IEnumerable<KeyValuePair<Guid, string>> GetList()
     {
       return from a in Persistance.Instance.GetAll()
-               select new KeyValuePair<Guid, string>(a.Id, a.Name);
+               select new KeyValuePair<Guid, string>(a.AggregateRootId, a.Name);
     }
   }
 }

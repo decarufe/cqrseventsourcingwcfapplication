@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.ServiceModel;
@@ -10,6 +11,7 @@ using Rhino.ServiceBus.Msmq;
 using Server.Contracts;
 using Server.Engine;
 using Microsoft.Practices.Unity;
+using SimpleCqrs.Eventing;
 using SimpleCqrs.Rhino.ServiceBus;
 using Utils;
 
@@ -19,36 +21,39 @@ namespace Server.ReadModel.Endpoint
   {
     static void Main(string[] args)
     {
-      new MongoRepository.MongoRepositoryManager<Architecture>().Drop();
-      var repository = new ArchitectureRepository();
+      new MongoRepository.MongoRepositoryManager<ArchitectureView>().Drop();
 
-      Thread.Sleep(2000);
+      Thread.Sleep(100);
 
       PrepareQueues.Prepare("msmq://localhost/CQRS.ReadModel", QueueType.Standard);
 
       var host = new DefaultHost();
       host.Start<ReadModelBootStrapper>();
 
-      var runtime = new TrainingRuntime(new RsbEventBus((IServiceBus)host.Bus));
+      var runtime = new TrainingRuntime();
       runtime.Start();
 
       var container = runtime.ServiceLocator.Container;
-      container.RegisterInstance(repository);
 
-      //var eventStore = container.Resolve<IEventStore>();
-      //var eventBus = container.Resolve<IEventBus>();
-
-      //Assembly assembly = typeof(ICqrsService).Assembly;
-      //var types = from t in assembly.GetTypes()
-      //            where t.IsPublic
-      //                  && typeof(DomainEvent).IsAssignableFrom(t)
-      //            select t;
-      //IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(types);
-
-      //eventBus.PublishEvents(events);
+      RebuildFromEvents(container);
 
       Console.WriteLine("Waiting for messages");
       Console.ReadLine();
+    }
+
+    private static void RebuildFromEvents(IUnityContainer container)
+    {
+      var eventStore = container.Resolve<IEventStore>();
+      var eventBus = container.Resolve<IEventBus>();
+
+      Assembly assembly = typeof (ICqrsService).Assembly;
+      var types = from t in assembly.GetTypes()
+                  where t.IsPublic
+                        && typeof (DomainEvent).IsAssignableFrom(t)
+                  select t;
+      IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(types);
+
+      eventBus.PublishEvents(events);
     }
   }
 }
