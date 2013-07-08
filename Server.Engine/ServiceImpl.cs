@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Practices.Unity;
+using MongoDB.Bson;
 using Server.Contracts;
 using Server.Engine.Commands;
 using Server.ReadModels;
@@ -27,15 +28,15 @@ namespace Server.Engine
 
     public string GetName(Guid id)
     {
-      ArchitectureView architectureView = Persistance.Instance.Get(id);
+      ArchitectureView architectureView = Persistance<ArchitectureView>.Instance.Get(id.ToString());
 
       return architectureView.Name;
     }
 
     public IEnumerable<KeyValuePair<Guid, string>> GetList()
     {
-      return from a in Persistance.Instance.GetAll()
-               select new KeyValuePair<Guid, string>(a.AggregateRootId, a.Name);
+      return from a in Persistance<ArchitectureView>.Instance.GetAll()
+               select new KeyValuePair<Guid, string>(Guid.Parse(a.Id), a.Name);
     }
   }
 }

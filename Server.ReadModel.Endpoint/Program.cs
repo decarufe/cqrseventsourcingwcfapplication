@@ -11,6 +11,7 @@ using Rhino.ServiceBus.Msmq;
 using Server.Contracts;
 using Server.Engine;
 using Microsoft.Practices.Unity;
+using Server.ReadModels;
 using SimpleCqrs.Eventing;
 using SimpleCqrs.Rhino.ServiceBus;
 using Utils;
@@ -21,8 +22,6 @@ namespace Server.ReadModel.Endpoint
   {
     static void Main(string[] args)
     {
-      new MongoRepository.MongoRepositoryManager<ArchitectureView>().Drop();
-
       Thread.Sleep(100);
 
       PrepareQueues.Prepare("msmq://localhost/CQRS.ReadModel", QueueType.Standard);
@@ -51,9 +50,23 @@ namespace Server.ReadModel.Endpoint
                   where t.IsPublic
                         && typeof (DomainEvent).IsAssignableFrom(t)
                   select t;
-      IEnumerable<DomainEvent> events = eventStore.GetEventsByEventTypes(types);
 
-      eventBus.PublishEvents(events);
+      ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ArchitectureView).FullName);
+
+      IEnumerable<DomainEvent> events;
+      DateTime lastEvent;
+      if (readModelInfo == null)
+      {
+        events = eventStore.GetEventsByEventTypes(types);
+        lastEvent = DateTime.MinValue;
+      }
+      else
+      {
+        events = eventStore.GetEventsByEventTypes(types, readModelInfo.LastEvent, DateTime.MaxValue);
+        lastEvent = readModelInfo.LastEvent;
+      }
+
+      eventBus.PublishEvents(events.Where(e => e.EventDate > lastEvent));
     }
   }
 }
