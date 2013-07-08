@@ -1,13 +1,15 @@
 using System;
 using System.Collections.Generic;
+using MongoRepository;
 
 namespace Server.Contracts
 {
-  public interface IPersistance
+  public interface IPersistance<TEntity>
+    where TEntity : IEntity
   {
-    void Add(ArchitectureView architectureView);
-    ArchitectureView Get(Guid id);
-    void Update(ArchitectureView architecture);
-    IEnumerable<ArchitectureView> GetAll();
+    void Add(TEntity architectureView);
+    TEntity Get(string id);
+    void Update(TEntity architecture);
+    IEnumerable<TEntity> GetAll();
   }
 }

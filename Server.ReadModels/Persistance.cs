@@ -1,53 +1,55 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using MongoDB.Bson;
 using MongoRepository;
 using Server.Contracts;
 
 namespace Server.ReadModels
 {
-  public class Persistance : IPersistance
+  public class Persistance<TEntity> : IPersistance<TEntity>
+    where TEntity : IEntity
   {
-    private readonly MongoRepository.MongoRepository<ArchitectureView> _architectureTable;
+    private readonly MongoRepository.MongoRepository<TEntity> _table;
 
-    private static IPersistance _persistance;
+    private static IPersistance<TEntity> _persistance;
 
-    public Persistance(MongoRepository<ArchitectureView> architectureTable)
+    private Persistance(MongoRepository<TEntity> table)
     {
-      _architectureTable = architectureTable;
+      _table = table;
     }
 
-    public static IPersistance Instance
+    public static IPersistance<TEntity> Instance
     {
       get
       {
         if (_persistance == null)
         {
-          _persistance = new Persistance(new MongoRepository<ArchitectureView>());
+          _persistance = new Persistance<TEntity>(new MongoRepository<TEntity>());
         }
 
         return _persistance;
       }
     }
 
-    public void Add(ArchitectureView architectureView)
+    public void Add(TEntity architectureView)
     {
-      _architectureTable.Add(architectureView);
+      _table.Add(architectureView);
     }
 
-    public void Update(ArchitectureView architecture)
+    public void Update(TEntity architecture)
     {
-      _architectureTable.Update(architecture);
+      _table.Update(architecture);
     }
 
-    public ArchitectureView Get(Guid id)
+    public TEntity Get(string id)
     {
-      return _architectureTable.GetSingle(a => a.AggregateRootId == id);
+      return _table.GetById(id);
     }
 
-    public IEnumerable<ArchitectureView> GetAll()
+    public IEnumerable<TEntity> GetAll()
     {
-      return _architectureTable.AsEnumerable();
+      return _table.AsEnumerable();
     }
   }
 }
