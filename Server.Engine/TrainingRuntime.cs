@@ -32,21 +32,5 @@ namespace Server.Engine
       if (_bus == null) return base.GetEventBus(serviceLocator);
       return _bus;
     }
-
-    protected override void OnStarted(UnityServiceLocator serviceLocator)
-    {
-      //base.OnStarted(serviceLocator);
-
-      //var eventStore = serviceLocator.Resolve<IEventStore>();
-      //var eventBus = serviceLocator.Resolve<IEventBus>();
-      //Assembly assembly = typeof (ICqrsService).Assembly;
-      //var types = from t in assembly.GetTypes()
-      //            where t.IsPublic
-      //                  && typeof (DomainEvent).IsAssignableFrom(t)
-      //            select t;
-      //var events = eventStore.GetEventsByEventTypes(types).ToArray();
-      //if (events.Any())
-      //  eventBus.PublishEvents(events);
-    }
   }
 }
