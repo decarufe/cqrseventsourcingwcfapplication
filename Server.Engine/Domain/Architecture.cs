@@ -4,7 +4,7 @@ using SimpleCqrs.Domain;
 
 namespace Server.Engine.Domain
 {
-  public class Architecture : AggregateRoot
+  public class Architecture : AggregateRoot, ISnapshotOriginator
   {
     private string _name;
 
@@ -47,6 +47,42 @@ namespace Server.Engine.Domain
           NewName = newName
         });
       }
+    }
+
+    public Snapshot GetSnapshot()
+    {
+      return new ArchitectureSnapshot()
+      {
+        AggregateRootId = Id,
+        LastEventSequence = LastEventSequence,
+        Name = _name
+      };
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+      _name = ((ArchitectureSnapshot) snapshot).Name;
+    }
+
+    public bool ShouldTakeSnapshot(Snapshot previousSnapshot)
+    {
+      if (previousSnapshot == null)
+      {
+        if (LastEventSequence > 2)
+        {
+          return true;
+        }
+      }
+      else
+      {
+        return LastEventSequence - previousSnapshot.LastEventSequence > 2;
+      }
+      return false;
+    }
+
+    private class ArchitectureSnapshot : Snapshot
+    {
+      public string Name { get; set; }
     }
   }
 }
