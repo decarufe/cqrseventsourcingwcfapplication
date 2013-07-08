@@ -3,6 +3,7 @@ using Server.Engine.Commands;
 using Server.Engine.Domain;
 using SimpleCqrs.Commanding;
 using SimpleCqrs.Domain;
+using SimpleCqrs.Eventing;
 
 namespace Server.Engine.CommandHandlers
 {
@@ -10,10 +11,12 @@ namespace Server.Engine.CommandHandlers
     IHandleCommands<SetNameCommand>
   {
     private readonly IDomainRepository _repository;
+    private readonly ISnapshotStore _snapshotStore;
 
-    public ArchitectureCommandHandler(IDomainRepository repository)
+    public ArchitectureCommandHandler(IDomainRepository repository, ISnapshotStore snapshotStore)
     {
       _repository = repository;
+      _snapshotStore = snapshotStore;
     }
 
     public void Handle(ICommandHandlingContext<SetNameCommand> handlingContext)

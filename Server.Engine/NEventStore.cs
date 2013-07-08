@@ -68,7 +68,7 @@ namespace Server.Engine
 
     public IEnumerable<DomainEvent> GetEvents(Guid aggregateRootId, int startSequence)
     {
-      var commits = _store.Advanced.GetFrom(aggregateRootId, startSequence, Int32.MaxValue);
+      var commits = _store.Advanced.GetFrom(aggregateRootId, startSequence + 1, Int32.MaxValue);
       var domainEvents = from commit in commits
                          from eventMessage in commit.Events
                          select (DomainEvent) eventMessage.Body;
@@ -129,6 +129,17 @@ namespace Server.Engine
                          select (DomainEvent) eventMessage.Body;
 
       return domainEvents;
+    }
+
+    public Snapshot LoadSnapshot(Guid aggregateRootId)
+    {
+      Snapshot snapshot = _store.Advanced.GetSnapshot(aggregateRootId, Int32.MaxValue);
+      return snapshot;
+    }
+
+    public void TakeSnapshot(Snapshot snapshot)
+    {
+      _store.Advanced.AddSnapshot(snapshot);
     }
   }
 }
