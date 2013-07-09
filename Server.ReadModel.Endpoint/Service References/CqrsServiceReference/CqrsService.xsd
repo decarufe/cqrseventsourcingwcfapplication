@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <xs:schema xmlns:tns="http://tempuri.org/" elementFormDefault="qualified" targetNamespace="http://tempuri.org/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-  <xs:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
-  <xs:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Server.Contracts" />
+  <xs:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Server.Contracts" />
   <xs:element name="SetName">
     <xs:complexType>
       <xs:sequence>
@@ -16,10 +15,49 @@
       <xs:sequence />
     </xs:complexType>
   </xs:element>
-  <xs:element name="GetName">
+  <xs:element name="AddSystem">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q2:guid" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parentSystemName" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="AddSystemResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveSystem">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q3:guid" />
+        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="RemoveSystemResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CommitVersion">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q4:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="CommitVersionResponse">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetName">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q5:guid" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -27,6 +65,20 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element minOccurs="0" name="GetNameResult" nillable="true" type="xs:string" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSystems">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q6:guid" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetSystemsResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q7="http://schemas.datacontract.org/2004/07/Server.Contracts" minOccurs="0" name="GetSystemsResult" nillable="true" type="q7:ArrayOfSystemEntity" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -38,7 +90,7 @@
   <xs:element name="GetListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q3="http://schemas.datacontract.org/2004/07/System.Collections.Generic" minOccurs="0" name="GetListResult" nillable="true" type="q3:ArrayOfKeyValuePairOfguidstring" />
+        <xs:element xmlns:q8="http://schemas.datacontract.org/2004/07/Server.Contracts" minOccurs="0" name="GetListResult" nillable="true" type="q8:ArrayOfDomainModelDto" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -65,7 +117,7 @@
   <xs:element name="PingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q4="http://schemas.datacontract.org/2004/07/Server.Contracts" minOccurs="0" name="PingResult" nillable="true" type="q4:Pong" />
+        <xs:element xmlns:q9="http://schemas.datacontract.org/2004/07/Server.Contracts" minOccurs="0" name="PingResult" nillable="true" type="q9:Pong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

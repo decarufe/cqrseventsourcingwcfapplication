@@ -12,10 +12,22 @@ namespace Server.Contracts
     void SetName(Guid id, string name);
 
     [OperationContract]
+    void AddSystem(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveSystem(Guid id, string name);
+
+    [OperationContract]
+    void CommitVersion(Guid id);
+
+    [OperationContract]
     string GetName(Guid id);
 
     [OperationContract]
-    IEnumerable<KeyValuePair<Guid, string>> GetList();
+    IEnumerable<SystemEntity> GetSystems(Guid id);
+
+    [OperationContract]
+    IEnumerable<DomainModelDto> GetList();
 
     [OperationContract]
     void ReloadFromEvents(Uri uri, DateTime lastEvent);

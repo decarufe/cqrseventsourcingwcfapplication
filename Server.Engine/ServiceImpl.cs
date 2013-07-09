@@ -30,6 +30,21 @@ namespace Server.Engine
       _commandBus.Send(new SetNameCommand(id, name));
     }
 
+    public void AddSystem(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddSystemCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveSystem(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveSystemCommand(id, name));
+    }
+
+    public void CommitVersion(Guid id)
+    {
+      _commandBus.Send(new CommitVersionCommand(id));
+    }
+
     public string GetName(Guid id)
     {
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
@@ -37,10 +52,17 @@ namespace Server.Engine
       return readModelEntity.Name;
     }
 
-    public IEnumerable<KeyValuePair<Guid, string>> GetList()
+    public IEnumerable<SystemEntity> GetSystems(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Systems;
+    }
+
+    public IEnumerable<DomainModelDto> GetList()
     {
       return from a in Persistance<ReadModelEntity>.Instance.GetAll()
-             select new KeyValuePair<Guid, string>(Guid.Parse(a.Id), a.Name);
+             select new DomainModelDto { Name = a.Name, Version = a.Version != null ? a.Version.ToString() : string.Empty, DomainModelId = a.DomainModelId, ReadModelId = a.Id };
     }
 
     public void ReloadFromEvents(Uri uri, DateTime lastEvent)

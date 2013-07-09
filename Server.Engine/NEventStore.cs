@@ -6,6 +6,7 @@ using EventStore;
 using EventStore.Serialization;
 using MongoDB.Bson.Serialization;
 using Server.Contracts;
+using Server.Engine.Domain;
 using SimpleCqrs.Eventing;
 
 namespace Server.Engine
@@ -32,6 +33,9 @@ namespace Server.Engine
       //   BsonClassMap.RegisterClassMap<DomainModelCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
       //   ...
+      BsonClassMap.RegisterClassMap<DomainModel>();
+      BsonClassMap.RegisterClassMap<DomainModel.State>();
+      BsonClassMap.RegisterClassMap<SystemGroup>();
 
       Assembly assembly = typeof (ICqrsService).Assembly;
       var types = from t in assembly.GetTypes()

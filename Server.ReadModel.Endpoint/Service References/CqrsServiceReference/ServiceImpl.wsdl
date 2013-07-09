@@ -4,8 +4,7 @@
     <xsd:schema targetNamespace="http://tempuri.org/Imports">
       <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
       <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
-      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/System.Collections.Generic" />
-      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/Server.Contracts" />
+      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Server.Contracts" />
     </xsd:schema>
   </wsdl:types>
   <wsdl:message name="ICqrsService_SetName_InputMessage">
@@ -14,11 +13,35 @@
   <wsdl:message name="ICqrsService_SetName_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetNameResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_AddSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSystem" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystem" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_CommitVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:CommitVersion" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_CommitVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CommitVersionResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_GetName_InputMessage">
     <wsdl:part name="parameters" element="tns:GetName" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetName_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSystems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystems" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSystems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemsResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetList" />
@@ -43,9 +66,25 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/SetName" message="tns:ICqrsService_SetName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/SetNameResponse" message="tns:ICqrsService_SetName_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddSystem" message="tns:ICqrsService_AddSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddSystemResponse" message="tns:ICqrsService_AddSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystem" message="tns:ICqrsService_RemoveSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystemResponse" message="tns:ICqrsService_RemoveSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CommitVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/CommitVersion" message="tns:ICqrsService_CommitVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/CommitVersionResponse" message="tns:ICqrsService_CommitVersion_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetName">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetName" message="tns:ICqrsService_GetName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetNameResponse" message="tns:ICqrsService_GetName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystems">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetSystems" message="tns:ICqrsService_GetSystems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetSystemsResponse" message="tns:ICqrsService_GetSystems_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetList">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetList" message="tns:ICqrsService_GetList_InputMessage" />
@@ -71,8 +110,44 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddSystem">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddSystem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSystem">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveSystem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommitVersion">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/CommitVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetName">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/GetName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystems">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetSystems" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
