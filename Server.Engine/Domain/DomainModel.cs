@@ -1,14 +1,14 @@
 ﻿using System;
 using System.IO;
+using JetBrains.Annotations;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using Server.Contracts.Events;
 using SimpleCqrs.Domain;
-using SimpleCqrs.Eventing;
 
 namespace Server.Engine.Domain
 {
-  public class Architecture : AggregateRoot, ISnapshotOriginator
+  public class DomainModel : AggregateRoot, ISnapshotOriginator
   {
     private State _state = new State();
     private long _appliedEventsSize;
@@ -21,13 +21,13 @@ namespace Server.Engine.Domain
       public string Name { get; set; }
     }
 
-    public Architecture()
+    public DomainModel()
     {
     }
 
-    private Architecture(Guid id, string name)
+    private DomainModel(Guid id, string name)
     {
-      CreateArchitecture(id);
+      CreateDomainModel(id);
       ChangeName(name);
     }
 
@@ -47,23 +47,25 @@ namespace Server.Engine.Domain
       return computeSize;
     }
 
-    public static Architecture Create(Guid id, string name)
+    public static DomainModel Create(Guid id, string name)
     {
-      return new Architecture(id, name);
+      return new DomainModel(id, name);
     }
 
-    private void CreateArchitecture(Guid id)
+    private void CreateDomainModel(Guid id)
     {
-      Apply(new ArchitectureCreatedEvent() {AggregateRootId = id});
+      Apply(new DomainModelCreatedEvent {AggregateRootId = id});
     }
 
-    public void OnArchitectureCreated(ArchitectureCreatedEvent architectureCreatedEvent)
+    [UsedImplicitly]
+    public void OnDomainModelCreated(DomainModelCreatedEvent domainModelCreatedEvent)
     {
-      Id = architectureCreatedEvent.AggregateRootId;
-      _appliedEventsSize += ComputeSize(architectureCreatedEvent);
+      Id = domainModelCreatedEvent.AggregateRootId;
+      _appliedEventsSize += ComputeSize(domainModelCreatedEvent);
       _shouldTakeSnapshot = _appliedEventsSize > ComputeSize(GetSnapshot());
     }
 
+    [UsedImplicitly]
     public void OnNameChanged(NameChangedEvent nameChangedEvent)
     {
       _state.Name = nameChangedEvent.NewName;

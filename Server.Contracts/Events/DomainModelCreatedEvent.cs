@@ -3,7 +3,7 @@ using SimpleCqrs.Eventing;
 
 namespace Server.Contracts.Events
 {
-  public class ArchitectureCreatedEvent : DomainEvent
+  public class DomainModelCreatedEvent : DomainEvent
   {
   }
 }

@@ -51,10 +51,11 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchitectureView.cs" />
-    <Compile Include="Events\ArchitectureCreatedEvent.cs" />
+    <Compile Include="Events\PingCalled.cs" />
+    <Compile Include="Pong.cs" />
+    <Compile Include="ReadModelEntity.cs" />
+    <Compile Include="Events\DomainModelCreatedEvent.cs" />
     <Compile Include="Events\NameChangedEvent.cs" />
-    <Compile Include="IPersistance.cs" />
     <Compile Include="ICqrsService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModelInfo.cs" />

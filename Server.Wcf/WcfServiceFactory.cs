@@ -1,13 +1,10 @@
 using System;
 using System.ServiceModel;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.Practices.Unity;
 using Rhino.ServiceBus;
 using Rhino.ServiceBus.Hosting;
 using Rhino.ServiceBus.Msmq;
 using Server.Contracts;
-using Server.Contracts.Events;
 using Server.Engine;
 using SimpleCqrs.Rhino.ServiceBus;
 using Unity.Wcf;
@@ -38,6 +35,7 @@ namespace Server.Wcf
     protected override void ConfigureContainer(IUnityContainer container)
     {
       container.RegisterType<ICqrsService, ServiceImpl>();
+      container.RegisterInstance((IServiceBus)_host.Bus);
     }
   }
 }

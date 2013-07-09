@@ -16,5 +16,11 @@ namespace Server.Contracts
 
     [OperationContract]
     IEnumerable<KeyValuePair<Guid, string>> GetList();
+
+    [OperationContract]
+    void ReloadFromEvents(Uri uri, DateTime lastEvent);
+
+    [OperationContract]
+    Pong Ping(Uri sender);
   }
 }

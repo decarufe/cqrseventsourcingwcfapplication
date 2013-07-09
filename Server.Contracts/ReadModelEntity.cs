@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Runtime.Serialization;
-using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoRepository;
 
 namespace Server.Contracts
 {
   [DataContract]
-  public class ArchitectureView : IEntity
+  public class ReadModelEntity : IEntity
   {
     public string Id { get; set; }
     public int LastEventSequence { get; set; }

@@ -1,24 +1,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Practices.Unity;
-using MongoDB.Bson;
+using System.Reflection;
+using Rhino.ServiceBus;
 using Server.Contracts;
+using Server.Contracts.Events;
 using Server.Engine.Commands;
-using Server.ReadModels;
 using SimpleCqrs.Commanding;
-using Rhino.ServiceBus.Hosting;
-using Rhino.ServiceBus.Msmq;
+using SimpleCqrs.Eventing;
+using Utils;
 
 namespace Server.Engine
 {
   public class ServiceImpl : ICqrsService
   {
+    private readonly IServiceBus _serviceBus;
     private readonly ICommandBus _commandBus;
+    private readonly IEventStore _eventStore;
 
-    public ServiceImpl(IUnityContainer container)
+    public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus)
     {
-      _commandBus = container.Resolve<ICommandBus>();
+      _commandBus = commandBus;
+      _eventStore = eventStore;
+      _serviceBus = serviceBus;
     }
 
     public void SetName(Guid id, string name)
@@ -28,15 +32,42 @@ namespace Server.Engine
 
     public string GetName(Guid id)
     {
-      ArchitectureView architectureView = Persistance<ArchitectureView>.Instance.Get(id.ToString());
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
 
-      return architectureView.Name;
+      return readModelEntity.Name;
     }
 
     public IEnumerable<KeyValuePair<Guid, string>> GetList()
     {
-      return from a in Persistance<ArchitectureView>.Instance.GetAll()
-               select new KeyValuePair<Guid, string>(Guid.Parse(a.Id), a.Name);
+      return from a in Persistance<ReadModelEntity>.Instance.GetAll()
+             select new KeyValuePair<Guid, string>(Guid.Parse(a.Id), a.Name);
+    }
+
+    public void ReloadFromEvents(Uri uri, DateTime lastEvent)
+    {
+      Assembly assembly = typeof (ICqrsService).Assembly;
+      var types = from t in assembly.GetTypes()
+                  where t.IsPublic
+                        && typeof (DomainEvent).IsAssignableFrom(t)
+                  select t;
+
+      IEnumerable<DomainEvent> events = _eventStore.GetEventsByEventTypes(types, lastEvent, DateTime.MaxValue);
+
+      var endpoint = new Endpoint
+      {
+        Uri = uri
+      };
+
+      DomainEvent[] messages = events.Where(e => e.EventDate > lastEvent).ToArray();
+// ReSharper disable CoVariantArrayConversion
+      if (messages.Any()) _serviceBus.Send(endpoint, messages);
+// ReSharper restore CoVariantArrayConversion
+    }
+
+    public Pong Ping(Uri uri)
+    {
+      _serviceBus.Send(new Endpoint {Uri = uri}, new PingCalled());
+      return new Pong();
     }
   }
 }

@@ -1,8 +1,5 @@
 using System;
 using System.Linq;
-using System.Reflection;
-using Rhino.ServiceBus;
-using Server.Contracts;
 using SimpleCqrs;
 using SimpleCqrs.Domain;
 using SimpleCqrs.Eventing;

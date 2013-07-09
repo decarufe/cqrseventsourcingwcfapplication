@@ -86,6 +86,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -94,12 +95,22 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ArchitectureEventHandler.cs" />
-    <Compile Include="ArchitectureRepository.cs" />
+    <Compile Include="ReadModelEventHandler.cs" />
+    <Compile Include="ReadModelRepository.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReadModelBootStrapper.cs" />
     <Compile Include="ReadModelEventBus.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Service References\CqrsServiceReference\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
@@ -110,10 +121,6 @@
       <Project>{eac90361-73e0-4e01-9699-8d6fa0ca5f83}</Project>
       <Name>Server.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server.ReadModels\Server.ReadModels.csproj">
-      <Project>{acf583ea-83fc-4445-8ca4-7a828d60da0d}</Project>
-      <Name>Server.ReadModels</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
       <Name>Utils</Name>
@@ -123,6 +130,53 @@
     <None Include="app.config" />
     <None Include="Documentation.chm" />
     <None Include="packages.config" />
+    <None Include="Service References\CqrsServiceReference\CqrsService.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CqrsServiceReference\CqrsService1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CqrsServiceReference\CqrsService2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CqrsServiceReference\CqrsService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.KeyValuePairOfguidstring.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Pong.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\ServiceImpl.wsdl" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\CqrsServiceReference\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CqrsServiceReference\CqrsService.disco" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CqrsServiceReference\configuration91.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CqrsServiceReference\configuration.svcinfo" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CqrsServiceReference\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />

@@ -1,25 +1,22 @@
-﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using MongoDB.Bson;
 using MongoRepository;
-using Server.Contracts;
 
-namespace Server.ReadModels
+namespace Utils
 {
-  public class Persistance<TEntity> : IPersistance<TEntity>
+  public class Persistance<TEntity>
     where TEntity : IEntity
   {
     private readonly MongoRepository.MongoRepository<TEntity> _table;
 
-    private static IPersistance<TEntity> _persistance;
+    private static Persistance<TEntity> _persistance;
 
     private Persistance(MongoRepository<TEntity> table)
     {
       _table = table;
     }
 
-    public static IPersistance<TEntity> Instance
+    public static Persistance<TEntity> Instance
     {
       get
       {
@@ -32,14 +29,14 @@ namespace Server.ReadModels
       }
     }
 
-    public void Add(TEntity architectureView)
+    public void Add(TEntity readModelEntity)
     {
-      _table.Add(architectureView);
+      _table.Add(readModelEntity);
     }
 
-    public void Update(TEntity architecture)
+    public void Update(TEntity readModelEntity)
     {
-      _table.Update(architecture);
+      _table.Update(readModelEntity);
     }
 
     public TEntity Get(string id)
@@ -49,7 +46,7 @@ namespace Server.ReadModels
 
     public IEnumerable<TEntity> GetAll()
     {
-      return _table.AsEnumerable();
+      return Enumerable.AsEnumerable<TEntity>(_table);
     }
   }
 }

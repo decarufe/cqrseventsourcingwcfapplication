@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
+﻿using JetBrains.Annotations;
 using Rhino.ServiceBus.Unity;
-using Server.Contracts;
 
 namespace Server.ReadModel.Endpoint
 {
+  [UsedImplicitly]
   public class ReadModelBootStrapper : UnityBootStrapper
   {
   }
