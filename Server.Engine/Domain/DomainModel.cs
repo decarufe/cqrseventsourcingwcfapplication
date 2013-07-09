@@ -12,16 +12,24 @@ namespace Server.Engine.Domain
 {
   public class DomainModel : AggregateRoot, ISnapshotOriginator
   {
-    private State _state = new State { Systems = new List<SystemGroup>()};
+    private State _state = new State
+    {
+      Systems = new List<SystemGroup>(),
+      SystemsAddedSinceLastCommit = new List<SystemGroup>(),
+      LastCommitedVersion = new Version(0,0),
+    };
     private long _appliedEventsSize;
     private bool _shouldTakeSnapshot;
     private long _lastSnapshotSize;
     private const long Ratio = 2;
 
-    private class State : Snapshot
+    public class State : Snapshot
     {
       public string Name { get; set; }
       public List<SystemGroup> Systems { get; set; }
+      public List<SystemGroup> SystemsAddedSinceLastCommit { get; set; }
+      public Version LastCommitedVersion { get; set; }
+      public bool MajorChange { get; set; }
     }
 
     public DomainModel()
@@ -32,6 +40,25 @@ namespace Server.Engine.Domain
     {
       CreateDomainModel(id);
       ChangeName(name);
+    }
+
+    #region Snapshot
+    public Snapshot GetSnapshot()
+    {
+      _state.AggregateRootId = Id;
+      _state.LastEventSequence = LastEventSequence;
+      return _state;
+    }
+
+    public void LoadSnapshot(Snapshot snapshot)
+    {
+      _lastSnapshotSize = ComputeSize(snapshot);
+      _state = ((State)snapshot);
+    }
+
+    public bool ShouldTakeSnapshot(Snapshot previousSnapshot)
+    {
+      return _shouldTakeSnapshot;
     }
 
     private long ComputeSize(object obj)
@@ -49,6 +76,7 @@ namespace Server.Engine.Domain
 
       return computeSize;
     }
+    #endregion
 
     public static DomainModel Create(Guid id, string name)
     {
@@ -109,31 +137,90 @@ namespace Server.Engine.Domain
     [UsedImplicitly]
     private void OnSystemAdded(SystemAddedEvent systemAddedEvent)
     {
-      _state.Systems.Add(new SystemGroup
+      var newSystem = new SystemGroup
       {
         Name = systemAddedEvent.Name,
         ParentSystemName = systemAddedEvent.ParentSystemName,
-      });
+      };
+      _state.Systems.Add(newSystem);
+      _state.SystemsAddedSinceLastCommit.Add(newSystem);
       _appliedEventsSize += ComputeSize(systemAddedEvent);
       _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
     }
 
-    public Snapshot GetSnapshot()
+    public void RemoveSystem(string systemName)
     {
-      _state.AggregateRootId = Id;
-      _state.LastEventSequence = LastEventSequence;
-      return _state;
+      if (_state.Systems.All(system => system.Name != systemName))
+      {
+        throw new ArgumentException(String.Format("The System named {0} does not exists.", systemName));
+      }
+
+      IEnumerable<string> systemsToRemove = ListSystemAndChildren(systemName);
+      foreach (var systemNameToRemove in systemsToRemove)
+      {
+        Apply(new SystemRemovedEvent
+        {
+          Name = systemNameToRemove,
+        });
+      }
+
     }
 
-    public void LoadSnapshot(Snapshot snapshot)
+    private IEnumerable<string> ListSystemAndChildren(string systemName)
     {
-      _lastSnapshotSize = ComputeSize(snapshot);
-      _state = ((State)snapshot);
+      var list = new List<string>();
+      foreach (var systemGroup in _state.Systems.Where(system => system.ParentSystemName == systemName))
+      {
+        list.AddRange(ListSystemAndChildren(systemGroup.Name));
+      }
+      list.Add(systemName);
+
+      return list;
     }
 
-    public bool ShouldTakeSnapshot(Snapshot previousSnapshot)
+    [UsedImplicitly]
+    private void OnSystemRemoved(SystemRemovedEvent systemRemovedEvent)
     {
-      return _shouldTakeSnapshot;
+      var systemToRemove = _state.Systems.FirstOrDefault(system => system.Name == systemRemovedEvent.Name);
+      if (systemToRemove != null)
+      {
+        _state.Systems.Remove(systemToRemove);
+
+        var newlyAddedSystemGroup =
+          _state.SystemsAddedSinceLastCommit.FirstOrDefault(system => system.Name == systemToRemove.Name);
+        if (newlyAddedSystemGroup != null)
+        {
+          _state.SystemsAddedSinceLastCommit.Remove(newlyAddedSystemGroup);
+        }
+        else
+        {
+          _state.MajorChange = true;
+        }
+      }
+
+      _appliedEventsSize += ComputeSize(systemRemovedEvent);
+      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+    }
+
+    public void CommitVersion()
+    {
+      var newVersion = new VersionCommitedEvent
+      {
+        NewVersion = _state.MajorChange
+                       ? new Version(_state.LastCommitedVersion.Major + 1, 0).ToString()
+                       : new Version(_state.LastCommitedVersion.Major,
+                                     _state.LastCommitedVersion.Minor + 1).ToString()
+      };
+      Apply(newVersion);
+    }
+
+    [UsedImplicitly]
+    private void OnVersionCommited(VersionCommitedEvent versionCommitedEvent)
+    {
+      _state.LastCommitedVersion = Version.Parse(versionCommitedEvent.NewVersion);
+      _state.SystemsAddedSinceLastCommit.Clear();
+      _appliedEventsSize += ComputeSize(versionCommitedEvent);
+      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
     }
   }
 }
