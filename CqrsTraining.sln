@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Engine", "Server.Eng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Contracts", "Server.Contracts\Server.Contracts.csproj", "{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.ReadModels", "Server.ReadModels\Server.ReadModels.csproj", "{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42F658E6-3639-42A5-890A-FF19D62B6644}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -17,6 +15,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{42F658
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.ReadModel.Endpoint", "Server.ReadModel.Endpoint\Server.ReadModel.Endpoint.csproj", "{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23CA0520-53C2-4086-80E6-1593EA662F09} = {23CA0520-53C2-4086-80E6-1593EA662F09}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "Utils\Utils.csproj", "{471C2A0B-8862-41B1-A5C3-EA7238E58020}"
 EndProject
@@ -38,10 +39,6 @@ Global
 		{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACF583EA-83FC-4445-8CA4-7A828D60DA0D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}.Release|Any CPU.ActiveCfg = Release|Any CPU

@@ -1,14 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using EventStore;
-using EventStore.Dispatcher;
 using EventStore.Serialization;
 using MongoDB.Bson.Serialization;
 using Server.Contracts;
-using Server.Contracts.Events;
 using SimpleCqrs.Eventing;
 
 namespace Server.Engine
@@ -32,7 +29,7 @@ namespace Server.Engine
     private static void RegisterMapping()
     {
       // The following code is equivalent to 
-      //   BsonClassMap.RegisterClassMap<ArchitectureCreatedEvent>();
+      //   BsonClassMap.RegisterClassMap<DomainModelCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
       //   ...
 

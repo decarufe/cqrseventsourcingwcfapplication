@@ -87,9 +87,9 @@
     <Reference Include="System.Messaging" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CommandHandlers\ArchitectureCommandHandler.cs" />
+    <Compile Include="CommandHandlers\DomainModelCommandHandler.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
-    <Compile Include="Domain\Architecture.cs" />
+    <Compile Include="Domain\DomainModel.cs" />
     <Compile Include="NEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -105,9 +105,9 @@
       <Project>{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}</Project>
       <Name>Server.Contracts</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Server.ReadModels\Server.ReadModels.csproj">
-      <Project>{acf583ea-83fc-4445-8ca4-7a828d60da0d}</Project>
-      <Name>Server.ReadModels</Name>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
+      <Name>Utils</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

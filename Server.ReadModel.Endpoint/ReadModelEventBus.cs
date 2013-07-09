@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using JetBrains.Annotations;
 using Rhino.ServiceBus;
 using SimpleCqrs.Eventing;
 
 namespace Server.ReadModel.Endpoint
 {
+  [UsedImplicitly]
   public class ReadModelEventBus : IEventBus
   {
     private readonly IServiceBus _serviceBus;

@@ -86,7 +86,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Service1.svc" />
+    <Content Include="CqrsService.svc" />
     <Content Include="Unity.Wcf.README.txt" />
     <Content Include="Web.config" />
   </ItemGroup>

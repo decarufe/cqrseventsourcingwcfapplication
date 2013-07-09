@@ -1,30 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.ServiceModel;
-using System.Text;
 using System.Threading;
-using Rhino.ServiceBus;
+using JetBrains.Annotations;
 using Rhino.ServiceBus.Hosting;
 using Rhino.ServiceBus.Msmq;
 using Server.Contracts;
 using Server.Engine;
-using Microsoft.Practices.Unity;
-using Server.ReadModels;
-using SimpleCqrs.Eventing;
-using SimpleCqrs.Rhino.ServiceBus;
+using Server.ReadModel.Endpoint.CqrsServiceReference;
 using Utils;
 
 namespace Server.ReadModel.Endpoint
 {
+  [UsedImplicitly]
   class Program
   {
-    static void Main(string[] args)
+    static void Main([CanBeNull] string[] args)
     {
-      Thread.Sleep(100);
+      PrepareQueues.Prepare(Resource.MsmqEndpoint, QueueType.Standard);
 
-      PrepareQueues.Prepare("msmq://localhost/CQRS.ReadModel", QueueType.Standard);
+      try
+      {
+        var cqrsServiceClient = new CqrsServiceClient();
+        cqrsServiceClient.Ping(new Uri(Resource.MsmqEndpoint));
+      }
+      catch (Exception e)
+      {
+        throw new InvalidOperationException("Server is not responding", e);
+      }
 
       var host = new DefaultHost();
       host.Start<ReadModelBootStrapper>();
@@ -32,41 +34,25 @@ namespace Server.ReadModel.Endpoint
       var runtime = new TrainingRuntime();
       runtime.Start();
 
-      var container = runtime.ServiceLocator.Container;
-
-      RebuildFromEvents(container);
+      RebuildFromEvents();
 
       Console.WriteLine("Waiting for messages");
       Console.ReadLine();
     }
 
-    private static void RebuildFromEvents(IUnityContainer container)
+    private static void RebuildFromEvents()
     {
-      var eventStore = container.Resolve<IEventStore>();
-      var eventBus = container.Resolve<IEventBus>();
+      ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ReadModelEntity).FullName);
+      DateTime lastEvent = readModelInfo == null ? DateTime.MinValue : readModelInfo.LastEvent;
 
-      Assembly assembly = typeof (ICqrsService).Assembly;
-      var types = from t in assembly.GetTypes()
-                  where t.IsPublic
-                        && typeof (DomainEvent).IsAssignableFrom(t)
-                  select t;
-
-      ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ArchitectureView).FullName);
-
-      IEnumerable<DomainEvent> events;
-      DateTime lastEvent;
-      if (readModelInfo == null)
+      Console.Write("Connecting to server...");
+      using (var cqrsServiceClient = new CqrsServiceClient())
       {
-        events = eventStore.GetEventsByEventTypes(types);
-        lastEvent = DateTime.MinValue;
+        Console.WriteLine("Connnected.");
+        Console.WriteLine("Reloading events...");
+        cqrsServiceClient.ReloadFromEvents(new Uri(Resource.MsmqEndpoint), lastEvent.ToUniversalTime());
+        Console.WriteLine("Reloading events completed.");
       }
-      else
-      {
-        events = eventStore.GetEventsByEventTypes(types, readModelInfo.LastEvent, DateTime.MaxValue);
-        lastEvent = readModelInfo.LastEvent;
-      }
-
-      eventBus.PublishEvents(events.Where(e => e.EventDate > lastEvent));
     }
   }
 }
