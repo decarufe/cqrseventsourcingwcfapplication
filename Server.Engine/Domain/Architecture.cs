@@ -10,10 +10,11 @@ namespace Server.Engine.Domain
 {
   public class Architecture : AggregateRoot, ISnapshotOriginator
   {
-    private readonly State _state = new State();
+    private State _state = new State();
     private long _appliedEventsSize;
-    private bool _takeSnapshot;
+    private bool _shouldTakeSnapshot;
     private long _lastSnapshotSize;
+    private const long Ratio = 2;
 
     private class State : Snapshot
     {
@@ -60,14 +61,14 @@ namespace Server.Engine.Domain
     {
       Id = architectureCreatedEvent.AggregateRootId;
       _appliedEventsSize += ComputeSize(architectureCreatedEvent);
-      _takeSnapshot = _appliedEventsSize > ComputeSize(GetSnapshot());
+      _shouldTakeSnapshot = _appliedEventsSize > ComputeSize(GetSnapshot());
     }
 
     public void OnNameChanged(NameChangedEvent nameChangedEvent)
     {
       _state.Name = nameChangedEvent.NewName;
       _appliedEventsSize += ComputeSize(nameChangedEvent);
-      _takeSnapshot = _appliedEventsSize > _lastSnapshotSize;
+      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
     }
 
     public void ChangeName(string newName)
@@ -83,22 +84,20 @@ namespace Server.Engine.Domain
 
     public Snapshot GetSnapshot()
     {
-      var architectureSnapshot = new State()
-      {
-        AggregateRootId = Id, LastEventSequence = LastEventSequence, Name = _state.Name
-      };
-      return architectureSnapshot;
+      _state.AggregateRootId = Id;
+      _state.LastEventSequence = LastEventSequence;
+      return _state;
     }
 
     public void LoadSnapshot(Snapshot snapshot)
     {
       _lastSnapshotSize = ComputeSize(snapshot);
-      _state.Name = ((State)snapshot).Name;
+      _state = ((State)snapshot);
     }
 
     public bool ShouldTakeSnapshot(Snapshot previousSnapshot)
     {
-      return _takeSnapshot;
+      return _shouldTakeSnapshot;
     }
   }
 }
