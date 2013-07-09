@@ -26,8 +26,6 @@ namespace Server.Engine
         .UsingMongoPersistence("EventStore", new DocumentObjectSerializer())
         .InitializeStorageEngine()
         .UsingBsonSerialization()
-        .UsingAsynchronousDispatchScheduler()
-        .DispatchTo(new DelegateMessageDispatcher(Dispatch))
         .Build();
     }
 
@@ -36,6 +34,7 @@ namespace Server.Engine
       // The following code is equivalent to 
       //   BsonClassMap.RegisterClassMap<ArchitectureCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
+      //   ...
 
       Assembly assembly = typeof (ICqrsService).Assembly;
       var types = from t in assembly.GetTypes()
@@ -56,14 +55,6 @@ namespace Server.Engine
       }
 
       // End of mapping
-    }
-
-    private void Dispatch(Commit commit)
-    {
-      foreach (var eventMessage in commit.Events)
-      {
-        Debug.WriteLine("Async: " + eventMessage.Body);
-      }
     }
 
     public IEnumerable<DomainEvent> GetEvents(Guid aggregateRootId, int startSequence)
