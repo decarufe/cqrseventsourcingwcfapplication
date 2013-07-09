@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using JetBrains.Annotations;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
@@ -10,7 +12,7 @@ namespace Server.Engine.Domain
 {
   public class DomainModel : AggregateRoot, ISnapshotOriginator
   {
-    private State _state = new State();
+    private State _state = new State { Systems = new List<SystemGroup>()};
     private long _appliedEventsSize;
     private bool _shouldTakeSnapshot;
     private long _lastSnapshotSize;
@@ -19,6 +21,7 @@ namespace Server.Engine.Domain
     private class State : Snapshot
     {
       public string Name { get; set; }
+      public List<SystemGroup> Systems { get; set; }
     }
 
     public DomainModel()
@@ -82,6 +85,37 @@ namespace Server.Engine.Domain
           NewName = newName
         });
       }
+    }
+
+    public void AddSystem(string systemName, string parentSystemName)
+    {
+      if (_state.Systems.Any(system => system.Name == systemName))
+      {
+        throw new ArgumentException(String.Format("A System with the named {0} already exists.", systemName));
+      }
+      if (!string.IsNullOrEmpty(parentSystemName)
+          && _state.Systems.All(system => system.Name != parentSystemName))
+      {
+        throw new ArgumentException(String.Format("Parent System named {0} does not exist.", parentSystemName));
+      }
+
+      Apply(new SystemAddedEvent
+      {
+        Name = systemName,
+        ParentSystemName = parentSystemName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnSystemAdded(SystemAddedEvent systemAddedEvent)
+    {
+      _state.Systems.Add(new SystemGroup
+      {
+        Name = systemAddedEvent.Name,
+        ParentSystemName = systemAddedEvent.ParentSystemName,
+      });
+      _appliedEventsSize += ComputeSize(systemAddedEvent);
+      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
     }
 
     public Snapshot GetSnapshot()
