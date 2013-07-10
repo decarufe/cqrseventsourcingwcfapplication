@@ -98,7 +98,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ServiceImpl.cs" />
-    <Compile Include="TrainingRuntime.cs" />
+    <Compile Include="DomainModelRuntime.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">

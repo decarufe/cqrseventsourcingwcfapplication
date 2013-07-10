@@ -7,19 +7,19 @@ using UnityServiceLocator = SimpleCqrs.Unity.UnityServiceLocator;
 
 namespace Server.Engine
 {
-  public class TrainingRuntime : SimpleCqrsRuntime<UnityServiceLocator>
+  public class DomainModelRuntime : SimpleCqrsRuntime<UnityServiceLocator>
   {
     private readonly IEventBus _bus;
     private readonly NEventStore _eventStore;
     private NSnapshotStore _snapshotStore;
 
-    public TrainingRuntime()
+    public DomainModelRuntime()
     {
       _eventStore = new NEventStore();
       _snapshotStore = new NSnapshotStore(_eventStore);
     }
 
-    public TrainingRuntime(IEventBus bus) : this()
+    public DomainModelRuntime(IEventBus bus) : this()
     {
       _bus = bus;
     }
