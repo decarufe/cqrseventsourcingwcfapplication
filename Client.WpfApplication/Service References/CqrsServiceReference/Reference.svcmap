@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="31e7d433-578e-4d29-ad83-63c6ff5fe486" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>true</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:11998/CqrsService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="CqrsService.xsd" MetadataType="Schema" ID="c0285d1e-d48c-4dfb-9487-0d34ba30d256" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CqrsService.disco" MetadataType="Disco" ID="a89e438e-a4f1-4231-b17a-0ac11f4f0c72" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?disco" />
+    <MetadataFile FileName="ServiceImpl.wsdl" MetadataType="Wsdl" ID="fc2a4bd8-39a1-422b-8a46-5dc31a9d4785" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?wsdl" />
+    <MetadataFile FileName="CqrsService1.xsd" MetadataType="Schema" ID="479b24d1-9662-4e11-a1df-eef3e2dac945" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CqrsService2.xsd" MetadataType="Schema" ID="38da2451-bd75-4d4b-96cb-5b90eca1685c" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd2" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>
