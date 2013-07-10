@@ -16,7 +16,7 @@ namespace Server.Engine.Domain
     private long _lastSnapshotSize;
     private const long Ratio = 2;
 
-    private class State : Snapshot
+    public class State : Snapshot
     {
       public string Name { get; set; }
     }

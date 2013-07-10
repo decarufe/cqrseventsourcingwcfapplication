@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
 using Rhino.ServiceBus;
 using Server.Contracts;
 using Server.Contracts.Events;
@@ -37,10 +38,9 @@ namespace Server.Engine
       return readModelEntity.Name;
     }
 
-    public IEnumerable<KeyValuePair<Guid, string>> GetList()
+    public IEnumerable<ReadModelEntity> GetList()
     {
-      return from a in Persistance<ReadModelEntity>.Instance.GetAll()
-             select new KeyValuePair<Guid, string>(Guid.Parse(a.Id), a.Name);
+      return Persistance<ReadModelEntity>.Instance.GetAll();  
     }
 
     public void ReloadFromEvents(Uri uri, DateTime lastEvent)

@@ -15,7 +15,7 @@ namespace Server.Contracts
     string GetName(Guid id);
 
     [OperationContract]
-    IEnumerable<KeyValuePair<Guid, string>> GetList();
+    IEnumerable<ReadModelEntity> GetList();
 
     [OperationContract]
     void ReloadFromEvents(Uri uri, DateTime lastEvent);

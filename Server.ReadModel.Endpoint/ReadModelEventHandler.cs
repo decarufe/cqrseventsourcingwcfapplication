@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using JetBrains.Annotations;
 using Rhino.ServiceBus;
 using Server.Contracts;
@@ -14,8 +15,11 @@ namespace Server.ReadModel.Endpoint
     ConsumerOf<NameChangedEvent>,
     ConsumerOf<PingCalled>
   {
-    public ReadModelEventHandler()
+    private readonly IServiceBus _serviceBus;
+
+    public ReadModelEventHandler(IServiceBus serviceBus)
     {
+      _serviceBus = serviceBus;
       UpdateLastEvent(null);
     }
 
@@ -33,6 +37,7 @@ namespace Server.ReadModel.Endpoint
 
     public void Consume(NameChangedEvent message)
     {
+      //Thread.Sleep(1000);
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
@@ -42,7 +47,7 @@ namespace Server.ReadModel.Endpoint
       Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.NewName);
     }
 
-    private static void UpdateLastEvent(DomainEvent message)
+    private void UpdateLastEvent(DomainEvent message)
     {
       ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ReadModelEntity).FullName);
       if (message == null)
@@ -60,6 +65,7 @@ namespace Server.ReadModel.Endpoint
       {
         readModelInfo.LastEvent = message.EventDate.ToUniversalTime();
         Persistance<ReadModelInfo>.Instance.Update(readModelInfo);
+        _serviceBus.Notify(new EntityChangedMessage() { Id = message.AggregateRootId });
       }
     }
 
