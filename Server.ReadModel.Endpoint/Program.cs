@@ -31,7 +31,7 @@ namespace Server.ReadModel.Endpoint
       var host = new DefaultHost();
       host.Start<ReadModelBootStrapper>();
 
-      var runtime = new TrainingRuntime();
+      var runtime = new DomainModelRuntime();
       runtime.Start();
 
       RebuildFromEvents();
