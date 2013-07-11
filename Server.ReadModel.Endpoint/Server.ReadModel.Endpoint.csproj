@@ -139,7 +139,16 @@
     <None Include="Service References\CqrsServiceReference\CqrsService2.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\CqrsServiceReference\CqrsService3.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Executable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Node.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Pong.datasource">

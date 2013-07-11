@@ -101,4 +101,16 @@
   <data name="MsmqEndpoint" xml:space="preserve">
     <value>msmq://localhost/CQRS.ReadModel</value>
   </data>
+  <data name="StringFormat_Var0:_Var1" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="StringFormat_Var0__Var1__Var2" xml:space="preserve">
+    <value>{0}: {1}, {2}</value>
+  </data>
+  <data name="Pong" xml:space="preserve">
+    <value>Pong</value>
+  </data>
+  <data name="StringFormat_Var0__Var1__Var2__Var3" xml:space="preserve">
+    <value>{0}: {1}, {2}, {3}</value>
+  </data>
 </root>

@@ -35,7 +35,11 @@ namespace Server.Engine
       //   ...
       BsonClassMap.RegisterClassMap<DomainModel>();
       BsonClassMap.RegisterClassMap<DomainModel.State>();
+      BsonClassMap.RegisterClassMap<SystemElement>();
       BsonClassMap.RegisterClassMap<SystemGroup>();
+      BsonClassMap.RegisterClassMap<Node>();
+      BsonClassMap.RegisterClassMap<Executable>();
+      BsonClassMap.RegisterClassMap<ExecutableAssignation>();
 
       Assembly assembly = typeof (ICqrsService).Assembly;
       var types = from t in assembly.GetTypes()

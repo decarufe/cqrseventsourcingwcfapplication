@@ -195,4 +195,19 @@
   <data name="EnterProductNamePropmt" xml:space="preserve">
     <value>Enter Product Name: </value>
   </data>
+  <data name="ArchitectureNameDisplayItem" xml:space="preserve">
+    <value>  - {0}</value>
+  </data>
+  <data name="System1_3Exec1" xml:space="preserve">
+    <value>s1.3 executable1</value>
+  </data>
+  <data name="System1_3Exec2" xml:space="preserve">
+    <value>s1.3 executable2</value>
+  </data>
+  <data name="System1_3_1" xml:space="preserve">
+    <value>s1.3.1</value>
+  </data>
+  <data name="System1_3_2" xml:space="preserve">
+    <value>s1.3.2</value>
+  </data>
 </root>

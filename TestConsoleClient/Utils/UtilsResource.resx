@@ -117,28 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="SelectOperation" xml:space="preserve">
-    <value>Select Operation: </value>
+  <data name="ArchitectureItemDisplay" xml:space="preserve">
+    <value>  {0}) {1} v{2}</value>
   </data>
-  <data name="MenuItem_CreateArchitecture" xml:space="preserve">
-    <value>  1) Create Architecture</value>
+  <data name="ArchitecturesEmptyError" xml:space="preserve">
+    <value>The list of Architectures is empty</value>
   </data>
-  <data name="MenuItem_ViewSystems" xml:space="preserve">
-    <value>  2) View Systems</value>
+  <data name="FormatString_Var0Var1" xml:space="preserve">
+    <value>{0}{1}</value>
   </data>
-  <data name="MenuItem_ViewDeployment" xml:space="preserve">
-    <value>  3) View Deployment</value>
+  <data name="IndexOutOfRangeError" xml:space="preserve">
+    <value>Selected Index is out of range, please Select a Valid Architecture</value>
   </data>
-  <data name="MenuItem_Exit" xml:space="preserve">
-    <value>  Q) Exit</value>
-  </data>
-  <data name="SelectionPrompt" xml:space="preserve">
-    <value>Selection: </value>
-  </data>
-  <data name="MenuItem_Refresh" xml:space="preserve">
-    <value>  R) Refresh</value>
-  </data>
-  <data name="MenuItem_Continue" xml:space="preserve">
-    <value>  C} Continue</value>
+  <data name="NodeItemDisplay" xml:space="preserve">
+    <value>Node: {0}</value>
   </data>
 </root>

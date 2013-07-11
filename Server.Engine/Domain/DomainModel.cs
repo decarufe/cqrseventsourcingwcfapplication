@@ -18,6 +18,7 @@ namespace Server.Engine.Domain
       SystemElements = new List<SystemElement>(),
       SystemElementsAddedSinceLastCommit = new List<SystemElement>(),
       LastCommitedVersion = new Version(0,0),
+      ExecutableAssignations = new List<ExecutableAssignation>()
     };
     private long _appliedEventsSize;
     private bool _shouldTakeSnapshot;
@@ -31,6 +32,7 @@ namespace Server.Engine.Domain
       public List<SystemElement> SystemElementsAddedSinceLastCommit { get; set; }
       public Version LastCommitedVersion { get; set; }
       public bool MajorChange { get; set; }
+      public List<ExecutableAssignation> ExecutableAssignations { get; set; }
     }
 
     public DomainModel()
@@ -156,7 +158,7 @@ namespace Server.Engine.Domain
 
     public void RemoveSystem(string name)
     {
-      var systemToRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Name != name);
+      var systemToRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Name == name);
       if (systemToRemove == null)
       {
         throw new ArgumentException(String.Format("The System named {0} does not exists.", name));
@@ -228,7 +230,7 @@ namespace Server.Engine.Domain
 
     public void AddNode(string name, string parentSystemName)
     {
-      if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(Node)))
+      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Node)))
       {
         throw new ArgumentException(String.Format("A Node named {0} already exists.", name));
       }
@@ -260,7 +262,7 @@ namespace Server.Engine.Domain
 
     public void RemoveNode(string name)
     {
-      var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(system => system.Name != name);
+      var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(node => node.Name == name);
       if (toRemove == null)
       {
         throw new ArgumentException(String.Format("The Node named {0} does not exists.", name));
@@ -290,6 +292,13 @@ namespace Server.Engine.Domain
         {
           _state.MajorChange = true;
         }
+
+        // Remove Exec Assignations on the Node Removed
+        var assignations = _state.ExecutableAssignations.Where(x => x.NodeName == toRemove.Name).ToList();
+        foreach (var executableAssignation in assignations)
+        {
+          _state.ExecutableAssignations.Remove(executableAssignation);
+        }
       }
 
       ComputeSnapshotRequirements(@event);
@@ -297,7 +306,7 @@ namespace Server.Engine.Domain
 
     public void AddExecutable(string name, string parentSystemName)
     {
-      if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(Node)))
+      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Node)))
       {
         throw new ArgumentException(String.Format("A Executable named {0} already exists.", name));
       }
@@ -329,7 +338,7 @@ namespace Server.Engine.Domain
 
     public void RemoveExecutable(string name)
     {
-      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(system => system.Name != name);
+      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(executable => executable.Name == name);
       if (toRemove == null)
       {
         throw new ArgumentException(String.Format("The Executable named {0} does not exists.", name));
@@ -344,7 +353,7 @@ namespace Server.Engine.Domain
     [UsedImplicitly]
     private void OnExecutableRemoved(ExecutableRemovedEvent @event)
     {
-      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(system => system.Name == @event.Name);
+      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(executable => executable.Name == @event.Name);
       if (toRemove != null)
       {
         _state.SystemElements.Remove(toRemove);
@@ -359,6 +368,53 @@ namespace Server.Engine.Domain
         {
           _state.MajorChange = true;
         }
+
+        // Remove Node Assignation of the Executable being removed
+        var assignations = _state.ExecutableAssignations.Where(x => x.ExecutableName == toRemove.Name).ToList();
+        foreach (var executableAssignation in assignations)
+        {
+          _state.ExecutableAssignations.Remove(executableAssignation);
+        }
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void AssignExecutableToNode(string executableName, string nodeName)
+    {
+      if (!_state.SystemElements.Any(element => element.Name == executableName && element.GetType() == typeof(Executable)))
+      {
+        throw new ArgumentException(String.Format("The Executable named {0} does not exist.", executableName));
+      }
+      if (!_state.SystemElements.Any(element => element.Name == nodeName && element.GetType() == typeof(Node)))
+      {
+        throw new ArgumentException(String.Format("The Node named {0} does not exist.", nodeName));
+      }
+
+      Apply(new ExecutableAssignedEvent
+      {
+        ExecutableName = executableName,
+        NodeName = nodeName,
+      });
+
+    }
+
+    [UsedImplicitly]
+    private void OnExecutableAssigned(ExecutableAssignedEvent @event)
+    {
+      var assignation = _state.ExecutableAssignations.FirstOrDefault(x => x.ExecutableName == @event.ExecutableName);
+      if (assignation == null)
+      {
+        assignation = new ExecutableAssignation
+        {
+          ExecutableName = @event.ExecutableName,
+          NodeName = @event.NodeName,
+        };
+        _state.ExecutableAssignations.Add(assignation);
+      }
+      else
+      {
+        assignation.NodeName = @event.NodeName;
       }
 
       ComputeSnapshotRequirements(@event);

@@ -31,6 +31,9 @@ namespace Server.Contracts
     void RemoveExecutable(Guid id, string name);
 
     [OperationContract]
+    void AssignExecutableToNode(Guid id, string executableName, string nodeName);
+
+    [OperationContract]
     void CommitVersion(Guid id);
 
     [OperationContract]

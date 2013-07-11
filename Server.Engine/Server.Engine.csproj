@@ -92,6 +92,7 @@
     <Compile Include="Commands\AddExecutableCommand.cs" />
     <Compile Include="Commands\AddNodeCommand.cs" />
     <Compile Include="Commands\AddSystemCommand.cs" />
+    <Compile Include="Commands\AssignExecutableToNodeCommand.cs" />
     <Compile Include="Commands\RemoveNodeCommand.cs" />
     <Compile Include="Commands\CommitVersionCommand.cs" />
     <Compile Include="Commands\RemoveExecutableCommand.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="Domain\DomainModel.cs" />
     <Compile Include="Domain\Executable.cs" />
+    <Compile Include="Domain\ExecutableAssignation.cs" />
     <Compile Include="Domain\Node.cs" />
     <Compile Include="Domain\SystemElement.cs" />
     <Compile Include="Domain\SystemGroup.cs" />

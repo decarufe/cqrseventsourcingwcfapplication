@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Server.ReadModel.Endpoint {
+namespace TestConsoleClient.Utils {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Server.ReadModel.Endpoint {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resource {
+    internal class UtilsResource {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resource() {
+        internal UtilsResource() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Server.ReadModel.Endpoint {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Server.ReadModel.Endpoint.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TestConsoleClient.Utils.UtilsResource", typeof(UtilsResource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,47 @@ namespace Server.ReadModel.Endpoint {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to msmq://localhost/CQRS.ReadModel.
+        ///   Looks up a localized string similar to   {0}) {1} v{2}.
         /// </summary>
-        internal static string MsmqEndpoint {
+        internal static string ArchitectureItemDisplay {
             get {
-                return ResourceManager.GetString("MsmqEndpoint", resourceCulture);
+                return ResourceManager.GetString("ArchitectureItemDisplay", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Pong.
+        ///   Looks up a localized string similar to The list of Architectures is empty.
         /// </summary>
-        internal static string Pong {
+        internal static string ArchitecturesEmptyError {
             get {
-                return ResourceManager.GetString("Pong", resourceCulture);
+                return ResourceManager.GetString("ArchitecturesEmptyError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}: {1}.
+        ///   Looks up a localized string similar to {0}{1}.
         /// </summary>
-        internal static string StringFormat_Var0__Var1 {
+        internal static string FormatString_Var0Var1 {
             get {
-                return ResourceManager.GetString("StringFormat_Var0:_Var1", resourceCulture);
+                return ResourceManager.GetString("FormatString_Var0Var1", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}: {1}, {2}.
+        ///   Looks up a localized string similar to Selected Index is out of range, please Select a Valid Architecture.
         /// </summary>
-        internal static string StringFormat_Var0__Var1__Var2 {
+        internal static string IndexOutOfRangeError {
             get {
-                return ResourceManager.GetString("StringFormat_Var0__Var1__Var2", resourceCulture);
+                return ResourceManager.GetString("IndexOutOfRangeError", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}: {1}, {2}, {3}.
+        ///   Looks up a localized string similar to Node: {0}.
         /// </summary>
-        internal static string StringFormat_Var0__Var1__Var2__Var3 {
+        internal static string NodeItemDisplay {
             get {
-                return ResourceManager.GetString("StringFormat_Var0__Var1__Var2__Var3", resourceCulture);
+                return ResourceManager.GetString("NodeItemDisplay", resourceCulture);
             }
         }
     }

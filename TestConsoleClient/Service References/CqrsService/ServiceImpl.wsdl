@@ -50,6 +50,12 @@
   <wsdl:message name="ICqrsService_RemoveExecutable_OutputMessage">
     <wsdl:part name="parameters" element="tns:RemoveExecutableResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignExecutableToNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignExecutableToNode" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignExecutableToNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignExecutableToNodeResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_CommitVersion_InputMessage">
     <wsdl:part name="parameters" element="tns:CommitVersion" />
   </wsdl:message>
@@ -126,6 +132,10 @@
     <wsdl:operation name="RemoveExecutable">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutable" message="tns:ICqrsService_RemoveExecutable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutableResponse" message="tns:ICqrsService_RemoveExecutable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignExecutableToNode">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignExecutableToNode" message="tns:ICqrsService_AssignExecutableToNode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse" message="tns:ICqrsService_AssignExecutableToNode_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="CommitVersion">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/CommitVersion" message="tns:ICqrsService_CommitVersion_InputMessage" />
@@ -218,6 +228,15 @@
     </wsdl:operation>
     <wsdl:operation name="RemoveExecutable">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveExecutable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignExecutableToNode">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AssignExecutableToNode" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
