@@ -19,7 +19,7 @@ namespace Client.WpfApplication
 
       using (var client = new CqrsServiceClient())
       {
-        for (int i = 0; i < 1000; i++)
+        for (int i = 0; i < 100; i++)
         {
           client.SetName(Guid.NewGuid(), "Insert " + i);
         }

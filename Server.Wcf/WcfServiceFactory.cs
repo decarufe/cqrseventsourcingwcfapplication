@@ -16,6 +16,7 @@ namespace Server.Wcf
   {
     private DomainModelRuntime _runtime;
     private DefaultHost _host;
+    private Bridge _bridge;
 
     protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
     {
@@ -34,6 +35,7 @@ namespace Server.Wcf
 
     protected override void ConfigureContainer(IUnityContainer container)
     {
+      container.RegisterType<Bridge>(new ContainerControlledLifetimeManager());
       container.RegisterType<ICqrsService, ServiceImpl>();
       container.RegisterInstance((IServiceBus)_host.Bus);
     }
