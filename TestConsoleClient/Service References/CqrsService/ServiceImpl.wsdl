@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="ServiceImpl" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data" />
+      <xsd:import schemaLocation="http://localhost:11998/CqrsService.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="ICqrsService_SetName_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetName" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_SetName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddSystem" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystem_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystem" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystem_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystemResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddNode" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveNode" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddExecutable_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddExecutable" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddExecutable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddExecutableResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveExecutable_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveExecutable" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveExecutable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveExecutableResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_CommitVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:CommitVersion" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_CommitVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:CommitVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetName" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSystems_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystems" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSystems_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSystemsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetNodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetNodes" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetNodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetNodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetExecutables_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetExecutables" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetExecutables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetExecutablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetList" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetListResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_ReloadFromEvents_InputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadFromEvents" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_ReloadFromEvents_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ReloadFromEventsResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_Ping_InputMessage">
+    <wsdl:part name="parameters" element="tns:Ping" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_Ping_OutputMessage">
+    <wsdl:part name="parameters" element="tns:PingResponse" />
+  </wsdl:message>
+  <wsdl:portType name="ICqrsService">
+    <wsdl:operation name="SetName">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/SetName" message="tns:ICqrsService_SetName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/SetNameResponse" message="tns:ICqrsService_SetName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddSystem" message="tns:ICqrsService_AddSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddSystemResponse" message="tns:ICqrsService_AddSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSystem">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystem" message="tns:ICqrsService_RemoveSystem_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystemResponse" message="tns:ICqrsService_RemoveSystem_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddNode">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddNode" message="tns:ICqrsService_AddNode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddNodeResponse" message="tns:ICqrsService_AddNode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNode">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveNode" message="tns:ICqrsService_RemoveNode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveNodeResponse" message="tns:ICqrsService_RemoveNode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddExecutable">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddExecutable" message="tns:ICqrsService_AddExecutable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddExecutableResponse" message="tns:ICqrsService_AddExecutable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveExecutable">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutable" message="tns:ICqrsService_RemoveExecutable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutableResponse" message="tns:ICqrsService_RemoveExecutable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="CommitVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/CommitVersion" message="tns:ICqrsService_CommitVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/CommitVersionResponse" message="tns:ICqrsService_CommitVersion_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetName">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetName" message="tns:ICqrsService_GetName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetNameResponse" message="tns:ICqrsService_GetName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSystems">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetSystems" message="tns:ICqrsService_GetSystems_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetSystemsResponse" message="tns:ICqrsService_GetSystems_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetNodes">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetNodes" message="tns:ICqrsService_GetNodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetNodesResponse" message="tns:ICqrsService_GetNodes_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetExecutables">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetExecutables" message="tns:ICqrsService_GetExecutables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetExecutablesResponse" message="tns:ICqrsService_GetExecutables_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetList" message="tns:ICqrsService_GetList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetListResponse" message="tns:ICqrsService_GetList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ReloadFromEvents">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/ReloadFromEvents" message="tns:ICqrsService_ReloadFromEvents_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/ReloadFromEventsResponse" message="tns:ICqrsService_ReloadFromEvents_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/Ping" message="tns:ICqrsService_Ping_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/PingResponse" message="tns:ICqrsService_Ping_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_ICqrsService" type="tns:ICqrsService">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="SetName">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/SetName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddSystem">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddSystem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveSystem">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveSystem" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddNode">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveNode">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddExecutable">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddExecutable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveExecutable">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveExecutable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CommitVersion">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/CommitVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetName">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSystems">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetSystems" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetNodes">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetNodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetExecutables">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetExecutables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetList">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ReloadFromEvents">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/ReloadFromEvents" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="Ping">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/Ping" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="ServiceImpl">
+    <wsdl:port name="BasicHttpBinding_ICqrsService" binding="tns:BasicHttpBinding_ICqrsService">
+      <soap:address location="http://localhost:11998/CqrsService.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

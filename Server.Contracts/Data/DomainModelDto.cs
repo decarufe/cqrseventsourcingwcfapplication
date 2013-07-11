@@ -1,10 +1,10 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
-namespace Server.Contracts
+namespace Server.Contracts.Data
 {
-  [DataContract(IsReference = true, Name = "DomainModelDto")]
+  [DataContract]
   [DebuggerDisplay("System: {Name} (Parent: {ParentSystemName})")]
   public class DomainModelDto
   {

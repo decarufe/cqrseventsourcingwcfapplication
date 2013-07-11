@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using Server.Contracts.Data;
 
 namespace Server.Contracts
 {
@@ -18,6 +19,18 @@ namespace Server.Contracts
     void RemoveSystem(Guid id, string name);
 
     [OperationContract]
+    void AddNode(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveNode(Guid id, string name);
+
+    [OperationContract]
+    void AddExecutable(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveExecutable(Guid id, string name);
+
+    [OperationContract]
     void CommitVersion(Guid id);
 
     [OperationContract]
@@ -25,6 +38,12 @@ namespace Server.Contracts
 
     [OperationContract]
     IEnumerable<SystemEntity> GetSystems(Guid id);
+
+    [OperationContract]
+    IEnumerable<Node> GetNodes(Guid id);
+
+    [OperationContract]
+    IEnumerable<Executable> GetExecutables(Guid id);
 
     [OperationContract]
     IEnumerable<DomainModelDto> GetList();

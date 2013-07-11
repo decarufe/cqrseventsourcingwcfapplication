@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="753c76a9-86b5-49aa-aaac-9b6f413cb7a0" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://localhost:11998/CqrsService.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="ServiceImpl.wsdl" MetadataType="Wsdl" ID="2adfc535-b1ce-4372-9613-bc3a2475d012" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?wsdl" />
+    <MetadataFile FileName="CqrsService.disco" MetadataType="Disco" ID="afbb8cf6-8a39-463a-b100-16b3e7286783" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?disco" />
+    <MetadataFile FileName="CqrsService.xsd" MetadataType="Schema" ID="a38185f8-41c1-4987-9cb1-270d03a75ea1" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd0" />
+    <MetadataFile FileName="CqrsService1.xsd" MetadataType="Schema" ID="bcf96b35-e86c-4965-bdfe-30a66fa6cf18" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd1" />
+    <MetadataFile FileName="CqrsService2.xsd" MetadataType="Schema" ID="92b10022-5f1a-4488-b36d-9fc013c13fe2" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CqrsService3.xsd" MetadataType="Schema" ID="7df02bda-4882-4dfe-bb2e-086037721a1a" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd3" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

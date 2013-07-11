@@ -7,6 +7,7 @@ using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using Server.Contracts.Events;
 using SimpleCqrs.Domain;
+using SimpleCqrs.Eventing;
 
 namespace Server.Engine.Domain
 {
@@ -14,8 +15,8 @@ namespace Server.Engine.Domain
   {
     private State _state = new State
     {
-      Systems = new List<SystemGroup>(),
-      SystemsAddedSinceLastCommit = new List<SystemGroup>(),
+      SystemElements = new List<SystemElement>(),
+      SystemElementsAddedSinceLastCommit = new List<SystemElement>(),
       LastCommitedVersion = new Version(0,0),
     };
     private long _appliedEventsSize;
@@ -26,8 +27,8 @@ namespace Server.Engine.Domain
     public class State : Snapshot
     {
       public string Name { get; set; }
-      public List<SystemGroup> Systems { get; set; }
-      public List<SystemGroup> SystemsAddedSinceLastCommit { get; set; }
+      public List<SystemElement> SystemElements { get; set; }
+      public List<SystemElement> SystemElementsAddedSinceLastCommit { get; set; }
       public Version LastCommitedVersion { get; set; }
       public bool MajorChange { get; set; }
     }
@@ -76,6 +77,12 @@ namespace Server.Engine.Domain
 
       return computeSize;
     }
+
+    private void ComputeSnapshotRequirements(DomainEvent @event)
+    {
+      _appliedEventsSize += ComputeSize(@event);
+      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+    }
     #endregion
 
     public static DomainModel Create(Guid id, string name)
@@ -89,19 +96,19 @@ namespace Server.Engine.Domain
     }
 
     [UsedImplicitly]
-    public void OnDomainModelCreated(DomainModelCreatedEvent domainModelCreatedEvent)
+    public void OnDomainModelCreated(DomainModelCreatedEvent @event)
     {
-      Id = domainModelCreatedEvent.AggregateRootId;
-      _appliedEventsSize += ComputeSize(domainModelCreatedEvent);
-      _shouldTakeSnapshot = _appliedEventsSize > ComputeSize(GetSnapshot());
+      Id = @event.AggregateRootId;
+      ComputeSnapshotRequirements(@event);
+      //_appliedEventsSize += ComputeSize(@event);
+      //_shouldTakeSnapshot = _appliedEventsSize > ComputeSize(GetSnapshot());
     }
 
     [UsedImplicitly]
-    public void OnNameChanged(NameChangedEvent nameChangedEvent)
+    public void OnNameChanged(NameChangedEvent @event)
     {
-      _state.Name = nameChangedEvent.NewName;
-      _appliedEventsSize += ComputeSize(nameChangedEvent);
-      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+      _state.Name = @event.NewName;
+      ComputeSnapshotRequirements(@event);
     }
 
     public void ChangeName(string newName)
@@ -115,82 +122,100 @@ namespace Server.Engine.Domain
       }
     }
 
-    public void AddSystem(string systemName, string parentSystemName)
+    public void AddSystem(string name, string parentSystemName)
     {
-      if (_state.Systems.Any(system => system.Name == systemName))
+      if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(SystemGroup)))
       {
-        throw new ArgumentException(String.Format("A System with the named {0} already exists.", systemName));
+        throw new ArgumentException(String.Format("A System named {0} already exists.", name));
       }
       if (!string.IsNullOrEmpty(parentSystemName)
-          && _state.Systems.All(system => system.Name != parentSystemName))
+          && _state.SystemElements.OfType<SystemGroup>().All(system => system.Name != parentSystemName))
       {
         throw new ArgumentException(String.Format("Parent System named {0} does not exist.", parentSystemName));
       }
 
       Apply(new SystemAddedEvent
       {
-        Name = systemName,
+        Name = name,
         ParentSystemName = parentSystemName
       });
     }
 
     [UsedImplicitly]
-    private void OnSystemAdded(SystemAddedEvent systemAddedEvent)
+    private void OnSystemAdded(SystemAddedEvent @event)
     {
       var newSystem = new SystemGroup
       {
-        Name = systemAddedEvent.Name,
-        ParentSystemName = systemAddedEvent.ParentSystemName,
+        Name = @event.Name,
+        ParentSystemName = @event.ParentSystemName,
       };
-      _state.Systems.Add(newSystem);
-      _state.SystemsAddedSinceLastCommit.Add(newSystem);
-      _appliedEventsSize += ComputeSize(systemAddedEvent);
-      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+      _state.SystemElements.Add(newSystem);
+      _state.SystemElementsAddedSinceLastCommit.Add(newSystem);
+      ComputeSnapshotRequirements(@event);
     }
 
-    public void RemoveSystem(string systemName)
+    public void RemoveSystem(string name)
     {
-      if (_state.Systems.All(system => system.Name != systemName))
+      var systemToRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Name != name);
+      if (systemToRemove == null)
       {
-        throw new ArgumentException(String.Format("The System named {0} does not exists.", systemName));
+        throw new ArgumentException(String.Format("The System named {0} does not exists.", name));
       }
 
-      IEnumerable<string> systemsToRemove = ListSystemAndChildren(systemName);
-      foreach (var systemNameToRemove in systemsToRemove)
+      IEnumerable<SystemElement> systemsToRemove = ListSystemAndChildren(systemToRemove);
+      foreach (var systemElement in systemsToRemove)
       {
-        Apply(new SystemRemovedEvent
+        // Todo implement visitors
+        if (systemElement.GetType() == typeof (SystemGroup))
         {
-          Name = systemNameToRemove,
-        });
+          Apply(new SystemRemovedEvent
+          {
+            Name = systemElement.Name,
+          });
+        }
+        if (systemElement.GetType() == typeof(Node))
+        {
+          Apply(new NodeRemovedEvent
+          {
+            Name = systemElement.Name,
+          });
+        }
+        if (systemElement.GetType() == typeof(Executable))
+        {
+          Apply(new ExecutableRemovedEvent
+          {
+            Name = systemElement.Name,
+          });
+        }
       }
 
     }
 
-    private IEnumerable<string> ListSystemAndChildren(string systemName)
+    private IEnumerable<SystemElement> ListSystemAndChildren(SystemElement systemElement)
     {
-      var list = new List<string>();
-      foreach (var systemGroup in _state.Systems.Where(system => system.ParentSystemName == systemName))
+      var list = new List<SystemElement>();
+      foreach (var element in _state.SystemElements.Where(system => system.ParentSystemName == systemElement.Name))
       {
-        list.AddRange(ListSystemAndChildren(systemGroup.Name));
+        list.AddRange(ListSystemAndChildren(element));
       }
-      list.Add(systemName);
+      list.Add(systemElement);
 
       return list;
     }
 
     [UsedImplicitly]
-    private void OnSystemRemoved(SystemRemovedEvent systemRemovedEvent)
+    private void OnSystemRemoved(SystemRemovedEvent @event)
     {
-      var systemToRemove = _state.Systems.FirstOrDefault(system => system.Name == systemRemovedEvent.Name);
-      if (systemToRemove != null)
+      var toRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Name == @event.Name);
+      if (toRemove != null)
       {
-        _state.Systems.Remove(systemToRemove);
+        _state.SystemElements.Remove(toRemove);
 
-        var newlyAddedSystemGroup =
-          _state.SystemsAddedSinceLastCommit.FirstOrDefault(system => system.Name == systemToRemove.Name);
-        if (newlyAddedSystemGroup != null)
+        var newlyAddedSystemElement =
+          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
+        if (newlyAddedSystemElement != null)
         {
-          _state.SystemsAddedSinceLastCommit.Remove(newlyAddedSystemGroup);
+          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
         }
         else
         {
@@ -198,8 +223,145 @@ namespace Server.Engine.Domain
         }
       }
 
-      _appliedEventsSize += ComputeSize(systemRemovedEvent);
-      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void AddNode(string name, string parentSystemName)
+    {
+      if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(Node)))
+      {
+        throw new ArgumentException(String.Format("A Node named {0} already exists.", name));
+      }
+      if (!string.IsNullOrEmpty(parentSystemName)
+          && _state.SystemElements.OfType<SystemGroup>().All(system => system.Name != parentSystemName))
+      {
+        throw new ArgumentException(String.Format("Parent System named {0} does not exist.", parentSystemName));
+      }
+
+      Apply(new NodeAddedEvent
+      {
+        Name = name,
+        ParentSystemName = parentSystemName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnNodeAdded(NodeAddedEvent @event)
+    {
+      var node = new Node
+      {
+        Name = @event.Name,
+        ParentSystemName = @event.ParentSystemName,
+      };
+      _state.SystemElements.Add(node);
+      _state.SystemElementsAddedSinceLastCommit.Add(node);
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void RemoveNode(string name)
+    {
+      var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(system => system.Name != name);
+      if (toRemove == null)
+      {
+        throw new ArgumentException(String.Format("The Node named {0} does not exists.", name));
+      }
+
+      Apply(new NodeRemovedEvent
+      {
+        Name = toRemove.Name
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnNodeRemoved(NodeRemovedEvent @event)
+    {
+      var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(system => system.Name == @event.Name);
+      if (toRemove != null)
+      {
+        _state.SystemElements.Remove(toRemove);
+
+        var newlyAddedSystemElement =
+          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
+        if (newlyAddedSystemElement != null)
+        {
+          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
+        }
+        else
+        {
+          _state.MajorChange = true;
+        }
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void AddExecutable(string name, string parentSystemName)
+    {
+      if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(Node)))
+      {
+        throw new ArgumentException(String.Format("A Executable named {0} already exists.", name));
+      }
+      if (!string.IsNullOrEmpty(parentSystemName)
+          && _state.SystemElements.OfType<SystemGroup>().All(system => system.Name != parentSystemName))
+      {
+        throw new ArgumentException(String.Format("Parent System named {0} does not exist.", parentSystemName));
+      }
+
+      Apply(new ExecutableAddedEvent
+      {
+        Name = name,
+        ParentSystemName = parentSystemName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnExecutableAdded(ExecutableAddedEvent @event)
+    {
+      var executable = new Executable
+      {
+        Name = @event.Name,
+        ParentSystemName = @event.ParentSystemName,
+      };
+      _state.SystemElements.Add(executable);
+      _state.SystemElementsAddedSinceLastCommit.Add(executable);
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void RemoveExecutable(string name)
+    {
+      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(system => system.Name != name);
+      if (toRemove == null)
+      {
+        throw new ArgumentException(String.Format("The Executable named {0} does not exists.", name));
+      }
+
+      Apply(new ExecutableRemovedEvent
+      {
+        Name = toRemove.Name
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnExecutableRemoved(ExecutableRemovedEvent @event)
+    {
+      var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(system => system.Name == @event.Name);
+      if (toRemove != null)
+      {
+        _state.SystemElements.Remove(toRemove);
+
+        var newlyAddedSystemElement =
+          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
+        if (newlyAddedSystemElement != null)
+        {
+          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
+        }
+        else
+        {
+          _state.MajorChange = true;
+        }
+      }
+
+      ComputeSnapshotRequirements(@event);
     }
 
     public void CommitVersion()
@@ -215,12 +377,11 @@ namespace Server.Engine.Domain
     }
 
     [UsedImplicitly]
-    private void OnVersionCommited(VersionCommitedEvent versionCommitedEvent)
+    private void OnVersionCommited(VersionCommitedEvent @event)
     {
-      _state.LastCommitedVersion = Version.Parse(versionCommitedEvent.NewVersion);
-      _state.SystemsAddedSinceLastCommit.Clear();
-      _appliedEventsSize += ComputeSize(versionCommitedEvent);
-      _shouldTakeSnapshot = _appliedEventsSize > _lastSnapshotSize * Ratio;
+      _state.LastCommitedVersion = Version.Parse(@event.NewVersion);
+      _state.SystemElementsAddedSinceLastCommit.Clear();
+      ComputeSnapshotRequirements(@event);
     }
   }
 }

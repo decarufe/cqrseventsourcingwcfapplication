@@ -1,11 +1,12 @@
-﻿
 using System.Diagnostics;
 using System.Runtime.Serialization;
 
-namespace Server.Contracts
+namespace Server.Contracts.Data
 {
-  [DataContract(IsReference = true, Name = "SystemEntity")]
+  [DataContract]
   [DebuggerDisplay("System: {Name} (Parent: {ParentSystemName})")]
+  [KnownType(typeof(Node))]
+  [KnownType(typeof(Executable))]
   public class SystemEntity
   {
     [DataMember(Order = 0)]
