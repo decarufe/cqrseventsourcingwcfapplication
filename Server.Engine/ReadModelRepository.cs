@@ -2,7 +2,7 @@
 using MongoRepository;
 using Server.Contracts;
 
-namespace Server.ReadModel.Endpoint
+namespace Server.Engine
 {
   [UsedImplicitly]
   public class ReadModelRepository : MongoRepository<ReadModelEntity>
