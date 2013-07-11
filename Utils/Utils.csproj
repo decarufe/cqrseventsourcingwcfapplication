@@ -51,6 +51,9 @@
     <Reference Include="Rhino.ServiceBus.Unity">
       <HintPath>..\Server.Wcf\bin\Rhino.ServiceBus.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="SimpleCqrs">
+      <HintPath>..\Server.Wcf\bin\SimpleCqrs.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
@@ -64,6 +67,7 @@
     <Compile Include="Annotations.cs" />
     <Compile Include="MyUnityBootStrapper.cs" />
     <Compile Include="Persistance.cs" />
+    <Compile Include="PiplelineEventBus.cs" />
     <Compile Include="PrepareQueues.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

@@ -51,7 +51,6 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="EntityChangedMessage.cs" />
     <Compile Include="Events\PingCalled.cs" />
     <Compile Include="Pong.cs" />
     <Compile Include="ReadModelEntity.cs" />

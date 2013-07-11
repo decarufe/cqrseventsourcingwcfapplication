@@ -1,8 +1,12 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using Server.Contracts;
 using SimpleCqrs;
 using SimpleCqrs.Domain;
 using SimpleCqrs.Eventing;
+using Utils;
 using UnityServiceLocator = SimpleCqrs.Unity.UnityServiceLocator;
 
 namespace Server.Engine
@@ -24,6 +28,33 @@ namespace Server.Engine
       _bus = bus;
     }
 
+    protected override void OnStarted(UnityServiceLocator serviceLocator)
+    {
+      base.OnStarted(serviceLocator);
+      ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ReadModelEntity).FullName);
+      DateTime lastEvent = readModelInfo == null ? DateTime.MinValue : readModelInfo.LastEvent;
+
+      if (readModelInfo != null)
+      {
+        IEnumerable<DomainEvent> missingEvents = GetMissingEvents(readModelInfo.LastEvent);
+      }
+    }
+
+    private DomainEvent[] GetMissingEvents(DateTime lastEvent)
+    {
+      Assembly assembly = typeof(ICqrsService).Assembly;
+      var types = from t in assembly.GetTypes()
+                  where t.IsPublic
+                        && typeof(DomainEvent).IsAssignableFrom(t)
+                  select t;
+
+      IEnumerable<DomainEvent> events = _eventStore.GetEventsByEventTypes(types, lastEvent, DateTime.MaxValue);
+
+      DomainEvent[] messages = events.Where(e => e.EventDate > lastEvent).ToArray();
+      return messages;
+    }
+
+
     protected override IEventStore GetEventStore(IServiceLocator serviceLocator)
     {
       return _eventStore;
@@ -31,8 +62,12 @@ namespace Server.Engine
 
     protected override IEventBus GetEventBus(IServiceLocator serviceLocator)
     {
-      if (_bus == null) return base.GetEventBus(serviceLocator);
-      return _bus;
+      var eventBus = base.GetEventBus(serviceLocator);
+      if (_bus == null)
+      {
+        return eventBus;
+      }
+      return new PiplelineEventBus(eventBus, _bus);
     }
 
     protected override ISnapshotStore GetSnapshotStore(IServiceLocator serviceLocator)
