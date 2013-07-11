@@ -190,6 +190,18 @@
       </xs:sequence>
     </xs:complexType>
   </xs:element>
+  <xs:element name="GetPublishedList">
+    <xs:complexType>
+      <xs:sequence />
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="GetPublishedListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Server.Contracts.Data" minOccurs="0" name="GetPublishedListResult" nillable="true" type="q18:ArrayOfDomainModelDto" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
   <xs:element name="ReloadFromEvents">
     <xs:complexType>
       <xs:sequence>
@@ -213,7 +225,7 @@
   <xs:element name="PingResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element xmlns:q18="http://schemas.datacontract.org/2004/07/Server.Contracts.Data" minOccurs="0" name="PingResult" nillable="true" type="q18:Pong" />
+        <xs:element xmlns:q19="http://schemas.datacontract.org/2004/07/Server.Contracts.Data" minOccurs="0" name="PingResult" nillable="true" type="q19:Pong" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

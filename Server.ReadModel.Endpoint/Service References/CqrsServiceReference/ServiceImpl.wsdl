@@ -92,6 +92,12 @@
   <wsdl:message name="ICqrsService_GetList_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetListResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_GetPublishedList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetPublishedList" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetPublishedList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetPublishedListResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_ReloadFromEvents_InputMessage">
     <wsdl:part name="parameters" element="tns:ReloadFromEvents" />
   </wsdl:message>
@@ -160,6 +166,10 @@
     <wsdl:operation name="GetList">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetList" message="tns:ICqrsService_GetList_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetListResponse" message="tns:ICqrsService_GetList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetPublishedList">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetPublishedList" message="tns:ICqrsService_GetPublishedList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetPublishedListResponse" message="tns:ICqrsService_GetPublishedList_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="ReloadFromEvents">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/ReloadFromEvents" message="tns:ICqrsService_ReloadFromEvents_InputMessage" />
@@ -291,6 +301,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetList">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/GetList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetPublishedList">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetPublishedList" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

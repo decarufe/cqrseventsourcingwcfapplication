@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Linq;
-using TestConsoleClient.CqrsService;
+using TestConsoleClient.CqrsServiceReference;
 using TestConsoleClient.Utils;
 
 namespace TestConsoleClient.Menus

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace TestConsoleClient.CqrsService {
+namespace TestConsoleClient.CqrsServiceReference {
     using System.Runtime.Serialization;
     using System;
     
@@ -17,8 +17,8 @@ namespace TestConsoleClient.CqrsService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="SystemEntity", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsService.Executable))]
-    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsService.Node))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Executable))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Node))]
     public partial class SystemEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -80,7 +80,7 @@ namespace TestConsoleClient.CqrsService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Executable", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
-    public partial class Executable : TestConsoleClient.CqrsService.SystemEntity {
+    public partial class Executable : TestConsoleClient.CqrsServiceReference.SystemEntity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string NodeField;
@@ -103,7 +103,7 @@ namespace TestConsoleClient.CqrsService {
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="Node", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
-    public partial class Node : TestConsoleClient.CqrsService.SystemEntity {
+    public partial class Node : TestConsoleClient.CqrsServiceReference.SystemEntity {
         
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string[] ExecutablesField;
@@ -245,7 +245,7 @@ namespace TestConsoleClient.CqrsService {
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CqrsService.ICqrsService")]
+    [System.ServiceModel.ServiceContractAttribute(ConfigurationName="CqrsServiceReference.ICqrsService")]
     public interface ICqrsService {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/SetName", ReplyAction="http://tempuri.org/ICqrsService/SetNameResponse")]
@@ -279,31 +279,34 @@ namespace TestConsoleClient.CqrsService {
         string GetName(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetSystems", ReplyAction="http://tempuri.org/ICqrsService/GetSystemsResponse")]
-        TestConsoleClient.CqrsService.SystemEntity[] GetSystems(System.Guid id);
+        TestConsoleClient.CqrsServiceReference.SystemEntity[] GetSystems(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetNodes", ReplyAction="http://tempuri.org/ICqrsService/GetNodesResponse")]
-        TestConsoleClient.CqrsService.Node[] GetNodes(System.Guid id);
+        TestConsoleClient.CqrsServiceReference.Node[] GetNodes(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetExecutables", ReplyAction="http://tempuri.org/ICqrsService/GetExecutablesResponse")]
-        TestConsoleClient.CqrsService.Executable[] GetExecutables(System.Guid id);
+        TestConsoleClient.CqrsServiceReference.Executable[] GetExecutables(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetList", ReplyAction="http://tempuri.org/ICqrsService/GetListResponse")]
-        TestConsoleClient.CqrsService.DomainModelDto[] GetList();
+        TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetPublishedList", ReplyAction="http://tempuri.org/ICqrsService/GetPublishedListResponse")]
+        TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetPublishedList();
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/ReloadFromEvents", ReplyAction="http://tempuri.org/ICqrsService/ReloadFromEventsResponse")]
         void ReloadFromEvents(System.Uri uri, System.DateTime lastEvent);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/Ping", ReplyAction="http://tempuri.org/ICqrsService/PingResponse")]
-        TestConsoleClient.CqrsService.Pong Ping(System.Uri sender);
+        TestConsoleClient.CqrsServiceReference.Pong Ping(System.Uri sender);
     }
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public interface ICqrsServiceChannel : TestConsoleClient.CqrsService.ICqrsService, System.ServiceModel.IClientChannel {
+    public interface ICqrsServiceChannel : TestConsoleClient.CqrsServiceReference.ICqrsService, System.ServiceModel.IClientChannel {
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
-    public partial class CqrsServiceClient : System.ServiceModel.ClientBase<TestConsoleClient.CqrsService.ICqrsService>, TestConsoleClient.CqrsService.ICqrsService {
+    public partial class CqrsServiceClient : System.ServiceModel.ClientBase<TestConsoleClient.CqrsServiceReference.ICqrsService>, TestConsoleClient.CqrsServiceReference.ICqrsService {
         
         public CqrsServiceClient() {
         }
@@ -364,27 +367,31 @@ namespace TestConsoleClient.CqrsService {
             return base.Channel.GetName(id);
         }
         
-        public TestConsoleClient.CqrsService.SystemEntity[] GetSystems(System.Guid id) {
+        public TestConsoleClient.CqrsServiceReference.SystemEntity[] GetSystems(System.Guid id) {
             return base.Channel.GetSystems(id);
         }
         
-        public TestConsoleClient.CqrsService.Node[] GetNodes(System.Guid id) {
+        public TestConsoleClient.CqrsServiceReference.Node[] GetNodes(System.Guid id) {
             return base.Channel.GetNodes(id);
         }
         
-        public TestConsoleClient.CqrsService.Executable[] GetExecutables(System.Guid id) {
+        public TestConsoleClient.CqrsServiceReference.Executable[] GetExecutables(System.Guid id) {
             return base.Channel.GetExecutables(id);
         }
         
-        public TestConsoleClient.CqrsService.DomainModelDto[] GetList() {
+        public TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList() {
             return base.Channel.GetList();
+        }
+        
+        public TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetPublishedList() {
+            return base.Channel.GetPublishedList();
         }
         
         public void ReloadFromEvents(System.Uri uri, System.DateTime lastEvent) {
             base.Channel.ReloadFromEvents(uri, lastEvent);
         }
         
-        public TestConsoleClient.CqrsService.Pong Ping(System.Uri sender) {
+        public TestConsoleClient.CqrsServiceReference.Pong Ping(System.Uri sender) {
             return base.Channel.Ping(sender);
         }
     }
