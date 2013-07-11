@@ -360,6 +360,14 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] EndGetList(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetPublishedList", ReplyAction="http://tempuri.org/ICqrsService/GetPublishedListResponse")]
+        Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] GetPublishedList();
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/GetPublishedList", ReplyAction="http://tempuri.org/ICqrsService/GetPublishedListResponse")]
+        System.IAsyncResult BeginGetPublishedList(System.AsyncCallback callback, object asyncState);
+        
+        Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] EndGetPublishedList(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/ReloadFromEvents", ReplyAction="http://tempuri.org/ICqrsService/ReloadFromEventsResponse")]
         void ReloadFromEvents(System.Uri uri, System.DateTime lastEvent);
         
@@ -464,6 +472,25 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         private object[] results;
         
         public GetListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetPublishedListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetPublishedListCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
                 base(exception, cancelled, userState) {
             this.results = results;
         }
@@ -583,6 +610,12 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onGetListCompletedDelegate;
         
+        private BeginOperationDelegate onBeginGetPublishedListDelegate;
+        
+        private EndOperationDelegate onEndGetPublishedListDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetPublishedListCompletedDelegate;
+        
         private BeginOperationDelegate onBeginReloadFromEventsDelegate;
         
         private EndOperationDelegate onEndReloadFromEventsDelegate;
@@ -641,6 +674,8 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         public event System.EventHandler<GetExecutablesCompletedEventArgs> GetExecutablesCompleted;
         
         public event System.EventHandler<GetListCompletedEventArgs> GetListCompleted;
+        
+        public event System.EventHandler<GetPublishedListCompletedEventArgs> GetPublishedListCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> ReloadFromEventsCompleted;
         
@@ -1357,6 +1392,54 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                 this.onGetListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetListCompleted);
             }
             base.InvokeAsync(this.onBeginGetListDelegate, null, this.onEndGetListDelegate, this.onGetListCompletedDelegate, userState);
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] GetPublishedList() {
+            return base.Channel.GetPublishedList();
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetPublishedList(System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetPublishedList(callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] EndGetPublishedList(System.IAsyncResult result) {
+            return base.Channel.EndGetPublishedList(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetPublishedList(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            return this.BeginGetPublishedList(callback, asyncState);
+        }
+        
+        private object[] OnEndGetPublishedList(System.IAsyncResult result) {
+            Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] retVal = this.EndGetPublishedList(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetPublishedListCompleted(object state) {
+            if ((this.GetPublishedListCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetPublishedListCompleted(this, new GetPublishedListCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetPublishedListAsync() {
+            this.GetPublishedListAsync(null);
+        }
+        
+        public void GetPublishedListAsync(object userState) {
+            if ((this.onBeginGetPublishedListDelegate == null)) {
+                this.onBeginGetPublishedListDelegate = new BeginOperationDelegate(this.OnBeginGetPublishedList);
+            }
+            if ((this.onEndGetPublishedListDelegate == null)) {
+                this.onEndGetPublishedListDelegate = new EndOperationDelegate(this.OnEndGetPublishedList);
+            }
+            if ((this.onGetPublishedListCompletedDelegate == null)) {
+                this.onGetPublishedListCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetPublishedListCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetPublishedListDelegate, null, this.onEndGetPublishedListDelegate, this.onGetPublishedListCompletedDelegate, userState);
         }
         
         public void ReloadFromEvents(System.Uri uri, System.DateTime lastEvent) {

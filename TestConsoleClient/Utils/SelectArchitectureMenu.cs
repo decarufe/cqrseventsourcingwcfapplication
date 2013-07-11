@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TestConsoleClient.CqrsService;
+using TestConsoleClient.CqrsServiceReference;
 using TestConsoleClient.Menus;
 
 namespace TestConsoleClient.Utils
@@ -15,7 +15,7 @@ namespace TestConsoleClient.Utils
       {
         Console.Clear();
         Console.WriteLine();
-        var architectures = client.GetList().ToList();
+        var architectures = client.GetPublishedList().ToList();
         if (architectures.Any())
         {
           DisplayArchitectures(architectures);

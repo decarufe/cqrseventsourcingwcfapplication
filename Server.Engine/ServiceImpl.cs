@@ -15,9 +15,9 @@ namespace Server.Engine
 {
   public class ServiceImpl : ICqrsService
   {
-    private readonly IServiceBus _serviceBus;
     private readonly ICommandBus _commandBus;
     private readonly IEventStore _eventStore;
+    private readonly IServiceBus _serviceBus;
 
     public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus)
     {
@@ -102,16 +102,41 @@ namespace Server.Engine
     public IEnumerable<DomainModelDto> GetList()
     {
       return from a in Persistance<ReadModelEntity>.Instance.GetAll().OrderBy(x => x.Name).ThenBy(x => x.Version)
-             select new DomainModelDto { Name = a.Name, Version = a.Version != null ? a.Version.ToString() : string.Empty, DomainModelId = a.DomainModelId, ReadModelId = a.Id };
+             select
+               new DomainModelDto
+               {
+                 Name = a.Name,
+                 Version = a.Version != null ? a.Version.ToString() : string.Empty,
+                 DomainModelId = a.DomainModelId,
+                 ReadModelId = a.Id
+               };
+    }
+
+    public IEnumerable<DomainModelDto> GetPublishedList()
+    {
+      return
+        from a in
+          Persistance<ReadModelEntity>.Instance.GetAll()
+                                      .Where(y => y.DomainModelId.ToString() != y.Id)
+                                      .OrderBy(x => x.Name)
+                                      .ThenBy(x => x.Version)
+        select
+          new DomainModelDto
+          {
+            Name = a.Name,
+            Version = a.Version != null ? a.Version.ToString() : string.Empty,
+            DomainModelId = a.DomainModelId,
+            ReadModelId = a.Id
+          };
     }
 
     public void ReloadFromEvents(Uri uri, DateTime lastEvent)
     {
       Assembly assembly = typeof (ICqrsService).Assembly;
-      var types = from t in assembly.GetTypes()
-                  where t.IsPublic
-                        && typeof (DomainEvent).IsAssignableFrom(t)
-                  select t;
+      IEnumerable<Type> types = from t in assembly.GetTypes()
+                                where t.IsPublic
+                                      && typeof (DomainEvent).IsAssignableFrom(t)
+                                select t;
 
       IEnumerable<DomainEvent> events = _eventStore.GetEventsByEventTypes(types, lastEvent, DateTime.MaxValue);
 

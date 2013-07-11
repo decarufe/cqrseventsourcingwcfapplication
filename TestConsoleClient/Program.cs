@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Linq;
-using TestConsoleClient.CqrsService;
 using TestConsoleClient.Menus;
 
 namespace TestConsoleClient

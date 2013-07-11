@@ -52,6 +52,9 @@ namespace Server.Contracts
     IEnumerable<DomainModelDto> GetList();
 
     [OperationContract]
+    IEnumerable<DomainModelDto> GetPublishedList();
+
+    [OperationContract]
     void ReloadFromEvents(Uri uri, DateTime lastEvent);
 
     [OperationContract]
