@@ -87,6 +87,7 @@
     <Reference Include="System.Messaging" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Bridge.cs" />
     <Compile Include="CommandHandlers\DomainModelCommandHandler.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="Domain\DomainModel.cs" />

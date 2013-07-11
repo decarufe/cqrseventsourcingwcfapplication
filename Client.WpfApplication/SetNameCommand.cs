@@ -7,6 +7,7 @@ namespace Client.WpfApplication
   public class SetNameCommand : ICommand
   {
     private readonly IRefresh _refresher;
+    private bool _executing;
 
     public SetNameCommand(IRefresh refresher)
     {
@@ -15,20 +16,37 @@ namespace Client.WpfApplication
 
     public void Execute(object parameter)
     {
-      var readModelEntity = (ReadModelEntity) parameter;
-
-      using (var client = new CqrsServiceClient())
+      try
       {
-        client.SetName(Guid.Parse(readModelEntity.Id), readModelEntity.Name);
+        _executing = true;
+        OnCanExecuteChanged();
+
+        var readModelEntity = (ReadModelEntity) parameter;
+
+        using (var client = new CqrsServiceClient())
+        {
+          client.SetName(Guid.Parse(readModelEntity.Id), readModelEntity.Name);
+        }
+        _refresher.Refresh();
       }
-      _refresher.Refresh();
+      finally
+      {
+        _executing = false;
+        OnCanExecuteChanged();
+      }
     }
 
     public bool CanExecute(object parameter)
     {
-      return true;
+      return !_executing;
     }
 
     public event EventHandler CanExecuteChanged;
+
+    protected virtual void OnCanExecuteChanged()
+    {
+      var handler = CanExecuteChanged;
+      if (handler != null) handler(this, EventArgs.Empty);
+    }
   }
 }

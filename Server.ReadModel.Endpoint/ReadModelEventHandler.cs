@@ -37,7 +37,6 @@ namespace Server.ReadModel.Endpoint
 
     public void Consume(NameChangedEvent message)
     {
-      //Thread.Sleep(1000);
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
@@ -65,7 +64,7 @@ namespace Server.ReadModel.Endpoint
       {
         readModelInfo.LastEvent = message.EventDate.ToUniversalTime();
         Persistance<ReadModelInfo>.Instance.Update(readModelInfo);
-        _serviceBus.Notify(new EntityChangedMessage() { Id = message.AggregateRootId });
+        _serviceBus.Send(new EntityChangedMessage() { Id = message.AggregateRootId });
       }
     }
 

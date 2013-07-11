@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -13,6 +14,11 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Client.WpfApplication.CqrsServiceReference;
+using Microsoft.Practices.ServiceLocation;
+using Microsoft.Practices.Unity;
+using Rhino.ServiceBus.Hosting;
+using Rhino.ServiceBus.Msmq;
+using Utils;
 
 namespace Client.WpfApplication
 {
@@ -21,8 +27,11 @@ namespace Client.WpfApplication
   /// </summary>
   public partial class MainWindow : Window, IRefresh
   {
+    private DefaultHost _host;
+
     public static readonly DependencyProperty ItemsProperty =
-      DependencyProperty.Register("Items", typeof (ObservableCollection<ReadModelEntity>), typeof (MainWindow), new PropertyMetadata(default(ObservableCollection<ReadModelEntity>)));
+      DependencyProperty.Register("Items", typeof (ObservableCollection<ReadModelEntity>), typeof (MainWindow),
+                                  new PropertyMetadata(default(ObservableCollection<ReadModelEntity>)));
 
     public ObservableCollection<ReadModelEntity> Items
     {
@@ -31,7 +40,8 @@ namespace Client.WpfApplication
     }
 
     public static readonly DependencyProperty SelectedItemProperty =
-      DependencyProperty.Register("SelectedItem", typeof (ReadModelEntity), typeof (MainWindow), new PropertyMetadata(default(ReadModelEntity)));
+      DependencyProperty.Register("SelectedItem", typeof (ReadModelEntity), typeof (MainWindow),
+                                  new PropertyMetadata(default(ReadModelEntity)));
 
     public ReadModelEntity SelectedItem
     {
@@ -40,7 +50,8 @@ namespace Client.WpfApplication
     }
 
     public static readonly DependencyProperty ButtonLabelProperty =
-      DependencyProperty.Register("ButtonLabel", typeof (string), typeof (MainWindow), new PropertyMetadata(default(string)));
+      DependencyProperty.Register("ButtonLabel", typeof (string), typeof (MainWindow),
+                                  new PropertyMetadata(default(string)));
 
     public string ButtonLabel
     {
@@ -68,6 +79,21 @@ namespace Client.WpfApplication
 
     private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
     {
+      PrepareQueues.Prepare(WpfApplication.Properties.Resources.MsmqEndpoint, QueueType.Standard);
+
+      try
+      {
+        var cqrsServiceClient = new CqrsServiceClient();
+        cqrsServiceClient.Ping(new Uri(WpfApplication.Properties.Resources.MsmqEndpoint));
+      }
+      catch (Exception ex)
+      {
+        throw new InvalidOperationException("Server is not responding", ex);
+      }
+
+      _host = new DefaultHost();
+      _host.Start<WpfBootStrapper>();
+
       Refresh();
     }
 
@@ -88,14 +114,17 @@ namespace Client.WpfApplication
 
     public void Refresh()
     {
-      using (var client = new CqrsServiceClient())
-      {
-        var readModelEntities = client.GetList();
-        var all = new[] { new NullReadModelEntity() }
-          .Union(readModelEntities);
-        Items = new ObservableCollection<ReadModelEntity>(all);
-      }
-      SelectedItem = Items.FirstOrDefault();
+      var client = new CqrsServiceClient();
+      Task<IEnumerable<ReadModelEntity>>
+        .Factory
+        .FromAsync(client.BeginGetList, client.EndGetList, client)
+        .ContinueWith(t =>
+        {
+          var all = new[] {new NullReadModelEntity()}
+            .Union(t.Result);
+          Items = new ObservableCollection<ReadModelEntity>(all);
+          SelectedItem = Items.FirstOrDefault();
+        }, TaskScheduler.FromCurrentSynchronizationContext());
     }
 
     private void Button_Click(object sender, RoutedEventArgs e)

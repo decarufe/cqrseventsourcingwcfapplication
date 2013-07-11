@@ -16,19 +16,29 @@ namespace Server.Engine
   public class ServiceImpl : ICqrsService
   {
     private readonly IServiceBus _serviceBus;
+    private readonly Bridge _bridge;
     private readonly ICommandBus _commandBus;
     private readonly IEventStore _eventStore;
+    private readonly AutoResetEvent _sync = new AutoResetEvent(false);
 
-    public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus)
+    public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus, Bridge bridge)
     {
       _commandBus = commandBus;
       _eventStore = eventStore;
       _serviceBus = serviceBus;
+      _bridge = bridge;
     }
 
     public void SetName(Guid id, string name)
     {
+      _bridge.RegisterAction(Consume);
       _commandBus.Send(new SetNameCommand(id, name));
+      _sync.WaitOne(TimeSpan.FromSeconds(30));
+    }
+
+    public void Consume(EntityChangedMessage message)
+    {
+      _sync.Set();
     }
 
     public string GetName(Guid id)
