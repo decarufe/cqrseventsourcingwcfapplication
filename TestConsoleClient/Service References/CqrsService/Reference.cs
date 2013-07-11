@@ -269,6 +269,9 @@ namespace TestConsoleClient.CqrsService {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
         void RemoveExecutable(System.Guid id, string name);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
+        void AssignExecutableToNode(System.Guid id, string executableName, string nodeName);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/CommitVersion", ReplyAction="http://tempuri.org/ICqrsService/CommitVersionResponse")]
         void CommitVersion(System.Guid id);
         
@@ -347,6 +350,10 @@ namespace TestConsoleClient.CqrsService {
         
         public void RemoveExecutable(System.Guid id, string name) {
             base.Channel.RemoveExecutable(id, name);
+        }
+        
+        public void AssignExecutableToNode(System.Guid id, string executableName, string nodeName) {
+            base.Channel.AssignExecutableToNode(id, executableName, nodeName);
         }
         
         public void CommitVersion(System.Guid id) {

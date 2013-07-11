@@ -61,7 +61,16 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1) Create Architecture.
+        ///   Looks up a localized string similar to   C} Continue.
+        /// </summary>
+        internal static string MenuItem_Continue {
+            get {
+                return ResourceManager.GetString("MenuItem_Continue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   1) Create Architecture.
         /// </summary>
         internal static string MenuItem_CreateArchitecture {
             get {
@@ -70,7 +79,7 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Q) Exit.
+        ///   Looks up a localized string similar to   Q) Exit.
         /// </summary>
         internal static string MenuItem_Exit {
             get {
@@ -79,7 +88,16 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 3) View Deployment.
+        ///   Looks up a localized string similar to   R) Refresh.
+        /// </summary>
+        internal static string MenuItem_Refresh {
+            get {
+                return ResourceManager.GetString("MenuItem_Refresh", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to   3) View Deployment.
         /// </summary>
         internal static string MenuItem_ViewDeployment {
             get {
@@ -88,7 +106,7 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2) View Systems.
+        ///   Looks up a localized string similar to   2) View Systems.
         /// </summary>
         internal static string MenuItem_ViewSystems {
             get {

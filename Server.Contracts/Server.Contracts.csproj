@@ -57,6 +57,7 @@
     <Compile Include="Data\Pong.cs" />
     <Compile Include="Data\SystemEntity.cs" />
     <Compile Include="Events\ExecutableAddedEvent.cs" />
+    <Compile Include="Events\ExecutableAssignedEvent.cs" />
     <Compile Include="Events\ExecutableRemovedEvent.cs" />
     <Compile Include="Events\NodeAddedEvent.cs" />
     <Compile Include="Events\NodeRemovedEvent.cs" />

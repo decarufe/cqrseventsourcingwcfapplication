@@ -26,6 +26,7 @@
     <MetadataFile FileName="CqrsService.xsd" MetadataType="Schema" ID="b56248fc-f05e-42ed-9c49-d577f99f2d4f" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd0" />
     <MetadataFile FileName="CqrsService1.xsd" MetadataType="Schema" ID="096dad16-3171-4587-a6cf-17a4f9e0fb35" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd1" />
     <MetadataFile FileName="CqrsService2.xsd" MetadataType="Schema" ID="5fcafd5c-bbe6-4e08-a5a4-afa0ce236f0f" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd2" />
+    <MetadataFile FileName="CqrsService3.xsd" MetadataType="Schema" ID="c9e34082-fdae-4059-8bfe-46654413409a" SourceId="1" SourceUrl="http://localhost:11998/CqrsService.svc?xsd=xsd3" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

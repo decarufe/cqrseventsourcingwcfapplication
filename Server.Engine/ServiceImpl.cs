@@ -61,6 +61,11 @@ namespace Server.Engine
       _commandBus.Send(new RemoveExecutableCommand(id, name));
     }
 
+    public void AssignExecutableToNode(Guid id, string executableName, string nodeName)
+    {
+      _commandBus.Send(new AssignExecutableToNodeCommand(id, executableName, nodeName));
+    }
+
     public void CommitVersion(Guid id)
     {
       _commandBus.Send(new CommitVersionCommand(id));

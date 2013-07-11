@@ -15,8 +15,10 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="SystemEntity", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts", IsReference=true)]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SystemEntity", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Server.ReadModel.Endpoint.CqrsServiceReference.Executable))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(Server.ReadModel.Endpoint.CqrsServiceReference.Node))]
     public partial class SystemEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -76,7 +78,53 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="DomainModelDto", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts", IsReference=true)]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Executable", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class Executable : Server.ReadModel.Endpoint.CqrsServiceReference.SystemEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NodeField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Node {
+            get {
+                return this.NodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NodeField, value) != true)) {
+                    this.NodeField = value;
+                    this.RaisePropertyChanged("Node");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Node", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class Node : Server.ReadModel.Endpoint.CqrsServiceReference.SystemEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] ExecutablesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string[] Executables {
+            get {
+                return this.ExecutablesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ExecutablesField, value) != true)) {
+                    this.ExecutablesField = value;
+                    this.RaisePropertyChanged("Executables");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="DomainModelDto", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
     public partial class DomainModelDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -169,7 +217,7 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
-    [System.Runtime.Serialization.DataContractAttribute(Name="Pong", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Pong", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
     public partial class Pong : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
@@ -224,6 +272,46 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         void EndRemoveSystem(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddNode", ReplyAction="http://tempuri.org/ICqrsService/AddNodeResponse")]
+        void AddNode(System.Guid id, string name, string parentSystemName);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/AddNode", ReplyAction="http://tempuri.org/ICqrsService/AddNodeResponse")]
+        System.IAsyncResult BeginAddNode(System.Guid id, string name, string parentSystemName, System.AsyncCallback callback, object asyncState);
+        
+        void EndAddNode(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveNode", ReplyAction="http://tempuri.org/ICqrsService/RemoveNodeResponse")]
+        void RemoveNode(System.Guid id, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveNode", ReplyAction="http://tempuri.org/ICqrsService/RemoveNodeResponse")]
+        System.IAsyncResult BeginRemoveNode(System.Guid id, string name, System.AsyncCallback callback, object asyncState);
+        
+        void EndRemoveNode(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddExecutable", ReplyAction="http://tempuri.org/ICqrsService/AddExecutableResponse")]
+        void AddExecutable(System.Guid id, string name, string parentSystemName);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/AddExecutable", ReplyAction="http://tempuri.org/ICqrsService/AddExecutableResponse")]
+        System.IAsyncResult BeginAddExecutable(System.Guid id, string name, string parentSystemName, System.AsyncCallback callback, object asyncState);
+        
+        void EndAddExecutable(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
+        void RemoveExecutable(System.Guid id, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
+        System.IAsyncResult BeginRemoveExecutable(System.Guid id, string name, System.AsyncCallback callback, object asyncState);
+        
+        void EndRemoveExecutable(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
+        void AssignExecutableToNode(System.Guid id, string executableName, string nodeName);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
+        System.IAsyncResult BeginAssignExecutableToNode(System.Guid id, string executableName, string nodeName, System.AsyncCallback callback, object asyncState);
+        
+        void EndAssignExecutableToNode(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/CommitVersion", ReplyAction="http://tempuri.org/ICqrsService/CommitVersionResponse")]
         void CommitVersion(System.Guid id);
         
@@ -247,6 +335,22 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         System.IAsyncResult BeginGetSystems(System.Guid id, System.AsyncCallback callback, object asyncState);
         
         Server.ReadModel.Endpoint.CqrsServiceReference.SystemEntity[] EndGetSystems(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetNodes", ReplyAction="http://tempuri.org/ICqrsService/GetNodesResponse")]
+        Server.ReadModel.Endpoint.CqrsServiceReference.Node[] GetNodes(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/GetNodes", ReplyAction="http://tempuri.org/ICqrsService/GetNodesResponse")]
+        System.IAsyncResult BeginGetNodes(System.Guid id, System.AsyncCallback callback, object asyncState);
+        
+        Server.ReadModel.Endpoint.CqrsServiceReference.Node[] EndGetNodes(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetExecutables", ReplyAction="http://tempuri.org/ICqrsService/GetExecutablesResponse")]
+        Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] GetExecutables(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/GetExecutables", ReplyAction="http://tempuri.org/ICqrsService/GetExecutablesResponse")]
+        System.IAsyncResult BeginGetExecutables(System.Guid id, System.AsyncCallback callback, object asyncState);
+        
+        Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] EndGetExecutables(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetList", ReplyAction="http://tempuri.org/ICqrsService/GetListResponse")]
         Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] GetList();
@@ -317,6 +421,44 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetNodesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetNodesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Node[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Server.ReadModel.Endpoint.CqrsServiceReference.Node[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetExecutablesCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetExecutablesCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Server.ReadModel.Endpoint.CqrsServiceReference.Executable[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -375,6 +517,36 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onRemoveSystemCompletedDelegate;
         
+        private BeginOperationDelegate onBeginAddNodeDelegate;
+        
+        private EndOperationDelegate onEndAddNodeDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddNodeCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRemoveNodeDelegate;
+        
+        private EndOperationDelegate onEndRemoveNodeDelegate;
+        
+        private System.Threading.SendOrPostCallback onRemoveNodeCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAddExecutableDelegate;
+        
+        private EndOperationDelegate onEndAddExecutableDelegate;
+        
+        private System.Threading.SendOrPostCallback onAddExecutableCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginRemoveExecutableDelegate;
+        
+        private EndOperationDelegate onEndRemoveExecutableDelegate;
+        
+        private System.Threading.SendOrPostCallback onRemoveExecutableCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginAssignExecutableToNodeDelegate;
+        
+        private EndOperationDelegate onEndAssignExecutableToNodeDelegate;
+        
+        private System.Threading.SendOrPostCallback onAssignExecutableToNodeCompletedDelegate;
+        
         private BeginOperationDelegate onBeginCommitVersionDelegate;
         
         private EndOperationDelegate onEndCommitVersionDelegate;
@@ -392,6 +564,18 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         private EndOperationDelegate onEndGetSystemsDelegate;
         
         private System.Threading.SendOrPostCallback onGetSystemsCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetNodesDelegate;
+        
+        private EndOperationDelegate onEndGetNodesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetNodesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetExecutablesDelegate;
+        
+        private EndOperationDelegate onEndGetExecutablesDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetExecutablesCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetListDelegate;
         
@@ -436,11 +620,25 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveSystemCompleted;
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddNodeCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveNodeCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AddExecutableCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveExecutableCompleted;
+        
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AssignExecutableToNodeCompleted;
+        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CommitVersionCompleted;
         
         public event System.EventHandler<GetNameCompletedEventArgs> GetNameCompleted;
         
         public event System.EventHandler<GetSystemsCompletedEventArgs> GetSystemsCompleted;
+        
+        public event System.EventHandler<GetNodesCompletedEventArgs> GetNodesCompleted;
+        
+        public event System.EventHandler<GetExecutablesCompletedEventArgs> GetExecutablesCompleted;
         
         public event System.EventHandler<GetListCompletedEventArgs> GetListCompleted;
         
@@ -603,6 +801,267 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         name}, this.onEndRemoveSystemDelegate, this.onRemoveSystemCompletedDelegate, userState);
         }
         
+        public void AddNode(System.Guid id, string name, string parentSystemName) {
+            base.Channel.AddNode(id, name, parentSystemName);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginAddNode(System.Guid id, string name, string parentSystemName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddNode(id, name, parentSystemName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndAddNode(System.IAsyncResult result) {
+            base.Channel.EndAddNode(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            string name = ((string)(inValues[1]));
+            string parentSystemName = ((string)(inValues[2]));
+            return this.BeginAddNode(id, name, parentSystemName, callback, asyncState);
+        }
+        
+        private object[] OnEndAddNode(System.IAsyncResult result) {
+            this.EndAddNode(result);
+            return null;
+        }
+        
+        private void OnAddNodeCompleted(object state) {
+            if ((this.AddNodeCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddNodeAsync(System.Guid id, string name, string parentSystemName) {
+            this.AddNodeAsync(id, name, parentSystemName, null);
+        }
+        
+        public void AddNodeAsync(System.Guid id, string name, string parentSystemName, object userState) {
+            if ((this.onBeginAddNodeDelegate == null)) {
+                this.onBeginAddNodeDelegate = new BeginOperationDelegate(this.OnBeginAddNode);
+            }
+            if ((this.onEndAddNodeDelegate == null)) {
+                this.onEndAddNodeDelegate = new EndOperationDelegate(this.OnEndAddNode);
+            }
+            if ((this.onAddNodeCompletedDelegate == null)) {
+                this.onAddNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddNodeCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddNodeDelegate, new object[] {
+                        id,
+                        name,
+                        parentSystemName}, this.onEndAddNodeDelegate, this.onAddNodeCompletedDelegate, userState);
+        }
+        
+        public void RemoveNode(System.Guid id, string name) {
+            base.Channel.RemoveNode(id, name);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRemoveNode(System.Guid id, string name, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRemoveNode(id, name, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndRemoveNode(System.IAsyncResult result) {
+            base.Channel.EndRemoveNode(result);
+        }
+        
+        private System.IAsyncResult OnBeginRemoveNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            string name = ((string)(inValues[1]));
+            return this.BeginRemoveNode(id, name, callback, asyncState);
+        }
+        
+        private object[] OnEndRemoveNode(System.IAsyncResult result) {
+            this.EndRemoveNode(result);
+            return null;
+        }
+        
+        private void OnRemoveNodeCompleted(object state) {
+            if ((this.RemoveNodeCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RemoveNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RemoveNodeAsync(System.Guid id, string name) {
+            this.RemoveNodeAsync(id, name, null);
+        }
+        
+        public void RemoveNodeAsync(System.Guid id, string name, object userState) {
+            if ((this.onBeginRemoveNodeDelegate == null)) {
+                this.onBeginRemoveNodeDelegate = new BeginOperationDelegate(this.OnBeginRemoveNode);
+            }
+            if ((this.onEndRemoveNodeDelegate == null)) {
+                this.onEndRemoveNodeDelegate = new EndOperationDelegate(this.OnEndRemoveNode);
+            }
+            if ((this.onRemoveNodeCompletedDelegate == null)) {
+                this.onRemoveNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveNodeCompleted);
+            }
+            base.InvokeAsync(this.onBeginRemoveNodeDelegate, new object[] {
+                        id,
+                        name}, this.onEndRemoveNodeDelegate, this.onRemoveNodeCompletedDelegate, userState);
+        }
+        
+        public void AddExecutable(System.Guid id, string name, string parentSystemName) {
+            base.Channel.AddExecutable(id, name, parentSystemName);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginAddExecutable(System.Guid id, string name, string parentSystemName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddExecutable(id, name, parentSystemName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndAddExecutable(System.IAsyncResult result) {
+            base.Channel.EndAddExecutable(result);
+        }
+        
+        private System.IAsyncResult OnBeginAddExecutable(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            string name = ((string)(inValues[1]));
+            string parentSystemName = ((string)(inValues[2]));
+            return this.BeginAddExecutable(id, name, parentSystemName, callback, asyncState);
+        }
+        
+        private object[] OnEndAddExecutable(System.IAsyncResult result) {
+            this.EndAddExecutable(result);
+            return null;
+        }
+        
+        private void OnAddExecutableCompleted(object state) {
+            if ((this.AddExecutableCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AddExecutableCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AddExecutableAsync(System.Guid id, string name, string parentSystemName) {
+            this.AddExecutableAsync(id, name, parentSystemName, null);
+        }
+        
+        public void AddExecutableAsync(System.Guid id, string name, string parentSystemName, object userState) {
+            if ((this.onBeginAddExecutableDelegate == null)) {
+                this.onBeginAddExecutableDelegate = new BeginOperationDelegate(this.OnBeginAddExecutable);
+            }
+            if ((this.onEndAddExecutableDelegate == null)) {
+                this.onEndAddExecutableDelegate = new EndOperationDelegate(this.OnEndAddExecutable);
+            }
+            if ((this.onAddExecutableCompletedDelegate == null)) {
+                this.onAddExecutableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddExecutableCompleted);
+            }
+            base.InvokeAsync(this.onBeginAddExecutableDelegate, new object[] {
+                        id,
+                        name,
+                        parentSystemName}, this.onEndAddExecutableDelegate, this.onAddExecutableCompletedDelegate, userState);
+        }
+        
+        public void RemoveExecutable(System.Guid id, string name) {
+            base.Channel.RemoveExecutable(id, name);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRemoveExecutable(System.Guid id, string name, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRemoveExecutable(id, name, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndRemoveExecutable(System.IAsyncResult result) {
+            base.Channel.EndRemoveExecutable(result);
+        }
+        
+        private System.IAsyncResult OnBeginRemoveExecutable(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            string name = ((string)(inValues[1]));
+            return this.BeginRemoveExecutable(id, name, callback, asyncState);
+        }
+        
+        private object[] OnEndRemoveExecutable(System.IAsyncResult result) {
+            this.EndRemoveExecutable(result);
+            return null;
+        }
+        
+        private void OnRemoveExecutableCompleted(object state) {
+            if ((this.RemoveExecutableCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RemoveExecutableCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RemoveExecutableAsync(System.Guid id, string name) {
+            this.RemoveExecutableAsync(id, name, null);
+        }
+        
+        public void RemoveExecutableAsync(System.Guid id, string name, object userState) {
+            if ((this.onBeginRemoveExecutableDelegate == null)) {
+                this.onBeginRemoveExecutableDelegate = new BeginOperationDelegate(this.OnBeginRemoveExecutable);
+            }
+            if ((this.onEndRemoveExecutableDelegate == null)) {
+                this.onEndRemoveExecutableDelegate = new EndOperationDelegate(this.OnEndRemoveExecutable);
+            }
+            if ((this.onRemoveExecutableCompletedDelegate == null)) {
+                this.onRemoveExecutableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveExecutableCompleted);
+            }
+            base.InvokeAsync(this.onBeginRemoveExecutableDelegate, new object[] {
+                        id,
+                        name}, this.onEndRemoveExecutableDelegate, this.onRemoveExecutableCompletedDelegate, userState);
+        }
+        
+        public void AssignExecutableToNode(System.Guid id, string executableName, string nodeName) {
+            base.Channel.AssignExecutableToNode(id, executableName, nodeName);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginAssignExecutableToNode(System.Guid id, string executableName, string nodeName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAssignExecutableToNode(id, executableName, nodeName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndAssignExecutableToNode(System.IAsyncResult result) {
+            base.Channel.EndAssignExecutableToNode(result);
+        }
+        
+        private System.IAsyncResult OnBeginAssignExecutableToNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            string executableName = ((string)(inValues[1]));
+            string nodeName = ((string)(inValues[2]));
+            return this.BeginAssignExecutableToNode(id, executableName, nodeName, callback, asyncState);
+        }
+        
+        private object[] OnEndAssignExecutableToNode(System.IAsyncResult result) {
+            this.EndAssignExecutableToNode(result);
+            return null;
+        }
+        
+        private void OnAssignExecutableToNodeCompleted(object state) {
+            if ((this.AssignExecutableToNodeCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AssignExecutableToNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AssignExecutableToNodeAsync(System.Guid id, string executableName, string nodeName) {
+            this.AssignExecutableToNodeAsync(id, executableName, nodeName, null);
+        }
+        
+        public void AssignExecutableToNodeAsync(System.Guid id, string executableName, string nodeName, object userState) {
+            if ((this.onBeginAssignExecutableToNodeDelegate == null)) {
+                this.onBeginAssignExecutableToNodeDelegate = new BeginOperationDelegate(this.OnBeginAssignExecutableToNode);
+            }
+            if ((this.onEndAssignExecutableToNodeDelegate == null)) {
+                this.onEndAssignExecutableToNodeDelegate = new EndOperationDelegate(this.OnEndAssignExecutableToNode);
+            }
+            if ((this.onAssignExecutableToNodeCompletedDelegate == null)) {
+                this.onAssignExecutableToNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAssignExecutableToNodeCompleted);
+            }
+            base.InvokeAsync(this.onBeginAssignExecutableToNodeDelegate, new object[] {
+                        id,
+                        executableName,
+                        nodeName}, this.onEndAssignExecutableToNodeDelegate, this.onAssignExecutableToNodeCompletedDelegate, userState);
+        }
+        
         public void CommitVersion(System.Guid id) {
             base.Channel.CommitVersion(id);
         }
@@ -750,6 +1209,106 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
             }
             base.InvokeAsync(this.onBeginGetSystemsDelegate, new object[] {
                         id}, this.onEndGetSystemsDelegate, this.onGetSystemsCompletedDelegate, userState);
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Node[] GetNodes(System.Guid id) {
+            return base.Channel.GetNodes(id);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetNodes(System.Guid id, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetNodes(id, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Node[] EndGetNodes(System.IAsyncResult result) {
+            return base.Channel.EndGetNodes(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetNodes(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            return this.BeginGetNodes(id, callback, asyncState);
+        }
+        
+        private object[] OnEndGetNodes(System.IAsyncResult result) {
+            Server.ReadModel.Endpoint.CqrsServiceReference.Node[] retVal = this.EndGetNodes(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetNodesCompleted(object state) {
+            if ((this.GetNodesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetNodesCompleted(this, new GetNodesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetNodesAsync(System.Guid id) {
+            this.GetNodesAsync(id, null);
+        }
+        
+        public void GetNodesAsync(System.Guid id, object userState) {
+            if ((this.onBeginGetNodesDelegate == null)) {
+                this.onBeginGetNodesDelegate = new BeginOperationDelegate(this.OnBeginGetNodes);
+            }
+            if ((this.onEndGetNodesDelegate == null)) {
+                this.onEndGetNodesDelegate = new EndOperationDelegate(this.OnEndGetNodes);
+            }
+            if ((this.onGetNodesCompletedDelegate == null)) {
+                this.onGetNodesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetNodesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetNodesDelegate, new object[] {
+                        id}, this.onEndGetNodesDelegate, this.onGetNodesCompletedDelegate, userState);
+        }
+        
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] GetExecutables(System.Guid id) {
+            return base.Channel.GetExecutables(id);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetExecutables(System.Guid id, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetExecutables(id, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] EndGetExecutables(System.IAsyncResult result) {
+            return base.Channel.EndGetExecutables(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetExecutables(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            return this.BeginGetExecutables(id, callback, asyncState);
+        }
+        
+        private object[] OnEndGetExecutables(System.IAsyncResult result) {
+            Server.ReadModel.Endpoint.CqrsServiceReference.Executable[] retVal = this.EndGetExecutables(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetExecutablesCompleted(object state) {
+            if ((this.GetExecutablesCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetExecutablesCompleted(this, new GetExecutablesCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetExecutablesAsync(System.Guid id) {
+            this.GetExecutablesAsync(id, null);
+        }
+        
+        public void GetExecutablesAsync(System.Guid id, object userState) {
+            if ((this.onBeginGetExecutablesDelegate == null)) {
+                this.onBeginGetExecutablesDelegate = new BeginOperationDelegate(this.OnBeginGetExecutables);
+            }
+            if ((this.onEndGetExecutablesDelegate == null)) {
+                this.onEndGetExecutablesDelegate = new EndOperationDelegate(this.OnEndGetExecutables);
+            }
+            if ((this.onGetExecutablesCompletedDelegate == null)) {
+                this.onGetExecutablesCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetExecutablesCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetExecutablesDelegate, new object[] {
+                        id}, this.onEndGetExecutablesDelegate, this.onGetExecutablesCompletedDelegate, userState);
         }
         
         public Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto[] GetList() {

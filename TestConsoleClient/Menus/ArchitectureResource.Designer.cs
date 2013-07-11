@@ -61,6 +61,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to   - {0}.
+        /// </summary>
+        internal static string ArchitectureNameDisplayItem {
+            get {
+                return ResourceManager.GetString("ArchitectureNameDisplayItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Product Name: .
         /// </summary>
         internal static string EnterProductNamePropmt {
@@ -138,6 +147,42 @@ namespace TestConsoleClient.Menus {
         internal static string System1_3 {
             get {
                 return ResourceManager.GetString("System1_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1.3.1.
+        /// </summary>
+        internal static string System1_3_1 {
+            get {
+                return ResourceManager.GetString("System1_3_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1.3.2.
+        /// </summary>
+        internal static string System1_3_2 {
+            get {
+                return ResourceManager.GetString("System1_3_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1.3 executable1.
+        /// </summary>
+        internal static string System1_3Exec1 {
+            get {
+                return ResourceManager.GetString("System1_3Exec1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1.3 executable2.
+        /// </summary>
+        internal static string System1_3Exec2 {
+            get {
+                return ResourceManager.GetString("System1_3Exec2", resourceCulture);
             }
         }
         

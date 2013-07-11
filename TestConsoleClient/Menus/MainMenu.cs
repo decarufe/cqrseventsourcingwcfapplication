@@ -28,8 +28,10 @@ namespace TestConsoleClient.Menus
              CreateMenu.Run();
              break;
            case "2":
+             ViewSystemsMenu.Run();
              break;
            case "3":
+             ViewDeploymentMenu.Run();
              break;
            case "q":
            case "Q":

@@ -22,6 +22,7 @@ namespace Server.ReadModel.Endpoint
     ConsumerOf<NodeRemovedEvent>,
     ConsumerOf<ExecutableAddedEvent>,
     ConsumerOf<ExecutableRemovedEvent>,
+    ConsumerOf<ExecutableAssignedEvent>,
     ConsumerOf<VersionCommitedEvent>
   {
     public ReadModelEventHandler()
@@ -52,7 +53,7 @@ namespace Server.ReadModel.Endpoint
 
     public void Consume(DomainModelCreatedEvent message)
     {
-      Console.WriteLine("{0}: {1}", message.GetType().Name, message.AggregateRootId);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1, message.GetType().Name, message.AggregateRootId);
       var entity = new ReadModelEntity
       {
         Id = message.AggregateRootId.ToString(),
@@ -74,12 +75,12 @@ namespace Server.ReadModel.Endpoint
       entity.Name = message.NewName;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.NewName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId, message.NewName);
     }
 
     public void Consume(PingCalled message)
     {
-      Console.WriteLine("Pong");
+      Console.WriteLine(Resource.Pong);
     }
 
     public void Consume(SystemAddedEvent message)
@@ -94,7 +95,7 @@ namespace Server.ReadModel.Endpoint
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}, {3}", message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
     }
 
     public void Consume(SystemRemovedEvent message)
@@ -102,11 +103,11 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      var toRemove = entity.Systems.First(system => system.Name == message.Name);
+      var toRemove = entity.Systems.First(x => x.Name == message.Name);
       entity.Systems.Remove(toRemove);
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId, message.Name);
     }
 
     public void Consume(NodeAddedEvent message)
@@ -118,10 +119,11 @@ namespace Server.ReadModel.Endpoint
       {
         Name = message.Name,
         ParentSystemName = message.ParentSystemName,
+        Executables = new List<string>(),
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}, {3}", message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
     }
 
     public void Consume(NodeRemovedEvent message)
@@ -129,11 +131,16 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      var toRemove = entity.Nodes.First(node => node.Name == message.Name);
+      var toRemove = entity.Nodes.First(x => x.Name == message.Name);
       entity.Nodes.Remove(toRemove);
+      foreach(var executable in entity.Executables.Where(x => x.Node == toRemove.Name))
+      {
+        executable.Node = string.Empty;
+      }
+
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId, message.Name);
     }
 
     public void Consume(ExecutableAddedEvent message)
@@ -148,7 +155,7 @@ namespace Server.ReadModel.Endpoint
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}, {3}", message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
     }
 
     public void Consume(ExecutableRemovedEvent message)
@@ -156,11 +163,40 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      var toRemove = entity.Executables.First(node => node.Name == message.Name);
+      var toRemove = entity.Executables.First(x => x.Name == message.Name);
       entity.Executables.Remove(toRemove);
+      foreach (var node in entity.Nodes.Where(x => x.Executables.Any(y => y == toRemove.Name)))
+      {
+        var executables = node.Executables.ToList();
+        executables.Remove(executables.First(x => x == toRemove.Name));
+        node.Executables = executables;
+      }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId, message.Name);
+    }
+
+    public void Consume(ExecutableAssignedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      var executable = entity.Executables.First(x => x.Name == message.ExecutableName);
+      var node = entity.Nodes.First(x => x.Name == message.NodeName);
+      // Clear previous assignations
+      foreach (var nodeItem in entity.Nodes.Where(x => x.Executables.Any(y => y == executable.Name)))
+      {
+        var executableItems = nodeItem.Executables.ToList();
+        executableItems.Remove(executableItems.First(x => x == executable.Name));
+        nodeItem.Executables = executableItems;
+      }
+      executable.Node = message.NodeName;
+      var executables = node.Executables.ToList();
+      executables.Add(message.ExecutableName);
+      node.Executables = executables;
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId, message.ExecutableName, message.NodeName);
     }
 
     public void Consume(VersionCommitedEvent message)
@@ -171,14 +207,16 @@ namespace Server.ReadModel.Endpoint
       {
         Id = Guid.NewGuid().ToString(),
         DomainModelId = masterEntity.DomainModelId,
-        Name = masterEntity.Name,
         LastEventSequence = masterEntity.LastEventSequence,
-        Systems = masterEntity.Systems,
+        Name = masterEntity.Name,
         Version = Version.Parse(message.NewVersion),
+        Systems = masterEntity.Systems,
+        Nodes = masterEntity.Nodes,
+        Executables = masterEntity.Executables,
       };
       Persistance<ReadModelEntity>.Instance.Add(versionEntity);
       UpdateLastEvent(message);
-      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.NewVersion);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId, message.NewVersion);
     }
   }
 }
