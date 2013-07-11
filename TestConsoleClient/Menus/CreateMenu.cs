@@ -17,7 +17,7 @@ namespace TestConsoleClient.Menus
         Console.WriteLine();
         DisplayArchitectureList(architectureList);
         Console.WriteLine();
-        Console.WriteLine("Enter Product Name");
+        Console.Write(ArchitectureResource.EnterProductNamePropmt);
         var name = Console.ReadLine();
         if (architectureList.All(x => x != name))
         {

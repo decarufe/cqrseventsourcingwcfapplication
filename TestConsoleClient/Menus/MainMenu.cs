@@ -11,12 +11,14 @@ namespace TestConsoleClient.Menus
        {
          Console.Clear();
          Console.WriteLine();
-         Console.WriteLine("Select Operation: ");
-         Console.WriteLine("1) Create Architecture");
-         Console.WriteLine("2) View Systems");
-         Console.WriteLine("3) View Deployment");
+         Console.WriteLine(MainMenuResource.SelectOperation);
+         Console.WriteLine(MainMenuResource.MenuItem_CreateArchitecture);
+         Console.WriteLine(MainMenuResource.MenuItem_ViewSystems);
+         Console.WriteLine(MainMenuResource.MenuItem_ViewDeployment);
          Console.WriteLine();
-         Console.WriteLine("Q) Exit");
+         Console.WriteLine(MainMenuResource.MenuItem_Exit);
+         Console.WriteLine();
+         Console.Write(MainMenuResource.SelectionPrompt);
 
          var answer = Console.ReadLine();
 

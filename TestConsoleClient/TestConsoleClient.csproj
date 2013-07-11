@@ -52,6 +52,11 @@
     </Compile>
     <Compile Include="Menus\CreateMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\MainMenuResource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>MainMenuResource.resx</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Service References\CqrsService\Reference.cs">
@@ -117,6 +122,10 @@
     <EmbeddedResource Include="Menus\ArchitectureResource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ArchitectureResource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Menus\MainMenuResource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>MainMenuResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

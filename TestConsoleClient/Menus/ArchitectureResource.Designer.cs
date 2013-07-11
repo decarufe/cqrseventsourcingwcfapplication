@@ -61,6 +61,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enter Product Name: .
+        /// </summary>
+        internal static string EnterProductNamePropmt {
+            get {
+                return ResourceManager.GetString("EnterProductNamePropmt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to node1.
         /// </summary>
         internal static string Node1 {
