@@ -89,11 +89,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlers\DomainModelCommandHandler.cs" />
+    <Compile Include="Commands\AddExecutableCommand.cs" />
+    <Compile Include="Commands\AddNodeCommand.cs" />
     <Compile Include="Commands\AddSystemCommand.cs" />
+    <Compile Include="Commands\RemoveNodeCommand.cs" />
     <Compile Include="Commands\CommitVersionCommand.cs" />
+    <Compile Include="Commands\RemoveExecutableCommand.cs" />
     <Compile Include="Commands\RemoveSystemCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="Domain\DomainModel.cs" />
+    <Compile Include="Domain\Executable.cs" />
+    <Compile Include="Domain\Node.cs" />
+    <Compile Include="Domain\SystemElement.cs" />
     <Compile Include="Domain\SystemGroup.cs" />
     <Compile Include="NEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

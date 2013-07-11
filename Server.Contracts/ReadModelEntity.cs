@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using MongoRepository;
+using Server.Contracts.Data;
 
 namespace Server.Contracts
 {
-  [DataContract]
   public class ReadModelEntity : IEntity
   {
     public string Id { get; set; }
@@ -14,5 +13,7 @@ namespace Server.Contracts
     public string Name { get; set; }
     public Version Version { get; set; }
     public List<SystemEntity> Systems { get; set; }
+    public List<Node> Nodes { get; set; }
+    public List<Executable> Executables { get; set; }
   }
 }

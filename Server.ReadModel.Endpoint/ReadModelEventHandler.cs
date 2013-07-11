@@ -4,6 +4,7 @@ using System.Linq;
 using JetBrains.Annotations;
 using Rhino.ServiceBus;
 using Server.Contracts;
+using Server.Contracts.Data;
 using Server.Contracts.Events;
 using SimpleCqrs.Eventing;
 using Utils;
@@ -17,6 +18,10 @@ namespace Server.ReadModel.Endpoint
     ConsumerOf<PingCalled>,
     ConsumerOf<SystemAddedEvent>,
     ConsumerOf<SystemRemovedEvent>,
+    ConsumerOf<NodeAddedEvent>,
+    ConsumerOf<NodeRemovedEvent>,
+    ConsumerOf<ExecutableAddedEvent>,
+    ConsumerOf<ExecutableRemovedEvent>,
     ConsumerOf<VersionCommitedEvent>
   {
     public ReadModelEventHandler()
@@ -54,6 +59,8 @@ namespace Server.ReadModel.Endpoint
         DomainModelId = message.AggregateRootId,
         LastEventSequence = message.Sequence,
         Systems = new List<SystemEntity>(),
+        Nodes = new List<Node>(),
+        Executables = new List<Executable>(),
       };
       Persistance<ReadModelEntity>.Instance.Add(entity);
       UpdateLastEvent(message);
@@ -95,8 +102,62 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      var systemToRemove = entity.Systems.First(system => system.Name == message.Name);
-      entity.Systems.Remove(systemToRemove);
+      var toRemove = entity.Systems.First(system => system.Name == message.Name);
+      entity.Systems.Remove(toRemove);
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);
+    }
+
+    public void Consume(NodeAddedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      entity.Nodes.Add(new Node
+      {
+        Name = message.Name,
+        ParentSystemName = message.ParentSystemName,
+      });
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine("{0}: {1}, {2}, {3}", message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
+    }
+
+    public void Consume(NodeRemovedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      var toRemove = entity.Nodes.First(node => node.Name == message.Name);
+      entity.Nodes.Remove(toRemove);
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);
+    }
+
+    public void Consume(ExecutableAddedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      entity.Executables.Add(new Executable
+      {
+        Name = message.Name,
+        ParentSystemName = message.ParentSystemName,
+      });
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine("{0}: {1}, {2}, {3}", message.GetType().Name, message.AggregateRootId, message.Name, message.ParentSystemName);
+    }
+
+    public void Consume(ExecutableRemovedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      var toRemove = entity.Executables.First(node => node.Name == message.Name);
+      entity.Executables.Remove(toRemove);
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine("{0}: {1}, {2}", message.GetType().Name, message.AggregateRootId, message.Name);

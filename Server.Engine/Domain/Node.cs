@@ -1,6 +1,7 @@
 ﻿namespace Server.Engine.Domain
 {
-  public class SystemGroup : SystemElement
+  public class Node : SystemElement
   {
+     
   }
 }

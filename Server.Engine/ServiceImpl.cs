@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection;
 using Rhino.ServiceBus;
 using Server.Contracts;
+using Server.Contracts.Data;
 using Server.Contracts.Events;
 using Server.Engine.Commands;
 using SimpleCqrs.Commanding;
@@ -40,6 +41,26 @@ namespace Server.Engine
       _commandBus.Send(new RemoveSystemCommand(id, name));
     }
 
+    public void AddNode(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddNodeCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveNode(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveNodeCommand(id, name));
+    }
+
+    public void AddExecutable(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddExecutableCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveExecutable(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveExecutableCommand(id, name));
+    }
+
     public void CommitVersion(Guid id)
     {
       _commandBus.Send(new CommitVersionCommand(id));
@@ -59,9 +80,23 @@ namespace Server.Engine
       return readModelEntity.Systems;
     }
 
+    public IEnumerable<Node> GetNodes(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Nodes;
+    }
+
+    public IEnumerable<Executable> GetExecutables(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Executables;
+    }
+
     public IEnumerable<DomainModelDto> GetList()
     {
-      return from a in Persistance<ReadModelEntity>.Instance.GetAll()
+      return from a in Persistance<ReadModelEntity>.Instance.GetAll().OrderBy(x => x.Name).ThenBy(x => x.Version)
              select new DomainModelDto { Name = a.Name, Version = a.Version != null ? a.Version.ToString() : string.Empty, DomainModelId = a.DomainModelId, ReadModelId = a.Id };
     }
 

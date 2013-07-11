@@ -1,4 +1,5 @@
-﻿using SimpleCqrs.Eventing;
+﻿using System;
+using SimpleCqrs.Eventing;
 
 namespace Server.Contracts.Events
 {
