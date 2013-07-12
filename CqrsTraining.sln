@@ -28,6 +28,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleClient", "TestCo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.DomainObjects", "Server.DomainObjects\Server.DomainObjects.csproj", "{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.WpfApplication", "Client.WpfApplication\Client.WpfApplication.csproj", "{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{23CA0520-53C2-4086-80E6-1593EA662F09} = {23CA0520-53C2-4086-80E6-1593EA662F09}
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -108,6 +113,16 @@ Global
 		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|x86.ActiveCfg = Release|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
