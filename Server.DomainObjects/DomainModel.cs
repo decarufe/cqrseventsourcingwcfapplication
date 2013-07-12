@@ -437,6 +437,7 @@ namespace Server.DomainObjects
     {
       _state.LastCommitedVersion = Version.Parse(@event.NewVersion);
       _state.SystemElementsAddedSinceLastCommit.Clear();
+      _state.MajorChange = false;
       ComputeSnapshotRequirements(@event);
     }
   }
