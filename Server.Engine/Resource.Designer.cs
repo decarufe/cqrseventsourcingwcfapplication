@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Server.ReadModel.Endpoint {
+namespace Server.Engine {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace Server.ReadModel.Endpoint {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Server.ReadModel.Endpoint.Resource", typeof(Resource).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Server.Engine.Resource", typeof(Resource).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,24 +57,6 @@ namespace Server.ReadModel.Endpoint {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to msmq://localhost/CQRS.ReadModel.
-        /// </summary>
-        internal static string MsmqEndpoint {
-            get {
-                return ResourceManager.GetString("MsmqEndpoint", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Pong.
-        /// </summary>
-        internal static string Pong {
-            get {
-                return ResourceManager.GetString("Pong", resourceCulture);
             }
         }
         
