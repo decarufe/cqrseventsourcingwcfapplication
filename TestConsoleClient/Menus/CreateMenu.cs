@@ -23,6 +23,7 @@ namespace TestConsoleClient.Menus
         if (string.IsNullOrEmpty(name))
         {
           ErrorManagement.PrintError(string.Format("You must specifiy a name for the Architecture!"));
+          return;
         }
 
         if (architectureList.All(x => x != name))

@@ -80,19 +80,19 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
-    <None Include="Service References\CqrsServiceReference\CqrsService.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService4.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService1.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService41.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService2.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService42.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService3.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService43.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\ServiceImpl.wsdl" />
+    <None Include="Service References\CqrsServiceReference\ServiceImpl1.wsdl" />
     <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.DomainModelDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
@@ -111,9 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadataStorage Include="Service References\CqrsServiceReference\" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Service References\CqrsServiceReference\CqrsService.disco" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\CqrsServiceReference\configuration91.svcinfo" />
@@ -140,6 +137,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>UtilsResource.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Service References\CqrsServiceReference\CqrsService1.disco" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

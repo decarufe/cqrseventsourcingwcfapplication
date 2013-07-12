@@ -98,6 +98,7 @@
     <Compile Include="Commands\RemoveExecutableCommand.cs" />
     <Compile Include="Commands\RemoveSystemCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
+    <Compile Include="EventHandlers\ReadModelEventHandler.cs" />
     <Compile Include="NEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
@@ -105,8 +106,9 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ReadModelRepository.cs" />
     <Compile Include="ServiceImpl.cs" />
-    <Compile Include="TrainingRuntime.cs" />
+    <Compile Include="DomainModelRuntime.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">

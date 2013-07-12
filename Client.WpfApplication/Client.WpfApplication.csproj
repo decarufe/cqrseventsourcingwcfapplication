@@ -4,13 +4,15 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <ProjectGuid>{DFC93D57-033E-43FE-B7EF-86DA9265C1B8}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Server.ReadModel.Endpoint</RootNamespace>
-    <AssemblyName>Server.ReadModel.Endpoint</AssemblyName>
+    <RootNamespace>Client.WpfApplication</RootNamespace>
+    <AssemblyName>Client.WpfApplication</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
   </PropertyGroup>
@@ -34,8 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Common.Logging, Version=2.1.2.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Common.Logging">
       <HintPath>..\packages\Common.Logging.2.1.2\lib\net40\Common.Logging.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.ServiceLocation">
@@ -54,17 +55,7 @@
     <Reference Include="Microsoft.Practices.Unity.Interception.Configuration">
       <HintPath>..\packages\Unity.Interception.2.1.505.2\lib\NET35\Microsoft.Practices.Unity.Interception.Configuration.dll</HintPath>
     </Reference>
-    <Reference Include="MongoDB.Bson">
-      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>..\packages\mongocsharpdriver.1.8.1\lib\net35\MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoRepository">
-      <HintPath>..\packages\MongoRepository.1.5.0\lib\MongoRepository.dll</HintPath>
-    </Reference>
-    <Reference Include="Rhino.ServiceBus, Version=3.1.1.0, Culture=neutral, PublicKeyToken=0b3305902db7183f, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="Rhino.ServiceBus">
       <HintPath>..\packages\Rhino.ServiceBus.3.1.1.0\lib\4.0\Rhino.ServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.ServiceBus.Host">
@@ -73,89 +64,100 @@
     <Reference Include="Rhino.ServiceBus.Unity">
       <HintPath>..\packages\Rhino.ServiceBus.Unity.3.1.1.0\lib\4.0\Rhino.ServiceBus.Unity.dll</HintPath>
     </Reference>
-    <Reference Include="SimpleCqrs, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SimpleCqrs.1.0\lib\SimpleCqrs.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleCqrs.Rhino.ServiceBus">
-      <HintPath>..\packages\SimpleCqrs.Rhino.Servicebus.1.0\lib\SimpleCqrs.Rhino.ServiceBus.dll</HintPath>
-    </Reference>
-    <Reference Include="SimpleCqrs.Unity, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\SimpleCqrs.Unity.1.0\lib\SimpleCqrs.Unity.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Core" />
+    <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Xml" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ReadModelEventHandler.cs" />
-    <Compile Include="ReadModelRepository.cs" />
-    <Compile Include="Program.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ReadModelBootStrapper.cs" />
-    <Compile Include="ReadModelEventBus.cs" />
-    <Compile Include="Resource.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resource.resx</DependentUpon>
-    </Compile>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="BatchInsertCommand.cs" />
+    <Compile Include="IRefresh.cs" />
     <Compile Include="Service References\CqrsServiceReference\Reference.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Reference.svcmap</DependentUpon>
     </Compile>
+    <Compile Include="SetNameCommand.cs" />
+    <Compile Include="WpfBootStrapper.cs" />
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
-      <Project>{bfaf71da-7097-4d26-afc3-5f44fd9d7025}</Project>
-      <Name>Server.Contracts</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Server.Engine\Server.Engine.csproj">
-      <Project>{eac90361-73e0-4e01-9699-8d6fa0ca5f83}</Project>
-      <Name>Server.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Utils\Utils.csproj">
-      <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
-      <Name>Utils</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="app.config" />
-    <None Include="Documentation.chm" />
     <None Include="packages.config" />
-    <None Include="Service References\CqrsServiceReference\CqrsService4.xsd">
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.DomainModelDto.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Executable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Node.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Pong.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.SystemEntity.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\CqrsService3.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService41.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService31.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService42.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService32.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="Service References\CqrsServiceReference\CqrsService43.xsd">
+    <None Include="Service References\CqrsServiceReference\CqrsService33.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Executable.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Node.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Pong.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
-    </None>
-    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.SystemEntity.datasource">
-      <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CqrsServiceReference\ServiceImpl1.wsdl" />
   </ItemGroup>
@@ -178,11 +180,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resource.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
+    <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
+      <Project>{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}</Project>
+      <Name>Server.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="Service References\CqrsServiceReference\CqrsService1.disco" />

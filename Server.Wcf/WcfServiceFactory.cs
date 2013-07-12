@@ -1,4 +1,7 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection;
 using System.ServiceModel;
 using Microsoft.Practices.Unity;
 using Rhino.ServiceBus;
@@ -6,6 +9,7 @@ using Rhino.ServiceBus.Hosting;
 using Rhino.ServiceBus.Msmq;
 using Server.Contracts;
 using Server.Engine;
+using SimpleCqrs.Eventing;
 using SimpleCqrs.Rhino.ServiceBus;
 using Unity.Wcf;
 using Utils;
@@ -14,7 +18,7 @@ namespace Server.Wcf
 {
   public class WcfServiceFactory : UnityServiceHostFactory
   {
-    private TrainingRuntime _runtime;
+    private DomainModelRuntime _runtime;
     private DefaultHost _host;
 
     protected override ServiceHost CreateServiceHost(Type serviceType, Uri[] baseAddresses)
@@ -24,7 +28,7 @@ namespace Server.Wcf
       _host = new DefaultHost();
       _host.Start<BackendBootStrapper>();
 
-      _runtime = new TrainingRuntime(new RsbEventBus((IServiceBus)_host.Bus));
+      _runtime = new DomainModelRuntime(new RsbEventBus((IServiceBus)_host.Bus));
       _runtime.Start();
 
       var unityContainer = _runtime.ServiceLocator.Container;
