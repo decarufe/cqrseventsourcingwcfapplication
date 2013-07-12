@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Runtime.Serialization;
 using JetBrains.Annotations;
 using MongoRepository;
 
 namespace Server.Contracts
 {
+  [UsedImplicitly]
   public class ReadModelInfo : IEntity
   {
     public ReadModelInfo()

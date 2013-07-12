@@ -1,4 +1,3 @@
-using System.Linq;
 using JetBrains.Annotations;
 using Rhino.ServiceBus.Unity;
 

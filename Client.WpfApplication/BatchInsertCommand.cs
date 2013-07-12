@@ -15,7 +15,7 @@ namespace Client.WpfApplication
 
     public void Execute(object parameter)
     {
-      var readModelEntity = (ReadModelEntity) parameter;
+      var readModelEntity = (DomainModelDto)parameter;
 
       using (var client = new CqrsServiceClient())
       {

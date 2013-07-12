@@ -34,8 +34,25 @@ namespace Server.ReadModel.Endpoint
       var runtime = new DomainModelRuntime();
       runtime.Start();
 
+      RebuildFromEvents();
+
       Console.WriteLine("Waiting for messages");
       Console.ReadLine();
+    }
+
+    private static void RebuildFromEvents()
+    {
+      ReadModelInfo readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof(ReadModelEntity).FullName);
+      DateTime lastEvent = readModelInfo == null ? DateTime.MinValue : readModelInfo.LastEvent;
+
+      Console.Write("Connecting to server...");
+      using (var cqrsServiceClient = new CqrsServiceClient())
+      {
+        Console.WriteLine("Connnected.");
+        Console.WriteLine("Reloading events...");
+        cqrsServiceClient.ReloadFromEvents(new Uri(Resource.MsmqEndpoint), lastEvent.ToUniversalTime());
+        Console.WriteLine("Reloading events completed.");
+      }
     }
   }
 }

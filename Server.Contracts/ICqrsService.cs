@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ServiceModel;
+using Server.Contracts.Data;
 
 namespace Server.Contracts
 {
@@ -12,10 +13,46 @@ namespace Server.Contracts
     void SetName(Guid id, string name);
 
     [OperationContract]
+    void AddSystem(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveSystem(Guid id, string name);
+
+    [OperationContract]
+    void AddNode(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveNode(Guid id, string name);
+
+    [OperationContract]
+    void AddExecutable(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveExecutable(Guid id, string name);
+
+    [OperationContract]
+    void AssignExecutableToNode(Guid id, string executableName, string nodeName);
+
+    [OperationContract]
+    void CommitVersion(Guid id);
+
+    [OperationContract]
     string GetName(Guid id);
 
     [OperationContract]
-    IEnumerable<ReadModelEntity> GetList();
+    IEnumerable<SystemEntity> GetSystems(Guid id);
+
+    [OperationContract]
+    IEnumerable<Node> GetNodes(Guid id);
+
+    [OperationContract]
+    IEnumerable<Executable> GetExecutables(Guid id);
+
+    [OperationContract]
+    IEnumerable<DomainModelDto> GetList();
+
+    [OperationContract]
+    IEnumerable<DomainModelDto> GetPublishedList();
 
     [OperationContract]
     void ReloadFromEvents(Uri uri, DateTime lastEvent);
