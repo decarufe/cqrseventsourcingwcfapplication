@@ -26,6 +26,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestConsoleClient", "TestCo
 		{23CA0520-53C2-4086-80E6-1593EA662F09} = {23CA0520-53C2-4086-80E6-1593EA662F09}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.DomainObjects", "Server.DomainObjects\Server.DomainObjects.csproj", "{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -96,6 +98,16 @@ Global
 		{36B93017-5622-4EF6-8AA1-F9BE221A06DF}.Release|Mixed Platforms.Build.0 = Release|x86
 		{36B93017-5622-4EF6-8AA1-F9BE221A06DF}.Release|x86.ActiveCfg = Release|x86
 		{36B93017-5622-4EF6-8AA1-F9BE221A06DF}.Release|x86.Build.0 = Release|x86
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
