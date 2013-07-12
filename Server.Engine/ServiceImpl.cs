@@ -15,15 +15,28 @@ namespace Server.Engine
 {
   public class ServiceImpl : ICqrsService
   {
-    private readonly IServiceBus _serviceBus;
+    private readonly IEventBus _eventBus;
     private readonly ICommandBus _commandBus;
     private readonly IEventStore _eventStore;
+    private readonly IServiceBus _serviceBus;
+    private static Semaphore _lock = new Semaphore(1, 1);
 
-    public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus)
+    public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus, IEventBus eventBus)
     {
       _commandBus = commandBus;
       _eventStore = eventStore;
       _serviceBus = serviceBus;
+      _eventBus = eventBus;
+
+      _lock.WaitOne();
+
+      var readModelInfo = Persistance<ReadModelInfo>.Instance.Get(typeof (ReadModelEntity).FullName);
+      DateTime lastEvent = readModelInfo == null ? DateTime.MinValue : readModelInfo.LastEvent;
+      var missingEvents = GetMissingEvents(lastEvent);
+      if (missingEvents.Any())
+        _eventBus.PublishEvents(missingEvents);
+
+      _lock.Release();
     }
 
     public void SetName(Guid id, string name)
@@ -45,7 +58,7 @@ namespace Server.Engine
 
     public Pong Ping(Uri uri)
     {
-      _serviceBus.Send(new Endpoint {Uri = uri}, new PingCalled());
+      _serviceBus.Send(new Endpoint { Uri = uri }, new PingCalled());
       return new Pong();
     }
 
