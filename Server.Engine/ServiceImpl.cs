@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Threading;
 using Rhino.ServiceBus;
 using Server.Contracts;
+using Server.Contracts.Data;
 using Server.Contracts.Events;
 using Server.Engine.Commands;
 using SimpleCqrs.Commanding;
@@ -44,6 +45,46 @@ namespace Server.Engine
       _commandBus.Send(new SetNameCommand(id, name));
     }
 
+    public void AddSystem(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddSystemCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveSystem(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveSystemCommand(id, name));
+    }
+
+    public void AddNode(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddNodeCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveNode(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveNodeCommand(id, name));
+    }
+
+    public void AddExecutable(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddExecutableCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveExecutable(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveExecutableCommand(id, name));
+    }
+
+    public void AssignExecutableToNode(Guid id, string executableName, string nodeName)
+    {
+      _commandBus.Send(new AssignExecutableToNodeCommand(id, executableName, nodeName));
+    }
+
+    public void CommitVersion(Guid id)
+    {
+      _commandBus.Send(new CommitVersionCommand(id));
+    }
+
     public string GetName(Guid id)
     {
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
@@ -51,9 +92,56 @@ namespace Server.Engine
       return readModelEntity.Name;
     }
 
-    public IEnumerable<ReadModelEntity> GetList()
+    public IEnumerable<SystemEntity> GetSystems(Guid id)
     {
-      return Persistance<ReadModelEntity>.Instance.GetAll();
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Systems;
+    }
+
+    public IEnumerable<Node> GetNodes(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Nodes;
+    }
+
+    public IEnumerable<Executable> GetExecutables(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Executables;
+    }
+
+    public IEnumerable<DomainModelDto> GetList()
+    {
+      return from a in Persistance<ReadModelEntity>.Instance.GetAll().OrderBy(x => x.Name).ThenBy(x => x.Version)
+             select
+               new DomainModelDto
+               {
+                 Name = a.Name,
+                 Version = a.Version != null ? a.Version.ToString() : string.Empty,
+                 DomainModelId = a.DomainModelId,
+                 ReadModelId = a.Id
+               };
+    }
+
+    public IEnumerable<DomainModelDto> GetPublishedList()
+    {
+      return
+        from a in
+          Persistance<ReadModelEntity>.Instance.GetAll()
+                                      .Where(y => y.DomainModelId.ToString() != y.Id)
+                                      .OrderBy(x => x.Name)
+                                      .ThenBy(x => x.Version)
+        select
+          new DomainModelDto
+          {
+            Name = a.Name,
+            Version = a.Version != null ? a.Version.ToString() : string.Empty,
+            DomainModelId = a.DomainModelId,
+            ReadModelId = a.Id
+          };
     }
 
     public Pong Ping(Uri uri)

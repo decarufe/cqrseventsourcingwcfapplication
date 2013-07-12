@@ -6,7 +6,7 @@ using EventStore;
 using EventStore.Serialization;
 using MongoDB.Bson.Serialization;
 using Server.Contracts;
-using Server.Engine.Domain;
+using Server.DomainObjects;
 using SimpleCqrs.Eventing;
 
 namespace Server.Engine
@@ -33,24 +33,24 @@ namespace Server.Engine
       //   BsonClassMap.RegisterClassMap<DomainModelCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
       //   ...
-
-      BsonClassMap.RegisterClassMap<DomainModel.State>();
-
-      Assembly assembly = typeof (ICqrsService).Assembly;
-      var types = from t in assembly.GetTypes()
+      Assembly eventsAssembly = typeof (ICqrsService).Assembly;
+      var types = (from t in eventsAssembly.GetTypes()
                   where t.IsPublic
                         && typeof (DomainEvent).IsAssignableFrom(t)
-                  select t;
+                  select t).ToList();
 
-      var mapper = (from map in typeof (BsonClassMap)
-                      .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod)
+      Assembly domainAssembly = typeof(DomainModel).Assembly;
+      types.AddRange(domainAssembly.GetTypes());
+
+      var mapper = (from map in typeof(BsonClassMap)
+                .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod)
                     where map.Name == "RegisterClassMap"
                           && !map.GetParameters().Any()
                     select map).Single();
 
       foreach (var type in types)
       {
-        MethodInfo map = mapper.MakeGenericMethod(new[] {type});
+        MethodInfo map = mapper.MakeGenericMethod(new[] { type });
         map.Invoke(null, null);
       }
 

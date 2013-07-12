@@ -30,22 +30,22 @@ namespace Client.WpfApplication
     private DefaultHost _host;
 
     public static readonly DependencyProperty ItemsProperty =
-      DependencyProperty.Register("Items", typeof (ObservableCollection<ReadModelEntity>), typeof (MainWindow),
-                                  new PropertyMetadata(default(ObservableCollection<ReadModelEntity>)));
+      DependencyProperty.Register("Items", typeof(ObservableCollection<DomainModelDto>), typeof(MainWindow),
+                                  new PropertyMetadata(default(ObservableCollection<DomainModelDto>)));
 
-    public ObservableCollection<ReadModelEntity> Items
+    public ObservableCollection<DomainModelDto> Items
     {
-      get { return (ObservableCollection<ReadModelEntity>) GetValue(ItemsProperty); }
+      get { return (ObservableCollection<DomainModelDto>)GetValue(ItemsProperty); }
       set { SetValue(ItemsProperty, value); }
     }
 
     public static readonly DependencyProperty SelectedItemProperty =
-      DependencyProperty.Register("SelectedItem", typeof (ReadModelEntity), typeof (MainWindow),
-                                  new PropertyMetadata(default(ReadModelEntity)));
+      DependencyProperty.Register("SelectedItem", typeof(DomainModelDto), typeof(MainWindow),
+                                  new PropertyMetadata(default(DomainModelDto)));
 
-    public ReadModelEntity SelectedItem
+    public DomainModelDto SelectedItem
     {
-      get { return (ReadModelEntity) GetValue(SelectedItemProperty); }
+      get { return (DomainModelDto) GetValue(SelectedItemProperty); }
       set { SetValue(SelectedItemProperty, value); }
     }
 
@@ -74,7 +74,7 @@ namespace Client.WpfApplication
 
     private void UpdateLabel()
     {
-      ButtonLabel = SelectedItem == null || SelectedItem is NullReadModelEntity ? "Create" : "Save";
+      ButtonLabel = SelectedItem == null || SelectedItem is NullDomainModelDto ? "Create" : "Save";
     }
 
     private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -99,15 +99,15 @@ namespace Client.WpfApplication
 
     private void Selector_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
     {
-      SelectedItem = (ReadModelEntity) ((ListBox) e.Source).SelectedItem;
+      SelectedItem = (DomainModelDto) ((ListBox) e.Source).SelectedItem;
       UpdateLabel();
     }
 
-    private class NullReadModelEntity : ReadModelEntity
+    private class NullDomainModelDto : DomainModelDto
     {
-      public NullReadModelEntity()
+      public NullDomainModelDto()
       {
-        Id = Guid.NewGuid().ToString();
+        ReadModelId = Guid.NewGuid().ToString();
         Name = "<new>";
       }
     }
@@ -115,14 +115,14 @@ namespace Client.WpfApplication
     public void Refresh()
     {
       var client = new CqrsServiceClient();
-      Task<IEnumerable<ReadModelEntity>>
+      Task<IEnumerable<DomainModelDto>>
         .Factory
         .FromAsync(client.BeginGetList, client.EndGetList, client)
         .ContinueWith(t =>
         {
-          var all = new[] {new NullReadModelEntity()}
+          var all = new[] {new NullDomainModelDto()}
             .Union(t.Result);
-          Items = new ObservableCollection<ReadModelEntity>(all);
+          Items = new ObservableCollection<DomainModelDto>(all);
           SelectedItem = Items.FirstOrDefault();
         }, TaskScheduler.FromCurrentSynchronizationContext());
     }
