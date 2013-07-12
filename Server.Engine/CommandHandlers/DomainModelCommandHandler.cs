@@ -1,8 +1,8 @@
 using System;
 using System.Diagnostics;
 using JetBrains.Annotations;
+using Server.DomainObjects;
 using Server.Engine.Commands;
-using Server.Engine.Domain;
 using SimpleCqrs.Commanding;
 using SimpleCqrs.Domain;
 

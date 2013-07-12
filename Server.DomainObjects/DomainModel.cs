@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -9,7 +9,7 @@ using Server.Contracts.Events;
 using SimpleCqrs.Domain;
 using SimpleCqrs.Eventing;
 
-namespace Server.Engine.Domain
+namespace Server.DomainObjects
 {
   public class DomainModel : AggregateRoot, ISnapshotOriginator
   {
