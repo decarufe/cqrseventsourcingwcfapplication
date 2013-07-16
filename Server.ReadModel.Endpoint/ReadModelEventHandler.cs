@@ -109,6 +109,10 @@ namespace Server.ReadModel.Endpoint
         Node = message.NodeName,
         Dispatchables = new List<string>(),
       });
+      var node = entity.Nodes.First(x => x.Name == message.NodeName);
+      var dispatchers = node.Dispatchers.ToList();
+      dispatchers.Add(message.Name);
+      node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
@@ -132,7 +136,7 @@ namespace Server.ReadModel.Endpoint
       dispatcher.Node = message.NodeName;
       List<string> dispatchers = node.Dispatchers.ToList();
       dispatchers.Add(message.DispatcherName);
-      node.Executables = dispatchers;
+      node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
