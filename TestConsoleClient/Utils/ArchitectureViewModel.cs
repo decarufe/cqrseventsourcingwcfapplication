@@ -16,23 +16,25 @@ namespace TestConsoleClient.Utils
     private static void PrintSbsRecusively(SystemEntity parentSystem, List<SystemEntity> systems, string indentation)
     {
       Console.WriteLine(UtilsResource.FormatString_SystemDisplay, indentation, parentSystem.Name);
-      foreach (var systemEntity in systems.Where(x => x.ParentSystemName == parentSystem.Name))
+      foreach (var systemEntity in systems.Where(x => x.ParentSystemId == parentSystem.Id))
       {
         PrintSbsRecusively(systemEntity, systems, indentation + Indentation);
       }
     }
 
-    public static void Deployment(Node node, List<Dispatchable> disaptchables)
+    public static void Deployment(Node node, List<Executable> executables, List<Dispatcher> dispatchers, List<Dispatchable> disaptchables)
     {
       Console.WriteLine(UtilsResource.NodeItemDisplay, node.Name);
       foreach (var executable in node.Executables)
       {
-        Console.WriteLine(UtilsResource.FormatString_ExecutableDisplay, Indentation, executable);
+        var excutableName = executables.First(x => x.Id == executable).Name;
+        Console.WriteLine(UtilsResource.FormatString_ExecutableDisplay, Indentation, excutableName);
       }
       foreach (var dispatcher in node.Dispatchers)
       {
-        Console.WriteLine(UtilsResource.FormatString_DispatcherDisplay, Indentation, dispatcher);
-        string dispatcher1 = dispatcher;
+        var dispatcherName = dispatchers.First(x => x.Id == dispatcher).Name;
+        Console.WriteLine(UtilsResource.FormatString_DispatcherDisplay, Indentation, dispatcherName);
+        long dispatcher1 = dispatcher;
         foreach (var dispatchable in disaptchables.Where(x => x.Dispatcher == dispatcher1))
         {
           Console.WriteLine(UtilsResource.FormatString_DispatchableDisplay, Indentation, dispatchable.Name);

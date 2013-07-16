@@ -10,32 +10,33 @@
   <xs:element name="ArrayOfSystemEntity" nillable="true" type="tns:ArrayOfSystemEntity" />
   <xs:complexType name="SystemEntity">
     <xs:sequence>
+      <xs:element minOccurs="0" name="Id" type="xs:long" />
       <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
-      <xs:element minOccurs="0" name="ParentSystemName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentSystemId" type="xs:long" />
     </xs:sequence>
   </xs:complexType>
   <xs:element name="SystemEntity" nillable="true" type="tns:SystemEntity" />
-  <xs:complexType name="Executable">
-    <xs:complexContent mixed="false">
-      <xs:extension base="tns:SystemEntity">
-        <xs:sequence>
-          <xs:element minOccurs="0" name="Node" nillable="true" type="xs:string" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
-  </xs:complexType>
-  <xs:element name="Executable" nillable="true" type="tns:Executable" />
   <xs:complexType name="Node">
     <xs:complexContent mixed="false">
       <xs:extension base="tns:SystemEntity">
         <xs:sequence>
-          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Executables" nillable="true" type="q1:ArrayOfstring" />
-          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchers" nillable="true" type="q2:ArrayOfstring" />
+          <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Executables" nillable="true" type="q1:ArrayOflong" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchers" nillable="true" type="q2:ArrayOflong" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Node" nillable="true" type="tns:Node" />
+  <xs:complexType name="Executable">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SystemEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Node" type="xs:long" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Executable" nillable="true" type="tns:Executable" />
   <xs:complexType name="ArrayOfNode">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Node" nillable="true" type="tns:Node" />
@@ -58,8 +59,8 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:SystemEntity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Node" nillable="true" type="xs:string" />
-          <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchables" nillable="true" type="q3:ArrayOfstring" />
+          <xs:element minOccurs="0" name="Node" type="xs:long" />
+          <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchables" nillable="true" type="q3:ArrayOflong" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -75,7 +76,7 @@
     <xs:complexContent mixed="false">
       <xs:extension base="tns:SystemEntity">
         <xs:sequence>
-          <xs:element minOccurs="0" name="Dispatcher" nillable="true" type="xs:string" />
+          <xs:element minOccurs="0" name="Dispatcher" type="xs:long" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>

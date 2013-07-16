@@ -13,43 +13,43 @@ namespace Server.Contracts
     void SetName(Guid id, string name);
 
     [OperationContract]
-    void AddSystem(Guid id, string name, string parentSystemName);
+    long AddSystem(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveSystem(Guid id, string name);
+    void RemoveSystem(Guid id, long systemId);
 
     [OperationContract]
-    void AddNode(Guid id, string name, string parentSystemName);
+    long AddNode(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveNode(Guid id, string name);
+    void RemoveNode(Guid id, long nodeId);
 
     [OperationContract]
-    void AddExecutable(Guid id, string name, string parentSystemName);
+    long AddExecutable(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveExecutable(Guid id, string name);
+    void RemoveExecutable(Guid id, long executableId);
 
     [OperationContract]
-    void AssignExecutableToNode(Guid id, string executableName, string nodeName);
+    void AssignExecutableToNode(Guid id, long executableId, long nodeId);
 
     [OperationContract]
-    void AddDispatcher(Guid id, string name, string nodeName);
+    long AddDispatcher(Guid id, string name, long nodeId);
 
     [OperationContract]
-    void RemoveDispatcher(Guid id, string name);
+    void RemoveDispatcher(Guid id, long dispatcherId);
 
     [OperationContract]
-    void AssignDispatcherToNode(Guid id, string dispatcherName, string nodeName);
+    void AssignDispatcherToNode(Guid id, long dispatcherId, long nodeId);
 
     [OperationContract]
-    void AddDispatchable(Guid id, string name, string parentSystemName);
+    long AddDispatchable(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveDispatchable(Guid id, string name);
+    void RemoveDispatchable(Guid id, long dispatchableId);
 
     [OperationContract]
-    void AssignDispatchableToDispatcher(Guid id, string dispatchableName, string dispatcherName);
+    void AssignDispatchableToDispatcher(Guid id, long dispatchableId, long dispatcherId);
 
     [OperationContract]
     void CommitVersion(Guid id);

@@ -5,6 +5,6 @@ namespace Server.Contracts.Events
 {
   public class SystemRemovedEvent : DomainEvent
   {
-    public string Name { get; set; }
+    public long Id { get; set; }
   }
 }

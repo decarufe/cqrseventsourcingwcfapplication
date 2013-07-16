@@ -10,9 +10,12 @@ namespace Server.Contracts.Data
   public class SystemEntity
   {
     [DataMember(Order = 0)]
-    public string Name { get; set; }
+    public long Id { get; set; }
 
     [DataMember(Order = 1)]
-    public string ParentSystemName { get; set; }
+    public string Name { get; set; }
+
+    [DataMember(Order = 2)]
+    public long ParentSystemId { get; set; }
   }
 }

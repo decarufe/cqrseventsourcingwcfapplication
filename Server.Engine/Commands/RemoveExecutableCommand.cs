@@ -5,18 +5,18 @@ namespace Server.Engine.Commands
 {
   public class RemoveExecutableCommand : ICommand
   {
-    private readonly string _name;
+    private readonly long _executableId;
     private readonly Guid _id;
 
-    public RemoveExecutableCommand(Guid id, string name)
+    public RemoveExecutableCommand(Guid id, long executableId)
     {
       _id = id;
-      _name = name;
+      _executableId = executableId;
     }
 
-    public string Name
+    public long ExecutableId
     {
-      get { return _name; }
+      get { return _executableId; }
     }
 
     public Guid Id

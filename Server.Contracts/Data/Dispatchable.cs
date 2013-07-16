@@ -8,6 +8,6 @@ namespace Server.Contracts.Data
   public class Dispatchable : SystemEntity
   {
     [DataMember(Order = 0)]
-    public string Dispatcher { get; set; }
+    public long Dispatcher { get; set; }
   }
 }

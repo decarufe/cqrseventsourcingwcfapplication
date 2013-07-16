@@ -5,18 +5,18 @@ namespace Server.Engine.Commands
 {
   public class RemoveNodeCommand : ICommand
   {
-    private readonly string _name;
+    private readonly long _nodeId;
     private readonly Guid _id;
 
-    public RemoveNodeCommand(Guid id, string name)
+    public RemoveNodeCommand(Guid id, long nodeId)
     {
       _id = id;
-      _name = name;
+      _nodeId = nodeId;
     }
 
-    public string Name
+    public long NodeId
     {
-      get { return _name; }
+      get { return _nodeId; }
     }
 
     public Guid Id

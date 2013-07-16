@@ -4,7 +4,7 @@ namespace Server.Contracts.Events.Dispatchables
 {
   public class DispatchableAssignedEvent : DomainEvent
   {
-    public string DispatchableName { get; set; }
-    public string DispatcherName { get; set; }
+    public long DispatchableId { get; set; }
+    public long DispatcherId { get; set; }
   }
 }

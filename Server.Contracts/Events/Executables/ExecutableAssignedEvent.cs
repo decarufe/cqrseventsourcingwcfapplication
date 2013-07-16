@@ -4,7 +4,7 @@ namespace Server.Contracts.Events.Executables
 {
   public class ExecutableAssignedEvent : DomainEvent
   {
-    public string ExecutableName { get; set; }
-    public string NodeName { get; set; }
+    public long ExecutableId { get; set; }
+    public long NodeId { get; set; }
   }
 }

@@ -9,9 +9,9 @@ namespace Server.Contracts.Data
   public class Dispatcher : SystemEntity
   {
     [DataMember(Order = 0)]
-    public string Node { get; set; }
+    public long Node { get; set; }
 
     [DataMember(Order = 1)]
-    public IEnumerable<string> Dispatchables { get; set; }
+    public IEnumerable<long> Dispatchables { get; set; }
   }
 }

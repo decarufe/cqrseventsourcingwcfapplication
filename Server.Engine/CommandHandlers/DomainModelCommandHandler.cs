@@ -39,7 +39,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddDispatchable(handlingContext.Command.Name, handlingContext.Command.ParentSystemName);
+          domainModel.AddDispatchable(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -57,7 +57,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddDispatcher(handlingContext.Command.Name, handlingContext.Command.NodeName);
+          domainModel.AddDispatcher(handlingContext.Command.Name, handlingContext.Command.NodeId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -75,7 +75,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddExecutable(handlingContext.Command.Name, handlingContext.Command.ParentSystemName);
+          domainModel.AddExecutable(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -93,7 +93,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddNode(handlingContext.Command.Name, handlingContext.Command.ParentSystemName);
+          domainModel.AddNode(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -111,7 +111,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddSystem(handlingContext.Command.Name, handlingContext.Command.ParentSystemName);
+          domainModel.AddSystem(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -129,7 +129,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AssignDispatchableToDispatcher(handlingContext.Command.DispatchableName, handlingContext.Command.DispatcherName);
+          domainModel.AssignDispatchableToDispatcher(handlingContext.Command.DispatchableId, handlingContext.Command.DispatcherId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -147,7 +147,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AssignDispatcherToNode(handlingContext.Command.DispatcherName, handlingContext.Command.NodeName);
+          domainModel.AssignDispatcherToNode(handlingContext.Command.DispatcherId, handlingContext.Command.NodeId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -165,7 +165,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AssignExecutableToNode(handlingContext.Command.ExecutableName, handlingContext.Command.NodeName);
+          domainModel.AssignExecutableToNode(handlingContext.Command.ExecutableId, handlingContext.Command.NodeId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -201,7 +201,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveDispatchable(handlingContext.Command.Name);
+          domainModel.RemoveDispatchable(handlingContext.Command.DispatchableId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -219,7 +219,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveDispatcher(handlingContext.Command.Name);
+          domainModel.RemoveDispatcher(handlingContext.Command.DispatcherId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
 
@@ -237,7 +237,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveExecutable(handlingContext.Command.Name);
+          domainModel.RemoveExecutable(handlingContext.Command.ExecutableId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -255,7 +255,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveNode(handlingContext.Command.Name);
+          domainModel.RemoveNode(handlingContext.Command.NodeId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -273,7 +273,7 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveSystem(handlingContext.Command.Name);
+          domainModel.RemoveSystem(handlingContext.Command.SystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 

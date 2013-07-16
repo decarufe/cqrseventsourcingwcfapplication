@@ -19,7 +19,7 @@ namespace TestConsoleClient.Menus
           if (selectedArchitecture != Guid.Empty)
           {
             var systems = client.GetSystems(selectedArchitecture);
-            var rootSystems = systems.Where(x => string.IsNullOrEmpty(x.ParentSystemName));
+            var rootSystems = systems.Where(x => x.ParentSystemId == 0);
 
             foreach (var system in rootSystems)
             {

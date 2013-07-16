@@ -5,25 +5,25 @@ namespace Server.Engine.Commands
 {
   public class AssignDispatchableToDispatcherCommand : ICommand
   {
-    private readonly string _dispatchableName;
-    private readonly string _dispatcherName;
+    private readonly long _dispatchableId;
+    private readonly long _dispatcherId;
     private readonly Guid _id;
 
-    public AssignDispatchableToDispatcherCommand(Guid id, string dispatchableName, string dispatcherName)
+    public AssignDispatchableToDispatcherCommand(Guid id, long dispatchableId, long dispatcherId)
     {
       _id = id;
-      _dispatchableName = dispatchableName;
-      _dispatcherName = dispatcherName;
+      _dispatchableId = dispatchableId;
+      _dispatcherId = dispatcherId;
     }
 
-    public string DispatchableName
+    public long DispatchableId
     {
-      get { return _dispatchableName; }
+      get { return _dispatchableId; }
     }
 
-    public string DispatcherName
+    public long DispatcherId
     {
-      get { return _dispatcherName; }
+      get { return _dispatcherId; }
     }
 
     public Guid Id

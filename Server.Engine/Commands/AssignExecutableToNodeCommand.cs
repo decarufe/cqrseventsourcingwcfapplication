@@ -5,25 +5,25 @@ namespace Server.Engine.Commands
 {
   public class AssignExecutableToNodeCommand : ICommand
   {
-    private readonly string _nodeName;
-    private readonly string _executableName;
+    private readonly long _nodeId;
+    private readonly long _executableId;
     private readonly Guid _id;
 
-    public AssignExecutableToNodeCommand(Guid id, string executableName, string nodeName)
+    public AssignExecutableToNodeCommand(Guid id, long executableId, long nodeId)
     {
       _id = id;
-      _executableName = executableName;
-      _nodeName = nodeName;
+      _executableId = executableId;
+      _nodeId = nodeId;
     }
 
-    public string ExecutableName
+    public long ExecutableId
     {
-      get { return _executableName; }
+      get { return _executableId; }
     }
 
-    public string NodeName
+    public long NodeId
     {
-      get { return _nodeName; }
+      get { return _nodeId; }
     }
 
     public Guid Id

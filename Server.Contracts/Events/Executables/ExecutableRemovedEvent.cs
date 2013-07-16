@@ -4,6 +4,6 @@ namespace Server.Contracts.Events.Executables
 {
   public class ExecutableRemovedEvent : DomainEvent
   {
-    public string Name { get; set; }
+    public long Id { get; set; }
   }
 }

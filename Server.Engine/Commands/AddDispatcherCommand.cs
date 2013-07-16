@@ -6,14 +6,14 @@ namespace Server.Engine.Commands
   public class AddDispatcherCommand : ICommand
   {
     private readonly string _name;
-    private readonly string _nodeName;
+    private readonly long _nodeId;
     private readonly Guid _id;
 
-    public AddDispatcherCommand(Guid id, string name, string nodeName)
+    public AddDispatcherCommand(Guid id, string name, long nodeId)
     {
       _id = id;
       _name = name;
-      _nodeName = nodeName;
+      _nodeId = nodeId;
     }
 
     public string Name
@@ -21,9 +21,9 @@ namespace Server.Engine.Commands
       get { return _name; }
     }
 
-    public string NodeName
+    public long NodeId
     {
-      get { return _nodeName; }
+      get { return _nodeId; }
     }
 
     public Guid Id
