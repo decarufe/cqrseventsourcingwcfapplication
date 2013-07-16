@@ -18,11 +18,12 @@ namespace TestConsoleClient.Menus
 
           if (selectedArchitecture != Guid.Empty)
           {
-            var nodes = client.GetNodes(selectedArchitecture);
+            var nodes = client.GetNodes(selectedArchitecture).ToList();
+            var dispatchables = client.GetDispatchables(selectedArchitecture).ToList();
 
             foreach (var node in nodes)
             {
-              ArchitectureViewModel.Deployment(node);
+              ArchitectureViewModel.Deployment(node, dispatchables);
             }
           }
           else

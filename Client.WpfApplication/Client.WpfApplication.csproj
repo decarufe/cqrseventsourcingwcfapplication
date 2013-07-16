@@ -132,6 +132,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
     <AppDesigner Include="Properties\" />
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Dispatchable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Dispatcher.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.DomainModelDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

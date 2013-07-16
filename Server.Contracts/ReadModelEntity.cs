@@ -25,5 +25,9 @@ namespace Server.Contracts
     public List<Node> Nodes { get; set; }
     [DataMember]
     public List<Executable> Executables { get; set; }
+    [DataMember]
+    public List<Dispatcher> Dispatchers { get; set; }
+    [DataMember]
+    public List<Dispatchable> Dispatchables { get; set; }
   }
 }

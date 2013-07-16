@@ -55,8 +55,18 @@ namespace Client.WpfApplication
 
     public string ButtonLabel
     {
-      get { return (string) GetValue(ButtonLabelProperty); }
+      get { return (string)GetValue(ButtonLabelProperty); }
       set { SetValue(ButtonLabelProperty, value); }
+    }
+
+    public static readonly DependencyProperty ButtonEnabledProperty =
+      DependencyProperty.Register("ButtonEnabled", typeof(bool), typeof(MainWindow),
+                                  new PropertyMetadata(default(bool)));
+
+    public bool ButtonEnabled
+    {
+      get { return (bool)GetValue(ButtonEnabledProperty); }
+      set { SetValue(ButtonEnabledProperty, value); }
     }
 
     public MainWindow()
@@ -74,7 +84,9 @@ namespace Client.WpfApplication
 
     private void UpdateLabel()
     {
-      ButtonLabel = SelectedItem == null || SelectedItem is NullDomainModelDto ? "Create" : "Save";
+      var creationMode = SelectedItem == null || SelectedItem is NullDomainModelDto;
+      ButtonLabel = creationMode ? "Create" : "Save";
+      ButtonEnabled = creationMode || SelectedItem.ReadModelId == SelectedItem.DomainModelId.ToString();
     }
 
     private void OnLoaded(object sender, RoutedEventArgs routedEventArgs)
@@ -130,6 +142,11 @@ namespace Client.WpfApplication
     private void Button_Click(object sender, RoutedEventArgs e)
     {
       Refresh();
+    }
+
+    private void Button_Click_1(object sender, RoutedEventArgs e)
+    {
+
     }
   }
 }

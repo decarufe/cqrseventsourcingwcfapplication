@@ -142,6 +142,12 @@
     <None Include="Service References\CqrsServiceReference\CqrsService43.xsd">
       <SubType>Designer</SubType>
     </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Dispatchable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Dispatcher.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.DomainModelDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

@@ -210,4 +210,40 @@
   <data name="System1_3_2" xml:space="preserve">
     <value>s1.3.2</value>
   </data>
+  <data name="Dispatcher1" xml:space="preserve">
+    <value>dispatcher1</value>
+  </data>
+  <data name="Dispatcher2" xml:space="preserve">
+    <value>dispatcher2</value>
+  </data>
+  <data name="Dispatcher3" xml:space="preserve">
+    <value>dispatcher3</value>
+  </data>
+  <data name="Dispatcher4" xml:space="preserve">
+    <value>dispatcher4</value>
+  </data>
+  <data name="System1_2Disp" xml:space="preserve">
+    <value>s1.2 dispatchable</value>
+  </data>
+  <data name="System1_3Disp" xml:space="preserve">
+    <value>s1.3 dispatchable</value>
+  </data>
+  <data name="System2_1Disp" xml:space="preserve">
+    <value>s2.1 dispatchable</value>
+  </data>
+  <data name="System2_2Disp" xml:space="preserve">
+    <value>s2.2 dispatchable</value>
+  </data>
+  <data name="System2_3Disp" xml:space="preserve">
+    <value>s2.3 dispatchable</value>
+  </data>
+  <data name="System3_1_1Disp1" xml:space="preserve">
+    <value>s3.1.1 dispatchable1</value>
+  </data>
+  <data name="System3_1_1Disp2" xml:space="preserve">
+    <value>s3.1.1 dispatchable2</value>
+  </data>
+  <data name="System3_1_1Disp3" xml:space="preserve">
+    <value>s3.1.1 dispatchable3</value>
+  </data>
 </root>

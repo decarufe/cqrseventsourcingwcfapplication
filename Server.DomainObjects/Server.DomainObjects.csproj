@@ -46,11 +46,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dispatchable.cs" />
+    <Compile Include="DispatchableAssignation.cs" />
+    <Compile Include="Dispatcher.cs" />
+    <Compile Include="DispatcherAssignation.cs" />
     <Compile Include="DomainModel.cs" />
     <Compile Include="Executable.cs" />
     <Compile Include="ExecutableAssignation.cs" />
     <Compile Include="Node.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SplSystemElement.cs" />
     <Compile Include="SystemElement.cs" />
     <Compile Include="SystemGroup.cs" />
   </ItemGroup>
