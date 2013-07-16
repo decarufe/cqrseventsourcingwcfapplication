@@ -80,6 +80,36 @@ namespace Server.Engine
       _commandBus.Send(new AssignExecutableToNodeCommand(id, executableName, nodeName));
     }
 
+    public void AddDispatcher(Guid id, string name, string nodeName)
+    {
+      _commandBus.Send(new AddDispatcherCommand(id, name, nodeName));
+    }
+
+    public void RemoveDispatcher(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveDispatcherCommand(id, name));
+    }
+
+    public void AssignDispatcherToNode(Guid id, string dispatcherName, string nodeName)
+    {
+      _commandBus.Send(new AssignDispatcherToNodeCommand(id, dispatcherName, nodeName));
+    }
+
+    public void AddDispatchable(Guid id, string name, string parentSystemName)
+    {
+      _commandBus.Send(new AddDispatchableCommand(id, name, parentSystemName));
+    }
+
+    public void RemoveDispatchable(Guid id, string name)
+    {
+      _commandBus.Send(new RemoveDispatchableCommand(id, name));
+    }
+
+    public void AssignDispatchableToDispatcher(Guid id, string dispatchableName, string dispatcherName)
+    {
+      _commandBus.Send(new AssignDispatchableToDispatcherCommand(id, dispatchableName, dispatcherName));
+    }
+
     public void CommitVersion(Guid id)
     {
       _commandBus.Send(new CommitVersionCommand(id));
@@ -111,6 +141,20 @@ namespace Server.Engine
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
 
       return readModelEntity.Executables;
+    }
+
+    public IEnumerable<Dispatcher> GetDispatchers(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Dispatchers;
+    }
+
+    public IEnumerable<Dispatchable> GetDispatchables(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.Dispatchables;
     }
 
     public IEnumerable<DomainModelDto> GetList()

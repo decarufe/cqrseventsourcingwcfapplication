@@ -79,11 +79,38 @@ namespace TestConsoleClient.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0}  (Model) {1}.
+        /// </summary>
+        internal static string FormatString_DispatchableDisplay {
+            get {
+                return ResourceManager.GetString("FormatString_DispatchableDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}(Disp) {1}.
+        /// </summary>
+        internal static string FormatString_DispatcherDisplay {
+            get {
+                return ResourceManager.GetString("FormatString_DispatcherDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}(Exec) {1}.
+        /// </summary>
+        internal static string FormatString_ExecutableDisplay {
+            get {
+                return ResourceManager.GetString("FormatString_ExecutableDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}{1}.
         /// </summary>
-        internal static string FormatString_Var0Var1 {
+        internal static string FormatString_SystemDisplay {
             get {
-                return ResourceManager.GetString("FormatString_Var0Var1", resourceCulture);
+                return ResourceManager.GetString("FormatString_SystemDisplay", resourceCulture);
             }
         }
         

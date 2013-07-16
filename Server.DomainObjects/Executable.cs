@@ -1,6 +1,6 @@
 namespace Server.DomainObjects
 {
-  public class Executable : SystemElement
+  public class Executable : SplSystemElement
   {
      
   }

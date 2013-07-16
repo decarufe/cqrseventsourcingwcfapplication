@@ -30,6 +30,7 @@
       <xs:extension base="tns:SystemEntity">
         <xs:sequence>
           <xs:element xmlns:q1="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Executables" nillable="true" type="q1:ArrayOfstring" />
+          <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchers" nillable="true" type="q2:ArrayOfstring" />
         </xs:sequence>
       </xs:extension>
     </xs:complexContent>
@@ -47,6 +48,39 @@
     </xs:sequence>
   </xs:complexType>
   <xs:element name="ArrayOfExecutable" nillable="true" type="tns:ArrayOfExecutable" />
+  <xs:complexType name="ArrayOfDispatcher">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Dispatcher" nillable="true" type="tns:Dispatcher" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDispatcher" nillable="true" type="tns:ArrayOfDispatcher" />
+  <xs:complexType name="Dispatcher">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SystemEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Node" nillable="true" type="xs:string" />
+          <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/Arrays" minOccurs="0" name="Dispatchables" nillable="true" type="q3:ArrayOfstring" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Dispatcher" nillable="true" type="tns:Dispatcher" />
+  <xs:complexType name="ArrayOfDispatchable">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="Dispatchable" nillable="true" type="tns:Dispatchable" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDispatchable" nillable="true" type="tns:ArrayOfDispatchable" />
+  <xs:complexType name="Dispatchable">
+    <xs:complexContent mixed="false">
+      <xs:extension base="tns:SystemEntity">
+        <xs:sequence>
+          <xs:element minOccurs="0" name="Dispatcher" nillable="true" type="xs:string" />
+        </xs:sequence>
+      </xs:extension>
+    </xs:complexContent>
+  </xs:complexType>
+  <xs:element name="Dispatchable" nillable="true" type="tns:Dispatchable" />
   <xs:complexType name="ArrayOfDomainModelDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DomainModelDto" nillable="true" type="tns:DomainModelDto" />
