@@ -1,0 +1,36 @@
+syntax: glob
+*/_ReSharper*
+*/_TeamCity*
+*/bin/*
+*/Bin/*
+*/logs/*
+*/Logs/*
+*.user
+*/obj/*
+*/.nuget/*
+*/packages/*
+*.suo
+*.orig
+*.rej
+*.dotCover
+*.svclog
+bin
+UpgradeLog.XML
+*/_UpgradeReport_Files/*
+UnitTestCoverage*
+TestResult*
+*/.parasoft.dat*
+Source/SystemArchitecture.DataAccess/SystemArchitecture.edmx.sql
+DeploymentPackages
+Source/Cae.DaVinci.DataAccess/*.edmx.sql
+Source/OneUi.Architecture.Facade/Service References/*
+Source/OneUi.Integration.Facade/Service References/*
+Source/OneUi.VariantBuilderService/Service References/*
+Source/Cmd/Service References/*
+Source/CommandLineClient/Service References/*
+Libs/*
+packages/*
+client/*
+*.wixobj
+Source/Cae.DaVinci.Utilities/EmbeddedResources.cs
+Source/OneUi.VariantBuilderService/EmbeddedResources.cs
