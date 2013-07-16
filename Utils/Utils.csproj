@@ -49,10 +49,10 @@
       <HintPath>..\packages\Rhino.ServiceBus.3.1.1.0\lib\4.0\Rhino.ServiceBus.dll</HintPath>
     </Reference>
     <Reference Include="Rhino.ServiceBus.Unity">
-      <HintPath>..\Server.Wcf\bin\Rhino.ServiceBus.Unity.dll</HintPath>
+      <HintPath>..\packages\Rhino.ServiceBus.Unity.3.1.1.0\lib\4.0\Rhino.ServiceBus.Unity.dll</HintPath>
     </Reference>
     <Reference Include="SimpleCqrs">
-      <HintPath>..\Server.Wcf\bin\SimpleCqrs.dll</HintPath>
+      <HintPath>..\packages\SimpleCqrs.1.0\lib\SimpleCqrs.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />

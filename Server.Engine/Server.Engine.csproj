@@ -85,11 +85,19 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Messaging" />
+    <Reference Include="System.Runtime.Serialization" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlers\DomainModelCommandHandler.cs" />
+    <Compile Include="Commands\AddExecutableCommand.cs" />
+    <Compile Include="Commands\AddNodeCommand.cs" />
+    <Compile Include="Commands\AddSystemCommand.cs" />
+    <Compile Include="Commands\AssignExecutableToNodeCommand.cs" />
+    <Compile Include="Commands\RemoveNodeCommand.cs" />
+    <Compile Include="Commands\CommitVersionCommand.cs" />
+    <Compile Include="Commands\RemoveExecutableCommand.cs" />
+    <Compile Include="Commands\RemoveSystemCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
-    <Compile Include="Domain\DomainModel.cs" />
     <Compile Include="EventHandlers\ReadModelEventHandler.cs" />
     <Compile Include="NEventStore.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -99,6 +107,11 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="ReadModelRepository.cs" />
+    <Compile Include="Resource.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resource.resx</DependentUpon>
+    </Compile>
     <Compile Include="ServiceImpl.cs" />
     <Compile Include="DomainModelRuntime.cs" />
   </ItemGroup>
@@ -106,6 +119,10 @@
     <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
       <Project>{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}</Project>
       <Name>Server.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Server.DomainObjects\Server.DomainObjects.csproj">
+      <Project>{5DA0FCFF-CE08-4486-955F-8A46FD6E489E}</Project>
+      <Name>Server.DomainObjects</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
@@ -119,7 +136,12 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Resource.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\nuget.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
