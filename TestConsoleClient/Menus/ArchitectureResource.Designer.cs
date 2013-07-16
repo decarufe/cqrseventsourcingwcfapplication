@@ -70,6 +70,42 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to dispatcher1.
+        /// </summary>
+        internal static string Dispatcher1 {
+            get {
+                return ResourceManager.GetString("Dispatcher1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dispatcher2.
+        /// </summary>
+        internal static string Dispatcher2 {
+            get {
+                return ResourceManager.GetString("Dispatcher2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dispatcher3.
+        /// </summary>
+        internal static string Dispatcher3 {
+            get {
+                return ResourceManager.GetString("Dispatcher3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dispatcher4.
+        /// </summary>
+        internal static string Dispatcher4 {
+            get {
+                return ResourceManager.GetString("Dispatcher4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter Product Name: .
         /// </summary>
         internal static string EnterProductNamePropmt {
@@ -133,6 +169,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to s1.2 dispatchable.
+        /// </summary>
+        internal static string System1_2Disp {
+            get {
+                return ResourceManager.GetString("System1_2Disp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to s1.2 executable.
         /// </summary>
         internal static string System1_2Exec {
@@ -165,6 +210,15 @@ namespace TestConsoleClient.Menus {
         internal static string System1_3_2 {
             get {
                 return ResourceManager.GetString("System1_3_2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s1.3 dispatchable.
+        /// </summary>
+        internal static string System1_3Disp {
+            get {
+                return ResourceManager.GetString("System1_3Disp", resourceCulture);
             }
         }
         
@@ -205,6 +259,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to s2.1 dispatchable.
+        /// </summary>
+        internal static string System2_1Disp {
+            get {
+                return ResourceManager.GetString("System2_1Disp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to s2.1 executable.
         /// </summary>
         internal static string System2_1Exec {
@@ -223,6 +286,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to s2.2 dispatchable.
+        /// </summary>
+        internal static string System2_2Disp {
+            get {
+                return ResourceManager.GetString("System2_2Disp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to s2.2 executable.
         /// </summary>
         internal static string System2_2Exec {
@@ -237,6 +309,15 @@ namespace TestConsoleClient.Menus {
         internal static string System2_3 {
             get {
                 return ResourceManager.GetString("System2_3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s2.3 dispatchable.
+        /// </summary>
+        internal static string System2_3Disp {
+            get {
+                return ResourceManager.GetString("System2_3Disp", resourceCulture);
             }
         }
         
@@ -273,6 +354,33 @@ namespace TestConsoleClient.Menus {
         internal static string System3_1_1 {
             get {
                 return ResourceManager.GetString("System3_1_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s3.1.1 dispatchable1.
+        /// </summary>
+        internal static string System3_1_1Disp1 {
+            get {
+                return ResourceManager.GetString("System3_1_1Disp1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s3.1.1 dispatchable2.
+        /// </summary>
+        internal static string System3_1_1Disp2 {
+            get {
+                return ResourceManager.GetString("System3_1_1Disp2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to s3.1.1 dispatchable3.
+        /// </summary>
+        internal static string System3_1_1Disp3 {
+            get {
+                return ResourceManager.GetString("System3_1_1Disp3", resourceCulture);
             }
         }
         

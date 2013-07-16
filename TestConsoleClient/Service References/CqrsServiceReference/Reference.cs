@@ -19,6 +19,8 @@ namespace TestConsoleClient.CqrsServiceReference {
     [System.SerializableAttribute()]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Executable))]
     [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Node))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Dispatcher))]
+    [System.Runtime.Serialization.KnownTypeAttribute(typeof(TestConsoleClient.CqrsServiceReference.Dispatchable))]
     public partial class SystemEntity : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
         
         [System.NonSerializedAttribute()]
@@ -108,6 +110,9 @@ namespace TestConsoleClient.CqrsServiceReference {
         [System.Runtime.Serialization.OptionalFieldAttribute()]
         private string[] ExecutablesField;
         
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] DispatchersField;
+        
         [System.Runtime.Serialization.DataMemberAttribute()]
         public string[] Executables {
             get {
@@ -117,6 +122,81 @@ namespace TestConsoleClient.CqrsServiceReference {
                 if ((object.ReferenceEquals(this.ExecutablesField, value) != true)) {
                     this.ExecutablesField = value;
                     this.RaisePropertyChanged("Executables");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string[] Dispatchers {
+            get {
+                return this.DispatchersField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DispatchersField, value) != true)) {
+                    this.DispatchersField = value;
+                    this.RaisePropertyChanged("Dispatchers");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Dispatcher", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class Dispatcher : TestConsoleClient.CqrsServiceReference.SystemEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string NodeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string[] DispatchablesField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Node {
+            get {
+                return this.NodeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.NodeField, value) != true)) {
+                    this.NodeField = value;
+                    this.RaisePropertyChanged("Node");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=1)]
+        public string[] Dispatchables {
+            get {
+                return this.DispatchablesField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DispatchablesField, value) != true)) {
+                    this.DispatchablesField = value;
+                    this.RaisePropertyChanged("Dispatchables");
+                }
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="Dispatchable", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class Dispatchable : TestConsoleClient.CqrsServiceReference.SystemEntity {
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string DispatcherField;
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string Dispatcher {
+            get {
+                return this.DispatcherField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.DispatcherField, value) != true)) {
+                    this.DispatcherField = value;
+                    this.RaisePropertyChanged("Dispatcher");
                 }
             }
         }
@@ -272,6 +352,24 @@ namespace TestConsoleClient.CqrsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
         void AssignExecutableToNode(System.Guid id, string executableName, string nodeName);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddDispatcher", ReplyAction="http://tempuri.org/ICqrsService/AddDispatcherResponse")]
+        void AddDispatcher(System.Guid id, string name, string nodeName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatcher", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatcherResponse")]
+        void RemoveDispatcher(System.Guid id, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatcherToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatcherToNodeResponse")]
+        void AssignDispatcherToNode(System.Guid id, string dispatcherName, string nodeName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddDispatchable", ReplyAction="http://tempuri.org/ICqrsService/AddDispatchableResponse")]
+        void AddDispatchable(System.Guid id, string name, string parentSystemName);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatchable", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatchableResponse")]
+        void RemoveDispatchable(System.Guid id, string name);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcherResponse")]
+        void AssignDispatchableToDispatcher(System.Guid id, string dispatchableName, string dispatcherName);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/CommitVersion", ReplyAction="http://tempuri.org/ICqrsService/CommitVersionResponse")]
         void CommitVersion(System.Guid id);
         
@@ -286,6 +384,12 @@ namespace TestConsoleClient.CqrsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetExecutables", ReplyAction="http://tempuri.org/ICqrsService/GetExecutablesResponse")]
         TestConsoleClient.CqrsServiceReference.Executable[] GetExecutables(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetDispatchers", ReplyAction="http://tempuri.org/ICqrsService/GetDispatchersResponse")]
+        TestConsoleClient.CqrsServiceReference.Dispatcher[] GetDispatchers(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetDispatchables", ReplyAction="http://tempuri.org/ICqrsService/GetDispatchablesResponse")]
+        TestConsoleClient.CqrsServiceReference.Dispatchable[] GetDispatchables(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetList", ReplyAction="http://tempuri.org/ICqrsService/GetListResponse")]
         TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList();
@@ -359,6 +463,30 @@ namespace TestConsoleClient.CqrsServiceReference {
             base.Channel.AssignExecutableToNode(id, executableName, nodeName);
         }
         
+        public void AddDispatcher(System.Guid id, string name, string nodeName) {
+            base.Channel.AddDispatcher(id, name, nodeName);
+        }
+        
+        public void RemoveDispatcher(System.Guid id, string name) {
+            base.Channel.RemoveDispatcher(id, name);
+        }
+        
+        public void AssignDispatcherToNode(System.Guid id, string dispatcherName, string nodeName) {
+            base.Channel.AssignDispatcherToNode(id, dispatcherName, nodeName);
+        }
+        
+        public void AddDispatchable(System.Guid id, string name, string parentSystemName) {
+            base.Channel.AddDispatchable(id, name, parentSystemName);
+        }
+        
+        public void RemoveDispatchable(System.Guid id, string name) {
+            base.Channel.RemoveDispatchable(id, name);
+        }
+        
+        public void AssignDispatchableToDispatcher(System.Guid id, string dispatchableName, string dispatcherName) {
+            base.Channel.AssignDispatchableToDispatcher(id, dispatchableName, dispatcherName);
+        }
+        
         public void CommitVersion(System.Guid id) {
             base.Channel.CommitVersion(id);
         }
@@ -377,6 +505,14 @@ namespace TestConsoleClient.CqrsServiceReference {
         
         public TestConsoleClient.CqrsServiceReference.Executable[] GetExecutables(System.Guid id) {
             return base.Channel.GetExecutables(id);
+        }
+        
+        public TestConsoleClient.CqrsServiceReference.Dispatcher[] GetDispatchers(System.Guid id) {
+            return base.Channel.GetDispatchers(id);
+        }
+        
+        public TestConsoleClient.CqrsServiceReference.Dispatchable[] GetDispatchables(System.Guid id) {
+            return base.Channel.GetDispatchables(id);
         }
         
         public TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList() {

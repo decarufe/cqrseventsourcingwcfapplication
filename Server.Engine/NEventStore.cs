@@ -35,12 +35,16 @@ namespace Server.Engine
       //   ...
       Assembly eventsAssembly = typeof (ICqrsService).Assembly;
       var types = (from t in eventsAssembly.GetTypes()
-                  where t.IsPublic
-                        && typeof (DomainEvent).IsAssignableFrom(t)
+                  where (t.IsPublic || t.IsNestedPublic)
+                        && t.IsClass
+                        && t != typeof(ReadModelInfo) // Remove ReadModelInfo since it seems to already be registred
                   select t).ToList();
 
       Assembly domainAssembly = typeof(DomainModel).Assembly;
-      types.AddRange(domainAssembly.GetTypes());
+      types.AddRange((from t in domainAssembly.GetTypes()
+                      where (t.IsPublic || t.IsNestedPublic)
+                            && t.IsClass
+                      select t).ToList());
 
       var mapper = (from map in typeof(BsonClassMap)
                 .GetMethods(BindingFlags.Public | BindingFlags.Static | BindingFlags.InvokeMethod)

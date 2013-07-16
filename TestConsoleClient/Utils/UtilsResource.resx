@@ -123,7 +123,16 @@
   <data name="ArchitecturesEmptyError" xml:space="preserve">
     <value>The list of Architectures is empty</value>
   </data>
-  <data name="FormatString_Var0Var1" xml:space="preserve">
+  <data name="FormatString_DispatchableDisplay" xml:space="preserve">
+    <value>{0}  (Model) {1}</value>
+  </data>
+  <data name="FormatString_DispatcherDisplay" xml:space="preserve">
+    <value>{0}(Disp) {1}</value>
+  </data>
+  <data name="FormatString_ExecutableDisplay" xml:space="preserve">
+    <value>{0}(Exec) {1}</value>
+  </data>
+  <data name="FormatString_SystemDisplay" xml:space="preserve">
     <value>{0}{1}</value>
   </data>
   <data name="IndexOutOfRangeError" xml:space="preserve">

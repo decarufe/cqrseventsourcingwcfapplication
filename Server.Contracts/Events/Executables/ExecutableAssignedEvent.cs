@@ -1,6 +1,6 @@
-﻿using SimpleCqrs.Eventing;
+using SimpleCqrs.Eventing;
 
-namespace Server.Contracts.Events
+namespace Server.Contracts.Events.Executables
 {
   public class ExecutableAssignedEvent : DomainEvent
   {
