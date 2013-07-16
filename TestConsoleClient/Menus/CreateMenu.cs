@@ -58,6 +58,7 @@ namespace TestConsoleClient.Menus
           client.AddDispatchable(id, ArchitectureResource.System1_2Disp, ArchitectureResource.System1_2);
           client.AddExecutable(id, ArchitectureResource.System1_3Exec1, ArchitectureResource.System1_3);
           client.AddExecutable(id, ArchitectureResource.System1_3Exec2, ArchitectureResource.System1_3);
+          client.AddDispatchable(id, ArchitectureResource.System1_3Disp, ArchitectureResource.System1_3);
           client.AddExecutable(id, ArchitectureResource.System2_1Exec, ArchitectureResource.System2_1);
           client.AddDispatchable(id, ArchitectureResource.System2_1Disp, ArchitectureResource.System2_1);
           client.AddExecutable(id, ArchitectureResource.System2_2Exec, ArchitectureResource.System2_2);
@@ -82,6 +83,7 @@ namespace TestConsoleClient.Menus
           client.AssignExecutableToNode(id, ArchitectureResource.System3_1_3Exec, ArchitectureResource.Node2);
           client.CommitVersion(id);
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System1_2Disp, ArchitectureResource.Dispatcher1);
+          client.AssignDispatchableToDispatcher(id, ArchitectureResource.System1_3Disp, ArchitectureResource.Dispatcher1);
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System2_1Disp, ArchitectureResource.Dispatcher2);
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System2_2Disp, ArchitectureResource.Dispatcher3);
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System2_3Disp, ArchitectureResource.Dispatcher4);
@@ -89,7 +91,7 @@ namespace TestConsoleClient.Menus
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System3_1_1Disp2, ArchitectureResource.Dispatcher4);
           client.AssignDispatchableToDispatcher(id, ArchitectureResource.System3_1_1Disp3, ArchitectureResource.Dispatcher4);
           client.CommitVersion(id);
-          client.AddDispatcher(id, ArchitectureResource.Dispatcher4, ArchitectureResource.Node1);
+          client.AssignDispatcherToNode(id, ArchitectureResource.Dispatcher4, ArchitectureResource.Node1);
           client.CommitVersion(id);
           client.RemoveSystem(id, ArchitectureResource.System1_3);
           client.CommitVersion(id);

@@ -35,7 +35,7 @@ namespace TestConsoleClient.Utils
         string dispatcher1 = dispatcher;
         foreach (var dispatchable in disaptchables.Where(x => x.Dispatcher == dispatcher1))
         {
-          Console.WriteLine(UtilsResource.FormatString_DispatchableDisplay, Indentation, dispatchable);
+          Console.WriteLine(UtilsResource.FormatString_DispatchableDisplay, Indentation, dispatchable.Name);
         }
       }
     }

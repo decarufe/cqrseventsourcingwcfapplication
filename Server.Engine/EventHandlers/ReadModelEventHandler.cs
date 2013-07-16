@@ -102,7 +102,7 @@ namespace Server.Engine.EventHandlers
       });
       var node = entity.Nodes.First(x => x.Name == message.NodeName);
       var dispatchers = node.Dispatchers.ToList();
-      dispatchers.Add(message.NodeName);
+      dispatchers.Add(message.Name);
       node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
@@ -127,7 +127,7 @@ namespace Server.Engine.EventHandlers
       dispatcher.Node = message.NodeName;
       List<string> dispatchers = node.Dispatchers.ToList();
       dispatchers.Add(message.DispatcherName);
-      node.Executables = dispatchers;
+      node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
