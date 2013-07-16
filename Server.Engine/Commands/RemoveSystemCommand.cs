@@ -5,18 +5,18 @@ namespace Server.Engine.Commands
 {
   public class RemoveSystemCommand : ICommand
   {
-    private readonly string _name;
+    private readonly long _systemId;
     private readonly Guid _id;
 
-    public RemoveSystemCommand(Guid id, string name)
+    public RemoveSystemCommand(Guid id, long systemId)
     {
       _id = id;
-      _name = name;
+      _systemId = systemId;
     }
 
-    public string Name
+    public long SystemId
     {
-      get { return _name; }
+      get { return _systemId; }
     }
 
     public Guid Id

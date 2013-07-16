@@ -20,20 +20,22 @@
       <xs:sequence>
         <xs:element xmlns:q2="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q2:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="parentSystemName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parentSystemId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddSystemResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddSystemResult" type="xs:long" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveSystem">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q3="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q3:guid" />
-        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="systemId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -47,20 +49,22 @@
       <xs:sequence>
         <xs:element xmlns:q4="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q4:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="parentSystemName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parentSystemId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddNodeResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddNodeResult" type="xs:long" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveNode">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q5="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q5:guid" />
-        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nodeId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -74,20 +78,22 @@
       <xs:sequence>
         <xs:element xmlns:q6="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q6:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="parentSystemName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parentSystemId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddExecutableResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddExecutableResult" type="xs:long" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveExecutable">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q7="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q7:guid" />
-        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="executableId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -100,8 +106,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q8="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q8:guid" />
-        <xs:element minOccurs="0" name="executableName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="nodeName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="executableId" type="xs:long" />
+        <xs:element minOccurs="0" name="nodeId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -115,20 +121,22 @@
       <xs:sequence>
         <xs:element xmlns:q9="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q9:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="nodeName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="nodeId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddDispatcherResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddDispatcherResult" type="xs:long" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveDispatcher">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q10="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q10:guid" />
-        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dispatcherId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -141,8 +149,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q11="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q11:guid" />
-        <xs:element minOccurs="0" name="dispatcherName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="nodeName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dispatcherId" type="xs:long" />
+        <xs:element minOccurs="0" name="nodeId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -156,20 +164,22 @@
       <xs:sequence>
         <xs:element xmlns:q12="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q12:guid" />
         <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="parentSystemName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="parentSystemId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="AddDispatchableResponse">
     <xs:complexType>
-      <xs:sequence />
+      <xs:sequence>
+        <xs:element minOccurs="0" name="AddDispatchableResult" type="xs:long" />
+      </xs:sequence>
     </xs:complexType>
   </xs:element>
   <xs:element name="RemoveDispatchable">
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q13="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q13:guid" />
-        <xs:element minOccurs="0" name="name" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dispatchableId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -182,8 +192,8 @@
     <xs:complexType>
       <xs:sequence>
         <xs:element xmlns:q14="http://schemas.microsoft.com/2003/10/Serialization/" minOccurs="0" name="id" type="q14:guid" />
-        <xs:element minOccurs="0" name="dispatchableName" nillable="true" type="xs:string" />
-        <xs:element minOccurs="0" name="dispatcherName" nillable="true" type="xs:string" />
+        <xs:element minOccurs="0" name="dispatchableId" type="xs:long" />
+        <xs:element minOccurs="0" name="dispatcherId" type="xs:long" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>

@@ -97,6 +97,7 @@
     <Compile Include="Commands\AssignDispatchableToDispatcherCommand.cs" />
     <Compile Include="Commands\AssignDispatcherToNodeCommand.cs" />
     <Compile Include="Commands\AssignExecutableToNodeCommand.cs" />
+    <Compile Include="Commands\AssignSplAssetCommand.cs" />
     <Compile Include="Commands\RemoveDispatchableCommand.cs" />
     <Compile Include="Commands\RemoveDispatcherCommand.cs" />
     <Compile Include="Commands\RemoveNodeCommand.cs" />
@@ -146,6 +147,7 @@
     <EmbeddedResource Include="Resource.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resource.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

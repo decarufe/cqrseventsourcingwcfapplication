@@ -19,11 +19,13 @@ namespace TestConsoleClient.Menus
           if (selectedArchitecture != Guid.Empty)
           {
             var nodes = client.GetNodes(selectedArchitecture).ToList();
+            var executables = client.GetExecutables(selectedArchitecture).ToList();
+            var dispatchers = client.GetDispatchers(selectedArchitecture).ToList();
             var dispatchables = client.GetDispatchables(selectedArchitecture).ToList();
 
             foreach (var node in nodes)
             {
-              ArchitectureViewModel.Deployment(node, dispatchables);
+              ArchitectureViewModel.Deployment(node, executables, dispatchers, dispatchables);
             }
           }
           else

@@ -9,6 +9,6 @@ namespace Server.Contracts.Data
   public class Executable : SystemEntity
   {
     [DataMember(Order = 0)]
-    public string Node { get; set; }
+    public long Node { get; set; }
   }
 }

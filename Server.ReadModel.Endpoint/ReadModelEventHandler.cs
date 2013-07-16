@@ -45,13 +45,14 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Dispatchables.Add(new Dispatchable
       {
+        Id = message.Id,
         Name = message.Name,
-        ParentSystemName = message.ParentSystemName,
+        ParentSystemId = message.ParentSystemId,
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.ParentSystemId);
     }
 
     public void Consume(DispatchableAssignedEvent message)
@@ -59,24 +60,24 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Dispatchable dispatchable = entity.Dispatchables.First(x => x.Name == message.DispatchableName);
-      Dispatcher dispatcher = entity.Dispatchers.First(x => x.Name == message.DispatcherName);
+      Dispatchable dispatchable = entity.Dispatchables.First(x => x.Id == message.DispatchableId);
+      Dispatcher dispatcher = entity.Dispatchers.First(x => x.Id == message.DispatcherId);
       // Clear previous assignations
       foreach (
-        Dispatcher dispatcherItem in entity.Dispatchers.Where(x => x.Dispatchables.Any(y => y == dispatchable.Name)))
+        Dispatcher dispatcherItem in entity.Dispatchers.Where(x => x.Dispatchables.Any(y => y == dispatchable.Id)))
       {
-        List<string> dispatchableItems = dispatcherItem.Dispatchables.ToList();
-        dispatchableItems.Remove(dispatchableItems.First(x => x == dispatchable.Name));
+        List<long> dispatchableItems = dispatcherItem.Dispatchables.ToList();
+        dispatchableItems.Remove(dispatchableItems.First(x => x == dispatchable.Id));
         dispatcherItem.Dispatchables = dispatchableItems;
       }
-      dispatchable.Dispatcher = message.DispatcherName;
-      List<string> dispatchables = dispatcher.Dispatchables.ToList();
-      dispatchables.Add(message.DispatchableName);
+      dispatchable.Dispatcher = message.DispatcherId;
+      List<long> dispatchables = dispatcher.Dispatchables.ToList();
+      dispatchables.Add(message.DispatchableId);
       dispatcher.Dispatchables = dispatchables;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.DispatchableName, message.DispatcherName);
+                        message.DispatchableId, message.DispatcherId);
     }
 
     public void Consume(DispatchableRemovedEvent message)
@@ -84,18 +85,18 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Dispatchable toRemove = entity.Dispatchables.First(x => x.Name == message.Name);
+      Dispatchable toRemove = entity.Dispatchables.First(x => x.Id == message.Id);
       entity.Dispatchables.Remove(toRemove);
-      foreach (Dispatcher dispatcher in entity.Dispatchers.Where(x => x.Dispatchables.Any(y => y == toRemove.Name)))
+      foreach (Dispatcher dispatcher in entity.Dispatchers.Where(x => x.Dispatchables.Any(y => y == message.Id)))
       {
-        List<string> dispatchers = dispatcher.Dispatchables.ToList();
-        dispatchers.Remove(dispatchers.First(x => x == toRemove.Name));
+        List<long> dispatchers = dispatcher.Dispatchables.ToList();
+        dispatchers.Remove(dispatchers.First(x => x == message.Id));
         dispatcher.Dispatchables = dispatchers;
       }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
-                        message.Name);
+                        message.Id);
     }
 
     public void Consume(DispatcherAddedEvent message)
@@ -105,18 +106,19 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Dispatchers.Add(new Dispatcher
       {
+        Id = message.Id,
         Name = message.Name,
-        Node = message.NodeName,
-        Dispatchables = new List<string>(),
+        Node = message.NodeId,
+        Dispatchables = new List<long>(),
       });
-      var node = entity.Nodes.First(x => x.Name == message.NodeName);
+      var node = entity.Nodes.First(x => x.Id == message.NodeId);
       var dispatchers = node.Dispatchers.ToList();
-      dispatchers.Add(message.Name);
+      dispatchers.Add(message.Id);
       node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.Name, message.NodeName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.NodeId);
     }
 
     public void Consume(DispatcherAssignedEvent message)
@@ -124,23 +126,23 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Dispatcher dispatcher = entity.Dispatchers.First(x => x.Name == message.DispatcherName);
-      Node node = entity.Nodes.First(x => x.Name == message.NodeName);
+      Dispatcher dispatcher = entity.Dispatchers.First(x => x.Id == message.DispatcherId);
+      Node node = entity.Nodes.First(x => x.Id == message.NodeId);
       // Clear previous assignations
-      foreach (Node nodeItem in entity.Nodes.Where(x => x.Dispatchers.Any(y => y == dispatcher.Name)))
+      foreach (Node nodeItem in entity.Nodes.Where(x => x.Dispatchers.Any(y => y == dispatcher.Id)))
       {
-        List<string> dispatcherItems = nodeItem.Dispatchers.ToList();
-        dispatcherItems.Remove(dispatcherItems.First(x => x == dispatcher.Name));
+        List<long> dispatcherItems = nodeItem.Dispatchers.ToList();
+        dispatcherItems.Remove(dispatcherItems.First(x => x == dispatcher.Id));
         nodeItem.Dispatchers = dispatcherItems;
       }
-      dispatcher.Node = message.NodeName;
-      List<string> dispatchers = node.Dispatchers.ToList();
-      dispatchers.Add(message.DispatcherName);
+      dispatcher.Node = message.NodeId;
+      List<long> dispatchers = node.Dispatchers.ToList();
+      dispatchers.Add(message.DispatcherId);
       node.Dispatchers = dispatchers;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.DispatcherName, message.NodeName);
+                        message.DispatcherId, message.NodeId);
     }
 
     public void Consume(DispatcherRemovedEvent message)
@@ -148,22 +150,22 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Dispatcher toRemove = entity.Dispatchers.First(x => x.Name == message.Name);
+      Dispatcher toRemove = entity.Dispatchers.First(x => x.Id == message.Id);
       entity.Dispatchers.Remove(toRemove);
-      foreach (Node node in entity.Nodes.Where(x => x.Dispatchers.Any(y => y == toRemove.Name)))
+      foreach (Node node in entity.Nodes.Where(x => x.Dispatchers.Any(y => y == message.Id)))
       {
-        List<string> dispatchers = node.Dispatchers.ToList();
-        dispatchers.Remove(dispatchers.First(x => x == toRemove.Name));
+        List<long> dispatchers = node.Dispatchers.ToList();
+        dispatchers.Remove(dispatchers.First(x => x == message.Id));
         node.Dispatchers = dispatchers;
       }
-      foreach (Dispatchable dispatchable in entity.Dispatchables.Where(x => x.Dispatcher == toRemove.Name))
+      foreach (Dispatchable dispatchable in entity.Dispatchables.Where(x => x.Dispatcher == message.Id))
       {
-        dispatchable.Dispatcher = string.Empty;
+        dispatchable.Dispatcher = 0;
       }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
-                        message.Name);
+                        message.Id);
     }
 
     public void Consume(DomainModelCreatedEvent message)
@@ -191,13 +193,14 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Executables.Add(new Executable
       {
+        Id = message.Id,
         Name = message.Name,
-        ParentSystemName = message.ParentSystemName,
+        ParentSystemId = message.ParentSystemId,
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.ParentSystemId);
     }
 
     public void Consume(ExecutableAssignedEvent message)
@@ -205,23 +208,23 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Executable executable = entity.Executables.First(x => x.Name == message.ExecutableName);
-      Node node = entity.Nodes.First(x => x.Name == message.NodeName);
+      Executable executable = entity.Executables.First(x => x.Id == message.ExecutableId);
+      Node node = entity.Nodes.First(x => x.Id == message.NodeId);
       // Clear previous assignations
-      foreach (Node nodeItem in entity.Nodes.Where(x => x.Executables.Any(y => y == executable.Name)))
+      foreach (Node nodeItem in entity.Nodes.Where(x => x.Executables.Any(y => y == message.ExecutableId)))
       {
-        List<string> executableItems = nodeItem.Executables.ToList();
-        executableItems.Remove(executableItems.First(x => x == executable.Name));
+        List<long> executableItems = nodeItem.Executables.ToList();
+        executableItems.Remove(executableItems.First(x => x == message.ExecutableId));
         nodeItem.Executables = executableItems;
       }
-      executable.Node = message.NodeName;
-      List<string> executables = node.Executables.ToList();
-      executables.Add(message.ExecutableName);
+      executable.Node = message.NodeId;
+      List<long> executables = node.Executables.ToList();
+      executables.Add(message.ExecutableId);
       node.Executables = executables;
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.ExecutableName, message.NodeName);
+                        message.ExecutableId, message.NodeId);
     }
 
     public void Consume(ExecutableRemovedEvent message)
@@ -229,18 +232,18 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Executable toRemove = entity.Executables.First(x => x.Name == message.Name);
+      Executable toRemove = entity.Executables.First(x => x.Id == message.Id);
       entity.Executables.Remove(toRemove);
-      foreach (Node node in entity.Nodes.Where(x => x.Executables.Any(y => y == toRemove.Name)))
+      foreach (Node node in entity.Nodes.Where(x => x.Executables.Any(y => y == message.Id)))
       {
-        List<string> executables = node.Executables.ToList();
-        executables.Remove(executables.First(x => x == toRemove.Name));
+        List<long> executables = node.Executables.ToList();
+        executables.Remove(executables.First(x => x == message.Id));
         node.Executables = executables;
       }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
-                        message.Name);
+                        message.Id);
     }
 
     public void Consume(NameChangedEvent message)
@@ -250,6 +253,13 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Name = message.NewName;
       Persistance<ReadModelEntity>.Instance.Update(entity);
+      var versionnedEntities = Persistance<ReadModelEntity>.Instance.GetAll().Where(x => x.DomainModelId == message.AggregateRootId && x.Id != message.AggregateRootId.ToString());
+      foreach (var versionnedEntity in versionnedEntities)
+      {
+        versionnedEntity.Name = message.NewName;
+        Persistance<ReadModelEntity>.Instance.Update(versionnedEntity);
+      }
+
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
                         message.NewName);
@@ -262,15 +272,16 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Nodes.Add(new Node
       {
+        Id = message.Id,
         Name = message.Name,
-        ParentSystemName = message.ParentSystemName,
-        Executables = new List<string>(),
-        Dispatchers = new List<string>(),
+        ParentSystemId = message.ParentSystemId,
+        Executables = new List<long>(),
+        Dispatchers = new List<long>(),
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.ParentSystemId);
     }
 
     public void Consume(NodeRemovedEvent message)
@@ -278,17 +289,17 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      Node toRemove = entity.Nodes.First(x => x.Name == message.Name);
+      Node toRemove = entity.Nodes.First(x => x.Id == message.Id);
       entity.Nodes.Remove(toRemove);
-      foreach (Executable executable in entity.Executables.Where(x => x.Node == toRemove.Name))
+      foreach (Executable executable in entity.Executables.Where(x => x.Id == message.Id))
       {
-        executable.Node = string.Empty;
+        executable.Node = 0;
       }
 
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
-                        message.Name);
+                        message.Id);
     }
 
     public void Consume(PingCalled message)
@@ -303,13 +314,14 @@ namespace Server.ReadModel.Endpoint
       entity.LastEventSequence = message.Sequence;
       entity.Systems.Add(new SystemEntity
       {
+        Id = message.Id,
         Name = message.Name,
-        ParentSystemName = message.ParentSystemName,
+        ParentSystemId = message.ParentSystemId,
       });
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
-      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3, message.GetType().Name, message.AggregateRootId,
-                        message.Name, message.ParentSystemName);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.ParentSystemId);
     }
 
     public void Consume(SystemRemovedEvent message)
@@ -317,12 +329,12 @@ namespace Server.ReadModel.Endpoint
       ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
       if (message.Sequence <= entity.LastEventSequence) return;
       entity.LastEventSequence = message.Sequence;
-      SystemEntity toRemove = entity.Systems.First(x => x.Name == message.Name);
+      SystemEntity toRemove = entity.Systems.First(x => x.Id == message.Id);
       entity.Systems.Remove(toRemove);
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
-                        message.Name);
+                        message.Id);
     }
 
     public void Consume(VersionCommitedEvent message)

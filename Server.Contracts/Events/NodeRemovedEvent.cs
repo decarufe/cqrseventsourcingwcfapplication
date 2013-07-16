@@ -4,6 +4,6 @@ namespace Server.Contracts.Events
 {
   public class NodeRemovedEvent : DomainEvent
   {
-    public string Name { get; set; }
+    public long Id { get; set; }
   }
 }

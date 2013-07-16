@@ -104,5 +104,14 @@ namespace Server.ReadModel.Endpoint {
                 return ResourceManager.GetString("StringFormat_Var0__Var1__Var2__Var3", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}: {1}, {2}, {3}, {4}.
+        /// </summary>
+        internal static string StringFormat_Var0__Var1__Var2__Var3__Var4 {
+            get {
+                return ResourceManager.GetString("StringFormat_Var0__Var1__Var2__Var3__Var4", resourceCulture);
+            }
+        }
     }
 }

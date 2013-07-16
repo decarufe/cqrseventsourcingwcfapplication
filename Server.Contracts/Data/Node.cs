@@ -9,9 +9,9 @@ namespace Server.Contracts.Data
   public class Node : SystemEntity
   {
     [DataMember(Order = 0)]
-    public IEnumerable<string> Executables { get; set; }
+    public IEnumerable<long> Executables { get; set; }
 
     [DataMember(Order = 1)]
-    public IEnumerable<string> Dispatchers { get; set; }
+    public IEnumerable<long> Dispatchers { get; set; }
   }
 }

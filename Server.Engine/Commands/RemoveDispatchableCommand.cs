@@ -5,18 +5,18 @@ namespace Server.Engine.Commands
 {
   public class RemoveDispatchableCommand : ICommand
   {
-    private readonly string _name;
+    private readonly long _dispatchableId;
     private readonly Guid _id;
 
-    public RemoveDispatchableCommand(Guid id, string name)
+    public RemoveDispatchableCommand(Guid id, long dispatchableId)
     {
       _id = id;
-      _name = name;
+      _dispatchableId = dispatchableId;
     }
 
-    public string Name
+    public long DispatchableId
     {
-      get { return _name; }
+      get { return _dispatchableId; }
     }
 
     public Guid Id

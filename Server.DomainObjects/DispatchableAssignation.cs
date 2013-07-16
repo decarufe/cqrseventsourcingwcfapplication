@@ -2,8 +2,8 @@
 {
   public class DispatchableAssignation
   {
-    public string DispatchableName { get; set; }
-    public string DispatcherName { get; set; }
+    public long DispatchableId { get; set; }
+    public long DispatcherId { get; set; }
     public int Band { get; set; }
   }
 }

@@ -6,14 +6,14 @@ namespace Server.Engine.Commands
   public class AddExecutableCommand : ICommand
   {
     private readonly string _name;
-    private readonly string _parentSystemName;
+    private readonly long _parentSystemId;
     private readonly Guid _id;
 
-    public AddExecutableCommand(Guid id, string name, string parentSystemName)
+    public AddExecutableCommand(Guid id, string name, long parentSystemId)
     {
       _id = id;
       _name = name;
-      _parentSystemName = parentSystemName;
+      _parentSystemId = parentSystemId;
     }
 
     public string Name
@@ -21,9 +21,9 @@ namespace Server.Engine.Commands
       get { return _name; }
     }
 
-    public string ParentSystemName
+    public long ParentSystemId
     {
-      get { return _parentSystemName; }
+      get { return _parentSystemId; }
     }
 
     public Guid Id
