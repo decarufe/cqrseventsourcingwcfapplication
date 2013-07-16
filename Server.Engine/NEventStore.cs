@@ -34,7 +34,14 @@ namespace Server.Engine
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
       //   ...
 
-      BsonClassMap.RegisterClassMap<DomainModel.State>();
+      try
+      {
+        BsonClassMap.RegisterClassMap<DomainModel.State>();
+      }
+      catch (Exception)
+      {
+        throw;
+      }
 
       Assembly assembly = typeof (ICqrsService).Assembly;
       var types = from t in assembly.GetTypes()
@@ -51,7 +58,14 @@ namespace Server.Engine
       foreach (var type in types)
       {
         MethodInfo map = mapper.MakeGenericMethod(new[] {type});
-        map.Invoke(null, null);
+        try
+        {
+          map.Invoke(null, null);
+        }
+        catch (Exception e)
+        {
+          Console.WriteLine(e);
+        }
       }
 
       // End of mapping
