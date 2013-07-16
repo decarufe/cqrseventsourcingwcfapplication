@@ -93,6 +93,12 @@
       <SubType>Designer</SubType>
     </None>
     <None Include="Service References\CqrsServiceReference\ServiceImpl1.wsdl" />
+    <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.Dispatchable.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.Dispatcher.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.DomainModelDto.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

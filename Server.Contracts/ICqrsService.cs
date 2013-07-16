@@ -34,6 +34,24 @@ namespace Server.Contracts
     void AssignExecutableToNode(Guid id, string executableName, string nodeName);
 
     [OperationContract]
+    void AddDispatcher(Guid id, string name, string nodeName);
+
+    [OperationContract]
+    void RemoveDispatcher(Guid id, string name);
+
+    [OperationContract]
+    void AssignDispatcherToNode(Guid id, string dispatcherName, string nodeName);
+
+    [OperationContract]
+    void AddDispatchable(Guid id, string name, string parentSystemName);
+
+    [OperationContract]
+    void RemoveDispatchable(Guid id, string name);
+
+    [OperationContract]
+    void AssignDispatchableToDispatcher(Guid id, string dispatchableName, string dispatcherName);
+
+    [OperationContract]
     void CommitVersion(Guid id);
 
     [OperationContract]
@@ -47,6 +65,12 @@ namespace Server.Contracts
 
     [OperationContract]
     IEnumerable<Executable> GetExecutables(Guid id);
+
+    [OperationContract]
+    IEnumerable<Dispatcher> GetDispatchers(Guid id);
+
+    [OperationContract]
+    IEnumerable<Dispatchable> GetDispatchables(Guid id);
 
     [OperationContract]
     IEnumerable<DomainModelDto> GetList();

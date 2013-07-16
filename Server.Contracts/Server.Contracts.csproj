@@ -51,14 +51,22 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\Dispatchable.cs" />
+    <Compile Include="Data\Dispatcher.cs" />
     <Compile Include="Data\DomainModelDto.cs" />
     <Compile Include="Data\Executable.cs" />
     <Compile Include="Data\Node.cs" />
     <Compile Include="Data\Pong.cs" />
     <Compile Include="Data\SystemEntity.cs" />
-    <Compile Include="Events\ExecutableAddedEvent.cs" />
-    <Compile Include="Events\ExecutableAssignedEvent.cs" />
-    <Compile Include="Events\ExecutableRemovedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatchableAddedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatchableAssignedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatchableRemovedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatcherAddedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatcherAssignedEvent.cs" />
+    <Compile Include="Events\Dispatchables\DispatcherRemovedEvent.cs" />
+    <Compile Include="Events\Executables\ExecutableAddedEvent.cs" />
+    <Compile Include="Events\Executables\ExecutableAssignedEvent.cs" />
+    <Compile Include="Events\Executables\ExecutableRemovedEvent.cs" />
     <Compile Include="Events\NodeAddedEvent.cs" />
     <Compile Include="Events\NodeRemovedEvent.cs" />
     <Compile Include="Events\PingCalled.cs" />

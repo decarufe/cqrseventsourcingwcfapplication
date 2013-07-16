@@ -56,6 +56,42 @@
   <wsdl:message name="ICqrsService_AssignExecutableToNode_OutputMessage">
     <wsdl:part name="parameters" element="tns:AssignExecutableToNodeResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_AddDispatcher_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddDispatcher" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddDispatcher_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddDispatcherResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveDispatcher_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDispatcher" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveDispatcher_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDispatcherResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignDispatcherToNode_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDispatcherToNode" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignDispatcherToNode_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDispatcherToNodeResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddDispatchable_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddDispatchable" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AddDispatchable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddDispatchableResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveDispatchable_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDispatchable" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveDispatchable_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveDispatchableResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignDispatchableToDispatcher_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDispatchableToDispatcher" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignDispatchableToDispatcher_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignDispatchableToDispatcherResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_CommitVersion_InputMessage">
     <wsdl:part name="parameters" element="tns:CommitVersion" />
   </wsdl:message>
@@ -85,6 +121,18 @@
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetExecutables_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetExecutablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetDispatchers_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDispatchers" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetDispatchers_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDispatchersResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetDispatchables_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDispatchables" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetDispatchables_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDispatchablesResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetList" />
@@ -143,6 +191,30 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignExecutableToNode" message="tns:ICqrsService_AssignExecutableToNode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse" message="tns:ICqrsService_AssignExecutableToNode_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AddDispatcher">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddDispatcher" message="tns:ICqrsService_AddDispatcher_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddDispatcherResponse" message="tns:ICqrsService_AddDispatcher_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDispatcher">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatcher" message="tns:ICqrsService_RemoveDispatcher_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatcherResponse" message="tns:ICqrsService_RemoveDispatcher_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignDispatcherToNode">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatcherToNode" message="tns:ICqrsService_AssignDispatcherToNode_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatcherToNodeResponse" message="tns:ICqrsService_AssignDispatcherToNode_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AddDispatchable">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddDispatchable" message="tns:ICqrsService_AddDispatchable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddDispatchableResponse" message="tns:ICqrsService_AddDispatchable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDispatchable">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatchable" message="tns:ICqrsService_RemoveDispatchable_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatchableResponse" message="tns:ICqrsService_RemoveDispatchable_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="AssignDispatchableToDispatcher">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher" message="tns:ICqrsService_AssignDispatchableToDispatcher_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcherResponse" message="tns:ICqrsService_AssignDispatchableToDispatcher_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="CommitVersion">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/CommitVersion" message="tns:ICqrsService_CommitVersion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/CommitVersionResponse" message="tns:ICqrsService_CommitVersion_OutputMessage" />
@@ -162,6 +234,14 @@
     <wsdl:operation name="GetExecutables">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetExecutables" message="tns:ICqrsService_GetExecutables_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetExecutablesResponse" message="tns:ICqrsService_GetExecutables_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDispatchers">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchers" message="tns:ICqrsService_GetDispatchers_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchersResponse" message="tns:ICqrsService_GetDispatchers_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDispatchables">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchables" message="tns:ICqrsService_GetDispatchables_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchablesResponse" message="tns:ICqrsService_GetDispatchables_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetList">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetList" message="tns:ICqrsService_GetList_InputMessage" />
@@ -254,6 +334,60 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AddDispatcher">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddDispatcher" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDispatcher">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveDispatcher" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignDispatcherToNode">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AssignDispatcherToNode" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AddDispatchable">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddDispatchable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="RemoveDispatchable">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveDispatchable" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="AssignDispatchableToDispatcher">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="CommitVersion">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/CommitVersion" style="document" />
       <wsdl:input>
@@ -292,6 +426,24 @@
     </wsdl:operation>
     <wsdl:operation name="GetExecutables">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/GetExecutables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDispatchers">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetDispatchers" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDispatchables">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetDispatchables" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

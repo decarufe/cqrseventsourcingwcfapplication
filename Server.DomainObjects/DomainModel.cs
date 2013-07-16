@@ -6,6 +6,8 @@ using JetBrains.Annotations;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using Server.Contracts.Events;
+using Server.Contracts.Events.Dispatchables;
+using Server.Contracts.Events.Executables;
 using SimpleCqrs.Domain;
 using SimpleCqrs.Eventing;
 
@@ -18,7 +20,9 @@ namespace Server.DomainObjects
       SystemElements = new List<SystemElement>(),
       SystemElementsAddedSinceLastCommit = new List<SystemElement>(),
       LastCommitedVersion = new Version(0,0),
-      ExecutableAssignations = new List<ExecutableAssignation>()
+      ExecutableAssignations = new List<ExecutableAssignation>(),
+      DispatcherAssignations = new List<DispatcherAssignation>(),
+      DispatchableAssignations = new List<DispatchableAssignation>(),
     };
     private long _appliedEventsSize;
     private bool _shouldTakeSnapshot;
@@ -33,6 +37,8 @@ namespace Server.DomainObjects
       public Version LastCommitedVersion { get; set; }
       public bool MajorChange { get; set; }
       public List<ExecutableAssignation> ExecutableAssignations { get; set; }
+      public List<DispatcherAssignation> DispatcherAssignations { get; set; }
+      public List<DispatchableAssignation> DispatchableAssignations { get; set; }
     }
 
     public DomainModel()
@@ -92,6 +98,7 @@ namespace Server.DomainObjects
       return new DomainModel(id, name);
     }
 
+    #region DomainModel
     private void CreateDomainModel(Guid id)
     {
       Apply(new DomainModelCreatedEvent {AggregateRootId = id});
@@ -123,7 +130,9 @@ namespace Server.DomainObjects
         });
       }
     }
+    #endregion
 
+    #region System Break Down
     public void AddSystem(string name, string parentSystemName)
     {
       if (_state.SystemElements.Any(system => system.Name == name && system.GetType() == typeof(SystemGroup)))
@@ -189,6 +198,13 @@ namespace Server.DomainObjects
             Name = systemElement.Name,
           });
         }
+        if (systemElement.GetType() == typeof(Dispatchable))
+        {
+          Apply(new DispatchableRemovedEvent
+          {
+            Name = systemElement.Name,
+          });
+        }
       }
 
     }
@@ -211,23 +227,14 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Name == @event.Name);
       if (toRemove != null)
       {
-        _state.SystemElements.Remove(toRemove);
-
-        var newlyAddedSystemElement =
-          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
-        if (newlyAddedSystemElement != null)
-        {
-          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
-        }
-        else
-        {
-          _state.MajorChange = true;
-        }
+        RemoveSystemElement(toRemove);
       }
 
       ComputeSnapshotRequirements(@event);
     }
+    #endregion
 
+    #region Node
     public void AddNode(string name, string parentSystemName)
     {
       if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Node)))
@@ -280,18 +287,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(system => system.Name == @event.Name);
       if (toRemove != null)
       {
-        _state.SystemElements.Remove(toRemove);
-
-        var newlyAddedSystemElement =
-          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
-        if (newlyAddedSystemElement != null)
-        {
-          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
-        }
-        else
-        {
-          _state.MajorChange = true;
-        }
+        RemoveSystemElement(toRemove);
 
         // Remove Exec Assignations on the Node Removed
         var assignations = _state.ExecutableAssignations.Where(x => x.NodeName == toRemove.Name).ToList();
@@ -303,10 +299,12 @@ namespace Server.DomainObjects
 
       ComputeSnapshotRequirements(@event);
     }
+    #endregion
 
+    #region Executable
     public void AddExecutable(string name, string parentSystemName)
     {
-      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Node)))
+      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Executable)))
       {
         throw new ArgumentException(String.Format("A Executable named {0} already exists.", name));
       }
@@ -356,18 +354,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(executable => executable.Name == @event.Name);
       if (toRemove != null)
       {
-        _state.SystemElements.Remove(toRemove);
-
-        var newlyAddedSystemElement =
-          _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == toRemove.Name);
-        if (newlyAddedSystemElement != null)
-        {
-          _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
-        }
-        else
-        {
-          _state.MajorChange = true;
-        }
+        RemoveSystemElement(toRemove);
 
         // Remove Node Assignation of the Executable being removed
         var assignations = _state.ExecutableAssignations.Where(x => x.ExecutableName == toRemove.Name).ToList();
@@ -419,7 +406,9 @@ namespace Server.DomainObjects
 
       ComputeSnapshotRequirements(@event);
     }
+    #endregion
 
+    #region Versionning
     public void CommitVersion()
     {
       var newVersion = new VersionCommitedEvent
@@ -440,5 +429,237 @@ namespace Server.DomainObjects
       _state.MajorChange = false;
       ComputeSnapshotRequirements(@event);
     }
+    #endregion
+
+    #region Dispatcher
+    public void AddDispatcher(string name, string nodeName)
+    {
+      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Dispatcher)))
+      {
+        throw new ArgumentException(String.Format("A Dispatcher named {0} already exists.", name));
+      }
+      if (_state.SystemElements.OfType<Node>().All(system => system.Name != nodeName))
+      {
+        throw new ArgumentException(String.Format("Node named {0} does not exist.", nodeName));
+      }
+
+      Apply(new DispatcherAddedEvent
+      {
+        Name = name,
+        NodeName = nodeName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatcherAdded(DispatcherAddedEvent @event)
+    {
+      var dispatcher = new Dispatcher
+      {
+        Name = @event.Name,
+      };
+      _state.SystemElements.Add(dispatcher);
+      _state.SystemElementsAddedSinceLastCommit.Add(dispatcher);
+      _state.DispatcherAssignations.Add(new DispatcherAssignation
+      {
+        DispatcherName = @event.Name,
+        NodeName = @event.NodeName,
+      });
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void RemoveDispatcher(string name)
+    {
+      var toRemove = _state.SystemElements.OfType<Dispatcher>().FirstOrDefault(dispatchable => dispatchable.Name == name);
+      if (toRemove == null)
+      {
+        throw new ArgumentException(String.Format("The Dispatcher named {0} does not exists.", name));
+      }
+
+      Apply(new DispatcherRemovedEvent
+      {
+        Name = toRemove.Name
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatcherRemoved(DispatcherRemovedEvent @event)
+    {
+      var toRemove = _state.SystemElements.OfType<Dispatcher>().FirstOrDefault(dispatcher => dispatcher.Name == @event.Name);
+      if (toRemove != null)
+      {
+        RemoveSystemElement(toRemove);
+
+        // Remove all Dispatchable Assignations on the Dispatcher being removed
+        var disaptchableAssignations = _state.DispatchableAssignations.Where(x => x.DispatcherName == toRemove.Name).ToList();
+        foreach (var disaptchableAssignation in disaptchableAssignations)
+        {
+          _state.DispatchableAssignations.Remove(disaptchableAssignation);
+        }
+
+        // Remove Node Assignation of the Dispatcher being removed
+        var assignations = _state.DispatcherAssignations.Where(x => x.DispatcherName == toRemove.Name).ToList();
+        foreach (var dispatcherAssignation in assignations)
+        {
+          _state.DispatcherAssignations.Remove(dispatcherAssignation);
+        }
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void AssignDispatcherToNode(string name, string nodeName)
+    {
+      if (_state.SystemElements.OfType<Dispatcher>().All(element => element.Name != name))
+      {
+        throw new ArgumentException(String.Format("Dispatcher named {0} does not exist.", name));
+      }
+      if (_state.SystemElements.OfType<Node>().All(system => system.Name != nodeName))
+      {
+        throw new ArgumentException(String.Format("Node named {0} does not exist.", nodeName));
+      }
+      if (_state.DispatcherAssignations.All(dispatcher => dispatcher.DispatcherName != name))
+      {
+        throw new ArgumentException(String.Format("Dispatcher {0} Assignation does not exist.", name));
+      }
+
+      Apply(new DispatcherAssignedEvent
+      {
+        DispatcherName = name,
+        NodeName = nodeName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatcherAssigned(DispatcherAssignedEvent @event)
+    {
+      var assignation = _state.DispatcherAssignations.First(x => x.DispatcherName == @event.DispatcherName);
+      if (assignation != null)
+      {
+        assignation.NodeName = @event.NodeName;
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+    #endregion
+
+    #region Dispatchable
+    public void AddDispatchable(string name, string parentSystemName)
+    {
+      if (_state.SystemElements.Any(element => element.Name == name && element.GetType() == typeof(Dispatchable)))
+      {
+        throw new ArgumentException(String.Format("A Dispatchable named {0} already exists.", name));
+      }
+      if (!string.IsNullOrEmpty(parentSystemName)
+          && _state.SystemElements.OfType<SystemGroup>().All(system => system.Name != parentSystemName))
+      {
+        throw new ArgumentException(String.Format("Parent System named {0} does not exist.", parentSystemName));
+      }
+
+      Apply(new DispatchableAddedEvent
+      {
+        Name = name,
+        ParentSystemName = parentSystemName
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatchableAdded(DispatchableAddedEvent @event)
+    {
+      var dispatchable = new Dispatchable
+      {
+        Name = @event.Name,
+        ParentSystemName = @event.ParentSystemName,
+      };
+      _state.SystemElements.Add(dispatchable);
+      _state.SystemElementsAddedSinceLastCommit.Add(dispatchable);
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void RemoveDispatchable(string name)
+    {
+      var toRemove = _state.SystemElements.OfType<Dispatchable>().FirstOrDefault(dispatchable => dispatchable.Name == name);
+      if (toRemove == null)
+      {
+        throw new ArgumentException(String.Format("The Dispatchable named {0} does not exists.", name));
+      }
+
+      Apply(new DispatchableRemovedEvent
+      {
+        Name = toRemove.Name
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatchableRemoved(DispatchableRemovedEvent @event)
+    {
+      var toRemove = _state.SystemElements.OfType<Dispatchable>().FirstOrDefault(dispatchable => dispatchable.Name == @event.Name);
+      if (toRemove != null)
+      {
+        RemoveSystemElement(toRemove);
+
+        // Remove Dispatchable Assignation of the Dispatchable being removed
+        var assignations = _state.DispatchableAssignations.Where(x => x.DispatchableName == toRemove.Name).ToList();
+        foreach (var dispatchableAssignation in assignations)
+        {
+          _state.DispatchableAssignations.Remove(dispatchableAssignation);
+        }
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void AssignDispatchableToDispatcher(string name, string dispatcherName)
+    {
+      if (_state.SystemElements.OfType<Dispatchable>().All(element => element.Name != name))
+      {
+        throw new ArgumentException(String.Format("Dispatchable named {0} does not exist.", name));
+      }
+      if (_state.SystemElements.OfType<Dispatcher>().All(dispatcher => dispatcher.Name != dispatcherName))
+      {
+        throw new ArgumentException(String.Format("Dispatcher named {0} does not exist.", dispatcherName));
+      }
+
+      Apply(new DispatchableAssignedEvent
+      {
+        DispatchableName = name,
+        DispatcherName = dispatcherName,
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnDispatchableAssigned(DispatchableAssignedEvent @event)
+    {
+      var assignation =
+        _state.DispatchableAssignations.FirstOrDefault(x => x.DispatchableName == @event.DispatchableName);
+      if (assignation == null)
+      {
+        assignation = new DispatchableAssignation
+        {
+          DispatchableName = @event.DispatchableName,
+        };
+        _state.DispatchableAssignations.Add(assignation);
+      }
+      assignation.DispatcherName = @event.DispatcherName;
+      ComputeSnapshotRequirements(@event);
+    }
+    #endregion
+
+    #region Utilities
+    private void RemoveSystemElement(SystemElement elementToRemove)
+    {
+      _state.SystemElements.Remove(elementToRemove);
+
+      var newlyAddedSystemElement =
+        _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == elementToRemove.Name);
+      if (newlyAddedSystemElement != null)
+      {
+        _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
+      }
+      else
+      {
+        _state.MajorChange = true;
+      }
+    }
+    #endregion
   }
 }

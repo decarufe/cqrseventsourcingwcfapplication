@@ -5,13 +5,13 @@ using System.Runtime.Serialization;
 namespace Server.Contracts.Data
 {
   [DataContract]
-  [DebuggerDisplay("Node: {Name} (Parent: {ParentSystemName})")]
-  public class Node : SystemEntity
+  [DebuggerDisplay("Dispatcher: {Name}, Node: {Node}")]
+  public class Dispatcher : SystemEntity
   {
     [DataMember(Order = 0)]
-    public IEnumerable<string> Executables { get; set; }
+    public string Node { get; set; }
 
     [DataMember(Order = 1)]
-    public IEnumerable<string> Dispatchers { get; set; }
+    public IEnumerable<string> Dispatchables { get; set; }
   }
 }
