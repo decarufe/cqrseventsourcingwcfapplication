@@ -32,7 +32,9 @@ namespace Server.ReadModel.Endpoint
     ConsumerOf<DispatcherAddedEvent>,
     ConsumerOf<DispatcherAssignedEvent>,
     ConsumerOf<DispatcherRemovedEvent>,
-    ConsumerOf<SplAssetAssignedEvent>
+    ConsumerOf<SplAssetAssignedEvent>,
+    ConsumerOf<SplSystemElementAddedEvent>,
+    ConsumerOf<SplSystemElementRemovedEvent>
   {
     public ReadModelEventHandler()
     {
@@ -187,6 +189,7 @@ namespace Server.ReadModel.Endpoint
         Executables = new List<Executable>(),
         Dispatchers = new List<Dispatcher>(),
         Dispatchables = new List<Dispatchable>(),
+        OtherSplElements = new List<SplElement>(),
         SplAssets = new List<SplAsset>(),
       };
       Persistance<ReadModelEntity>.Instance.Add(entity);
@@ -365,6 +368,7 @@ namespace Server.ReadModel.Endpoint
         Executables = masterEntity.Executables,
         Dispatchables = masterEntity.Dispatchables,
         Dispatchers = masterEntity.Dispatchers,
+        OtherSplElements = masterEntity.OtherSplElements,
         SplAssets = masterEntity.SplAssets,
       };
       Persistance<ReadModelEntity>.Instance.Add(versionEntity);
@@ -415,6 +419,42 @@ namespace Server.ReadModel.Endpoint
       UpdateLastEvent(message);
       Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4__Var5, message.GetType().Name, message.AggregateRootId,
                         message.SplElementId,message.SplElementName, message.ElementType, message.AssetName);
+    }
+
+    public void Consume(SplSystemElementAddedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      entity.OtherSplElements.Add(new SplElement
+      {
+        Id = message.Id,
+        Name = message.Name,
+        ParentSystemId = message.ParentSystemId,
+        Type = message.Type
+      });
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4, message.GetType().Name, message.AggregateRootId,
+                        message.Id, message.Name, message.ParentSystemId);
+    }
+
+    public void Consume(SplSystemElementRemovedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      SplElement toRemove = entity.OtherSplElements.First(x => x.Id == message.Id);
+      entity.OtherSplElements.Remove(toRemove);
+      var splAsset = entity.SplAssets.FirstOrDefault(x => x.ElementId == message.Id);
+      if (splAsset != null)
+      {
+        entity.SplAssets.Remove(splAsset);
+      }
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2, message.GetType().Name, message.AggregateRootId,
+                        message.Id);
     }
   }
 }

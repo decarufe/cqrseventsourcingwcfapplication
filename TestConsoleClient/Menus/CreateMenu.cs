@@ -58,7 +58,13 @@ namespace TestConsoleClient.Menus
           long system12ExecId = client.AddExecutable(id, ArchitectureResource.System1_2Exec, system12Id);
           long system13Exec1Id = client.AddExecutable(id, ArchitectureResource.System1_3Exec1, system13Id);
           long system13Exec2Id = client.AddExecutable(id, ArchitectureResource.System1_3Exec2, system13Id);
+          long system13DbId = client.AddOtherSplElement(id,
+                                                        ArchitectureResource.System1_3 +
+                                                        ArchitectureResource.Database_Suffix, "Database", system13Id);
           long system21ExecId = client.AddExecutable(id, ArchitectureResource.System2_1Exec, system21Id);
+          long system21DbId = client.AddOtherSplElement(id,
+                                                        ArchitectureResource.System2_1 +
+                                                        ArchitectureResource.Database_Suffix, "Database", system21Id);
           long system22ExecId = client.AddExecutable(id, ArchitectureResource.System2_2Exec, system22Id);
           long system23ExecId = client.AddExecutable(id, ArchitectureResource.System2_3Exec, system23Id);
           long system311ExecId = client.AddExecutable(id, ArchitectureResource.System3_1_1Exec, system311Id);
@@ -95,7 +101,9 @@ namespace TestConsoleClient.Menus
           client.AssignSplAsset(id, system12ExecId, ArchitectureResource.System1_2Exec + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system13Exec1Id, ArchitectureResource.System1_3Exec1 + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system13Exec2Id, ArchitectureResource.System1_3Exec2 + ArchitectureResource.Asset_Suffix);
+          client.AssignSplAsset(id, system13DbId, ArchitectureResource.System1_3 + ArchitectureResource.Database_Suffix + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system21ExecId, ArchitectureResource.System2_1Exec + ArchitectureResource.Asset_Suffix);
+          client.AssignSplAsset(id, system21DbId, ArchitectureResource.System2_1 + ArchitectureResource.Database_Suffix + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system22ExecId, ArchitectureResource.System2_2Exec + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system23ExecId, ArchitectureResource.System2_3Exec + ArchitectureResource.Asset_Suffix);
           client.AssignSplAsset(id, system311ExecId, ArchitectureResource.System3_1_1Exec + ArchitectureResource.Asset_Suffix);
@@ -112,7 +120,7 @@ namespace TestConsoleClient.Menus
           client.CommitVersion(id);
           client.AssignDispatcherToNode(id, dispatcher4Id, node1Id);
           client.CommitVersion(id);
-          client.RemoveSystem(id, system13Id);
+          client.RemoveSystemElement(id, system13Id);
           client.CommitVersion(id);
         }
         else

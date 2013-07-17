@@ -30,6 +30,8 @@ namespace Server.Contracts
     [DataMember]
     public List<Dispatchable> Dispatchables { get; set; }
     [DataMember]
+    public List<SplElement> OtherSplElements { get; set; }
+    [DataMember]
     public List<SplAsset> SplAssets { get; set; }
   }
 }

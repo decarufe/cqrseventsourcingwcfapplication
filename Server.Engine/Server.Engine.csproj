@@ -89,21 +89,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CommandHandlers\DomainModelCommandHandler.cs" />
-    <Compile Include="Commands\AddDispatchableCommand.cs" />
-    <Compile Include="Commands\AddDispatcherCommand.cs" />
-    <Compile Include="Commands\AddExecutableCommand.cs" />
-    <Compile Include="Commands\AddNodeCommand.cs" />
-    <Compile Include="Commands\AddSystemCommand.cs" />
+    <Compile Include="Commands\AddSystemElementCommand.cs" />
     <Compile Include="Commands\AssignDispatchableToDispatcherCommand.cs" />
     <Compile Include="Commands\AssignDispatcherToNodeCommand.cs" />
     <Compile Include="Commands\AssignExecutableToNodeCommand.cs" />
     <Compile Include="Commands\AssignSplAssetCommand.cs" />
-    <Compile Include="Commands\RemoveDispatchableCommand.cs" />
-    <Compile Include="Commands\RemoveDispatcherCommand.cs" />
-    <Compile Include="Commands\RemoveNodeCommand.cs" />
     <Compile Include="Commands\CommitVersionCommand.cs" />
-    <Compile Include="Commands\RemoveExecutableCommand.cs" />
-    <Compile Include="Commands\RemoveSystemCommand.cs" />
+    <Compile Include="Commands\RemoveSystemElementCommand.cs" />
     <Compile Include="Commands\SetNameCommand.cs" />
     <Compile Include="EventHandlers\ReadModelEventHandler.cs" />
     <Compile Include="NEventStore.cs" />

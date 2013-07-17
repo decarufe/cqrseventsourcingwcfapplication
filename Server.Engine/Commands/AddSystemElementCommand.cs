@@ -3,15 +3,17 @@ using SimpleCqrs.Commanding;
 
 namespace Server.Engine.Commands
 {
-  public class AddNodeCommand : ICommand
+  public class AddSystemElementCommand : ICommand
   {
     private readonly string _name;
+    private readonly string _type;
     private readonly long _parentSystemId;
     private readonly Guid _id;
 
-    public AddNodeCommand(Guid id, string name, long parentSystemId)
+    public AddSystemElementCommand(Guid id, string name, string type, long parentSystemId)
     {
       _id = id;
+      _type = type;
       _name = name;
       _parentSystemId = parentSystemId;
     }
@@ -19,6 +21,11 @@ namespace Server.Engine.Commands
     public string Name
     {
       get { return _name; }
+    }
+
+    public string Type
+    {
+      get { return _type; }
     }
 
     public long ParentSystemId

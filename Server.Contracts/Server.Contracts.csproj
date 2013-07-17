@@ -58,6 +58,7 @@
     <Compile Include="Data\Node.cs" />
     <Compile Include="Data\Pong.cs" />
     <Compile Include="Data\SplAsset.cs" />
+    <Compile Include="Data\SplElement.cs" />
     <Compile Include="Data\SystemEntity.cs" />
     <Compile Include="Events\Dispatchables\DispatchableAddedEvent.cs" />
     <Compile Include="Events\Dispatchables\DispatchableAssignedEvent.cs" />
@@ -72,6 +73,8 @@
     <Compile Include="Events\NodeRemovedEvent.cs" />
     <Compile Include="Events\PingCalled.cs" />
     <Compile Include="Events\SplAssetAssignedEvent.cs" />
+    <Compile Include="Events\SplSystemElementAddedEvent.cs" />
+    <Compile Include="Events\SplSystemElementRemovedEvent.cs" />
     <Compile Include="Events\SystemAddedEvent.cs" />
     <Compile Include="Events\SystemRemovedEvent.cs" />
     <Compile Include="Events\VersionCommitedEvent.cs" />

@@ -189,30 +189,37 @@ namespace Server.DomainObjects
             Id = systemElement.Id,
           });
         }
-        if (systemElement.GetType() == typeof(Node))
+        else if (systemElement.GetType() == typeof(Node))
         {
           Apply(new NodeRemovedEvent
           {
             Id = systemElement.Id,
           });
         }
-        if (systemElement.GetType() == typeof(Executable))
+        else if (systemElement.GetType() == typeof(Executable))
         {
           Apply(new ExecutableRemovedEvent
           {
             Id = systemElement.Id,
           });
         }
-        if (systemElement.GetType() == typeof(Dispatchable))
+        else if (systemElement.GetType() == typeof(Dispatchable))
         {
           Apply(new DispatchableRemovedEvent
           {
             Id = systemElement.Id,
           });
         }
-        if (systemElement.GetType() == typeof(Dispatcher))
+        else if (systemElement.GetType() == typeof(Dispatcher))
         {
           Apply(new DispatcherRemovedEvent
+          {
+            Id = systemElement.Id,
+          });
+        }
+        else if (systemElement as SplSystemElement != null)
+        {
+          Apply(new SplSystemElementRemovedEvent
           {
             Id = systemElement.Id,
           });
@@ -239,7 +246,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<SystemGroup>().FirstOrDefault(system => system.Id == @event.Id);
       if (toRemove != null)
       {
-        RemoveSystemElement(toRemove);
+        RemoveBaseSystemElement(toRemove);
       }
 
       ComputeSnapshotRequirements(@event);
@@ -301,7 +308,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Node>().FirstOrDefault(system => system.Id == @event.Id);
       if (toRemove != null)
       {
-        RemoveSystemElement(toRemove);
+        RemoveBaseSystemElement(toRemove);
 
         // Remove Exec Assignations on the Node Removed
         var assignations = _state.ExecutableAssignations.Where(x => x.NodeId == toRemove.Id).ToList();
@@ -343,6 +350,7 @@ namespace Server.DomainObjects
         Id = @event.Id,
         Name = @event.Name,
         ParentSystemId = @event.ParentSystemId,
+        Type = "Executable",
       };
       _state.IdCounter++;
       _state.SystemElements.Add(executable);
@@ -370,7 +378,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Executable>().FirstOrDefault(executable => executable.Id == @event.Id);
       if (toRemove != null)
       {
-        RemoveSystemElement(toRemove);
+        RemoveBaseSystemElement(toRemove);
 
         // Remove Node Assignation of the Executable being removed
         var assignations = _state.ExecutableAssignations.Where(x => x.ExecutableId == @event.Id).ToList();
@@ -506,7 +514,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Dispatcher>().FirstOrDefault(dispatcher => dispatcher.Id == @event.Id);
       if (toRemove != null)
       {
-        RemoveSystemElement(toRemove);
+        RemoveBaseSystemElement(toRemove);
 
         // Remove all Dispatchable Assignations on the Dispatcher being removed
         var disaptchableAssignations = _state.DispatchableAssignations.Where(x => x.DispatcherId == @event.Id).ToList();
@@ -589,6 +597,7 @@ namespace Server.DomainObjects
         Id = @event.Id,
         Name = @event.Name,
         ParentSystemId = @event.ParentSystemId,
+        Type = "Dispatchable",
       };
       _state.IdCounter++;
       _state.SystemElements.Add(dispatchable);
@@ -616,7 +625,7 @@ namespace Server.DomainObjects
       var toRemove = _state.SystemElements.OfType<Dispatchable>().FirstOrDefault(dispatchable => dispatchable.Id == @event.Id);
       if (toRemove != null)
       {
-        RemoveSystemElement(toRemove);
+        RemoveBaseSystemElement(toRemove);
 
         // Remove Dispatchable Assignation of the Dispatchable being removed
         var assignations = _state.DispatchableAssignations.Where(x => x.DispatchableId == toRemove.Id).ToList();
@@ -678,7 +687,7 @@ namespace Server.DomainObjects
       {
         SplElementId = splElementId,
         SplElementName = splElement.Name,
-        ElementType = splElement.GetType().ToString(),
+        ElementType = splElement.Type,
         AssetName = assetName,
       });
     }
@@ -691,13 +700,125 @@ namespace Server.DomainObjects
       ComputeSnapshotRequirements(@event);
     }
 
+    public void AddSystemElement(string name, string type, long parentSystemId)
+    {
+      switch (type)
+      {
+        case "System":
+          AddSystem(name, parentSystemId);
+          break;
+        case "Node":
+          AddNode(name, parentSystemId);
+          break;
+        case "Executable":
+          AddExecutable(name, parentSystemId);
+          break;
+        case "Dispatchable":
+          AddDispatchable(name, parentSystemId);
+          break;
+        case "Dispatcher":
+          AddDispatcher(name, parentSystemId);
+          break;
+        default:
+          if (_state.SystemElements.OfType<SplSystemElement>().Any(element => element.Name == name))
+          {
+            throw new ArgumentException(String.Format("A System Element named {0} already exists.", name));
+          }
+          if (_state.SystemElements.OfType<SystemGroup>().All(system => system.Id != parentSystemId))
+          {
+            throw new ArgumentException(String.Format("Parent System {0} does not exist.", parentSystemId));
+          }
+
+          Apply(new SplSystemElementAddedEvent
+          {
+            Id = _state.IdCounter,
+            Name = name,
+            ParentSystemId = parentSystemId,
+            Type = type,
+          });
+
+          break;
+      }
+    }
+
+    [UsedImplicitly]
+    private void OnSplSystemElementAdded(SplSystemElementAddedEvent @event)
+    {
+      var splSystemElement = new SplSystemElement
+      {
+        Id = @event.Id,
+        Name = @event.Name,
+        ParentSystemId = @event.ParentSystemId,
+        Type = @event.Type
+      };
+      _state.IdCounter++;
+      _state.SystemElements.Add(splSystemElement);
+      _state.SystemElementsAddedSinceLastCommit.Add(splSystemElement);
+      ComputeSnapshotRequirements(@event);
+    }
+
+    public void RemoveSystemElement(long elementId)
+    {
+      var systemElement =
+        _state.SystemElements.FirstOrDefault(element => element.Id == elementId);
+      if (systemElement == null)
+      {
+        throw new ArgumentException(String.Format("A System Element {0} does not exist.", elementId));
+      }
+
+      if (systemElement.GetType() == typeof (SystemGroup))
+      {
+        RemoveSystem(elementId);
+      }
+      else if (systemElement.GetType() == typeof(Node))
+      {
+        RemoveNode(elementId);
+      }
+      else if (systemElement.GetType() == typeof (Executable))
+      {
+        RemoveExecutable(elementId);
+      }
+      else if (systemElement.GetType() == typeof (Dispatchable))
+      {
+        RemoveDispatchable(elementId);
+      }
+      else if (systemElement.GetType() == typeof (Dispatcher))
+      {
+        RemoveDispatcher(elementId);
+      }
+      else if (systemElement as SplSystemElement != null)
+      {
+        Apply(new SplSystemElementRemovedEvent
+        {
+          Id = elementId,
+        });
+      }
+      else
+      {
+        throw new ArgumentException(String.Format("A System Element {0} is not supported.", elementId));
+      }
+    }
+
+    [UsedImplicitly]
+    private void OnSplSystemElementRemoved(SplSystemElementRemovedEvent @event)
+    {
+      var toRemove = _state.SystemElements.OfType<SplSystemElement>().FirstOrDefault(splSystemElement => splSystemElement.Id == @event.Id);
+      if (toRemove != null)
+      {
+        RemoveBaseSystemElement(toRemove);
+      }
+
+      ComputeSnapshotRequirements(@event);
+    }
+
     #region Utilities
-    private void RemoveSystemElement(SystemElement elementToRemove)
+
+    private void RemoveBaseSystemElement(SystemElement elementToRemove)
     {
       _state.SystemElements.Remove(elementToRemove);
 
       var newlyAddedSystemElement =
-        _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Name == elementToRemove.Name);
+        _state.SystemElementsAddedSinceLastCommit.FirstOrDefault(system => system.Id == elementToRemove.Id);
       if (newlyAddedSystemElement != null)
       {
         _state.SystemElementsAddedSinceLastCommit.Remove(newlyAddedSystemElement);
@@ -707,6 +828,7 @@ namespace Server.DomainObjects
         _state.MajorChange = true;
       }
     }
+
     #endregion
   }
 }

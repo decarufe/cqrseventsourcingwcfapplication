@@ -10,22 +10,14 @@ namespace Server.Engine.CommandHandlers
 {
   [UsedImplicitly]
   public class DomainModelCommandHandler :
-    IHandleCommands<SetNameCommand>,
-    IHandleCommands<AddSystemCommand>,
-    IHandleCommands<RemoveSystemCommand>,
-    IHandleCommands<AddNodeCommand>,
-    IHandleCommands<RemoveNodeCommand>,
-    IHandleCommands<AddExecutableCommand>,
-    IHandleCommands<RemoveExecutableCommand>,
-    IHandleCommands<AssignExecutableToNodeCommand>,
-    IHandleCommands<AddDispatchableCommand>,
-    IHandleCommands<RemoveDispatchableCommand>,
+    IHandleCommands<AddSystemElementCommand>,
     IHandleCommands<AssignDispatchableToDispatcherCommand>,
-    IHandleCommands<AddDispatcherCommand>,
-    IHandleCommands<RemoveDispatcherCommand>,
     IHandleCommands<AssignDispatcherToNodeCommand>,
+    IHandleCommands<AssignExecutableToNodeCommand>,
+    IHandleCommands<AssignSplAssetCommand>,
     IHandleCommands<CommitVersionCommand>,
-    IHandleCommands<AssignSplAssetCommand>
+    IHandleCommands<RemoveSystemElementCommand>,
+    IHandleCommands<SetNameCommand>
   {
     private readonly IDomainRepository _repository;
 
@@ -34,85 +26,14 @@ namespace Server.Engine.CommandHandlers
       _repository = repository;
     }
 
-    public void Handle(ICommandHandlingContext<AddDispatchableCommand> handlingContext)
+    public void Handle(ICommandHandlingContext<AddSystemElementCommand> handlingContext)
     {
       try
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AddDispatchable(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<AddDispatcherCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.AddDispatcher(handlingContext.Command.Name, handlingContext.Command.NodeId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<AddExecutableCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.AddExecutable(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<AddNodeCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.AddNode(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<AddSystemCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.AddSystem(handlingContext.Command.Name, handlingContext.Command.ParentSystemId);
+          domainModel.AddSystemElement(handlingContext.Command.Name, handlingContext.Command.Type,
+                                       handlingContext.Command.ParentSystemId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -130,9 +51,10 @@ namespace Server.Engine.CommandHandlers
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.AssignDispatchableToDispatcher(handlingContext.Command.DispatchableId, handlingContext.Command.DispatcherId);
+          domainModel.AssignDispatchableToDispatcher(handlingContext.Command.DispatchableId,
+                                                     handlingContext.Command.DispatcherId);
         else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
+          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
         _repository.Save(domainModel);
       }
@@ -150,7 +72,7 @@ namespace Server.Engine.CommandHandlers
         if (domainModel != null)
           domainModel.AssignDispatcherToNode(handlingContext.Command.DispatcherId, handlingContext.Command.NodeId);
         else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
+          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
         _repository.Save(domainModel);
       }
@@ -167,6 +89,24 @@ namespace Server.Engine.CommandHandlers
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
           domainModel.AssignExecutableToNode(handlingContext.Command.ExecutableId, handlingContext.Command.NodeId);
+        else
+          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
+
+        _repository.Save(domainModel);
+      }
+      catch (Exception e)
+      {
+        Debug.WriteLine(e);
+      }
+    }
+
+    public void Handle(ICommandHandlingContext<AssignSplAssetCommand> handlingContext)
+    {
+      try
+      {
+        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
+        if (domainModel != null)
+          domainModel.AssignSplAsset(handlingContext.Command.SplElementId, handlingContext.Command.AssetName);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -196,85 +136,13 @@ namespace Server.Engine.CommandHandlers
       }
     }
 
-    public void Handle(ICommandHandlingContext<RemoveDispatchableCommand> handlingContext)
+    public void Handle(ICommandHandlingContext<RemoveSystemElementCommand> handlingContext)
     {
       try
       {
         var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
         if (domainModel != null)
-          domainModel.RemoveDispatchable(handlingContext.Command.DispatchableId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<RemoveDispatcherCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.RemoveDispatcher(handlingContext.Command.DispatcherId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<RemoveExecutableCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.RemoveExecutable(handlingContext.Command.ExecutableId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<RemoveNodeCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.RemoveNode(handlingContext.Command.NodeId);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
-
-        _repository.Save(domainModel);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<RemoveSystemCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.RemoveSystem(handlingContext.Command.SystemId);
+          domainModel.RemoveSystemElement(handlingContext.Command.ElementId);
         else
           throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof (DomainModel));
 
@@ -301,24 +169,6 @@ namespace Server.Engine.CommandHandlers
       catch (AggregateRootNotFoundException)
       {
         DomainModel.Create(handlingContext.Command.Id, handlingContext.Command.Name);
-      }
-      catch (Exception e)
-      {
-        Debug.WriteLine(e);
-      }
-    }
-
-    public void Handle(ICommandHandlingContext<AssignSplAssetCommand> handlingContext)
-    {
-      try
-      {
-        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
-        if (domainModel != null)
-          domainModel.AssignSplAsset(handlingContext.Command.SplElementId, handlingContext.Command.AssetName);
-        else
-          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
-
-        _repository.Save(domainModel);
       }
       catch (Exception e)
       {
