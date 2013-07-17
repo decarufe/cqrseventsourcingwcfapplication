@@ -141,4 +141,7 @@
   <data name="MenuItem_Continue" xml:space="preserve">
     <value>  C} Continue</value>
   </data>
+  <data name="MenuItem_ViewBom" xml:space="preserve">
+    <value>  4) View Bill Of Material</value>
+  </data>
 </root>

@@ -160,6 +160,9 @@
     <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.Pong.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.SplAsset.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CqrsServiceReference\Server.ReadModel.Endpoint.CqrsServiceReference.SystemEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

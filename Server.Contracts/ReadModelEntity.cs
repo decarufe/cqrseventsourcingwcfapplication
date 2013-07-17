@@ -29,5 +29,7 @@ namespace Server.Contracts
     public List<Dispatcher> Dispatchers { get; set; }
     [DataMember]
     public List<Dispatchable> Dispatchables { get; set; }
+    [DataMember]
+    public List<SplAsset> SplAssets { get; set; }
   }
 }

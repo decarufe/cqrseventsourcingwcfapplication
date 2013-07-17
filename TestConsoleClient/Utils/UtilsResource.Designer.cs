@@ -79,6 +79,15 @@ namespace TestConsoleClient.Utils {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Bill Of Material (SPL).
+        /// </summary>
+        internal static string BillOfMaterial {
+            get {
+                return ResourceManager.GetString("BillOfMaterial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}  (Model) {1}.
         /// </summary>
         internal static string FormatString_DispatchableDisplay {
@@ -102,6 +111,15 @@ namespace TestConsoleClient.Utils {
         internal static string FormatString_ExecutableDisplay {
             get {
                 return ResourceManager.GetString("FormatString_ExecutableDisplay", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}{1} ({2}): AssetName {3}, Type {4}.
+        /// </summary>
+        internal static string FormatString_SplAsset {
+            get {
+                return ResourceManager.GetString("FormatString_SplAsset", resourceCulture);
             }
         }
         

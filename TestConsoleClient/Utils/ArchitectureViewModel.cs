@@ -41,5 +41,14 @@ namespace TestConsoleClient.Utils
         }
       }
     }
+
+    public static void Bom(List<SplAsset> splAssets)
+    {
+      Console.WriteLine(UtilsResource.BillOfMaterial);
+      foreach (var splAsset in splAssets)
+      {
+        Console.WriteLine(UtilsResource.FormatString_SplAsset, Indentation, splAsset.ElementName, splAsset.ElementId, splAsset.AssetName, splAsset.ElementType);
+      }
+    }
   }
 }

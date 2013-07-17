@@ -55,6 +55,9 @@ namespace Server.Contracts
     void CommitVersion(Guid id);
 
     [OperationContract]
+    void AssignSplAsset(Guid id, long splElementId, string assetName);
+
+    [OperationContract]
     string GetName(Guid id);
 
     [OperationContract]
@@ -71,6 +74,9 @@ namespace Server.Contracts
 
     [OperationContract]
     IEnumerable<Dispatchable> GetDispatchables(Guid id);
+
+    [OperationContract]
+    IEnumerable<SplAsset> GetSplAssets(Guid id);
 
     [OperationContract]
     IEnumerable<DomainModelDto> GetList();

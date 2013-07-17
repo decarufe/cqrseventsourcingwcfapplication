@@ -150,6 +150,9 @@
     <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.Pong.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.SplAsset.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\CqrsServiceReference\Client.WpfApplication.CqrsServiceReference.SystemEntity.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

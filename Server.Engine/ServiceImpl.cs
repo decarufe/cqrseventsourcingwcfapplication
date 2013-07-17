@@ -155,6 +155,11 @@ namespace Server.Engine
       _commandBus.Send(new CommitVersionCommand(id));
     }
 
+    public void AssignSplAsset(Guid id, long splElementId, string assetName)
+    {
+      _commandBus.Send(new AssignSplAssetCommand(id, splElementId, assetName));
+    }
+
     public string GetName(Guid id)
     {
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
@@ -195,6 +200,13 @@ namespace Server.Engine
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
 
       return readModelEntity.Dispatchables;
+    }
+
+    public IEnumerable<SplAsset> GetSplAssets(Guid id)
+    {
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+
+      return readModelEntity.SplAssets;
     }
 
     public IEnumerable<DomainModelDto> GetList()

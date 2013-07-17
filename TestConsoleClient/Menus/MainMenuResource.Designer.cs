@@ -97,6 +97,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to   4) View Bill Of Material.
+        /// </summary>
+        internal static string MenuItem_ViewBom {
+            get {
+                return ResourceManager.GetString("MenuItem_ViewBom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to   3) View Deployment.
         /// </summary>
         internal static string MenuItem_ViewDeployment {

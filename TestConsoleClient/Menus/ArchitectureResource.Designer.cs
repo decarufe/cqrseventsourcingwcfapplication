@@ -70,6 +70,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  Asset.
+        /// </summary>
+        internal static string Asset_Suffix {
+            get {
+                return ResourceManager.GetString("Asset_Suffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to dispatcher1.
         /// </summary>
         internal static string Dispatcher1 {

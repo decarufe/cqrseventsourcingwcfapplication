@@ -220,6 +220,99 @@ namespace Client.WpfApplication.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SplAsset", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class SplAsset : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ElementIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ElementNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ElementTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssetNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ElementId {
+            get {
+                return this.ElementIdField;
+            }
+            set {
+                if ((this.ElementIdField.Equals(value) != true)) {
+                    this.ElementIdField = value;
+                    this.RaisePropertyChanged("ElementId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ElementName {
+            get {
+                return this.ElementNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ElementNameField, value) != true)) {
+                    this.ElementNameField = value;
+                    this.RaisePropertyChanged("ElementName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ElementType {
+            get {
+                return this.ElementTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ElementTypeField, value) != true)) {
+                    this.ElementTypeField = value;
+                    this.RaisePropertyChanged("ElementType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string AssetName {
+            get {
+                return this.AssetNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssetNameField, value) != true)) {
+                    this.AssetNameField = value;
+                    this.RaisePropertyChanged("AssetName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DomainModelDto", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
     public partial class DomainModelDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -464,6 +557,14 @@ namespace Client.WpfApplication.CqrsServiceReference {
         
         void EndCommitVersion(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignSplAsset", ReplyAction="http://tempuri.org/ICqrsService/AssignSplAssetResponse")]
+        void AssignSplAsset(System.Guid id, long splElementId, string assetName);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/AssignSplAsset", ReplyAction="http://tempuri.org/ICqrsService/AssignSplAssetResponse")]
+        System.IAsyncResult BeginAssignSplAsset(System.Guid id, long splElementId, string assetName, System.AsyncCallback callback, object asyncState);
+        
+        void EndAssignSplAsset(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetName", ReplyAction="http://tempuri.org/ICqrsService/GetNameResponse")]
         string GetName(System.Guid id);
         
@@ -511,6 +612,14 @@ namespace Client.WpfApplication.CqrsServiceReference {
         System.IAsyncResult BeginGetDispatchables(System.Guid id, System.AsyncCallback callback, object asyncState);
         
         Client.WpfApplication.CqrsServiceReference.Dispatchable[] EndGetDispatchables(System.IAsyncResult result);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetSplAssets", ReplyAction="http://tempuri.org/ICqrsService/GetSplAssetsResponse")]
+        Client.WpfApplication.CqrsServiceReference.SplAsset[] GetSplAssets(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/GetSplAssets", ReplyAction="http://tempuri.org/ICqrsService/GetSplAssetsResponse")]
+        System.IAsyncResult BeginGetSplAssets(System.Guid id, System.AsyncCallback callback, object asyncState);
+        
+        Client.WpfApplication.CqrsServiceReference.SplAsset[] EndGetSplAssets(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetList", ReplyAction="http://tempuri.org/ICqrsService/GetListResponse")]
         Client.WpfApplication.CqrsServiceReference.DomainModelDto[] GetList();
@@ -760,6 +869,25 @@ namespace Client.WpfApplication.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class GetSplAssetsCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public GetSplAssetsCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public Client.WpfApplication.CqrsServiceReference.SplAsset[] Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((Client.WpfApplication.CqrsServiceReference.SplAsset[])(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetListCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -909,6 +1037,12 @@ namespace Client.WpfApplication.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onCommitVersionCompletedDelegate;
         
+        private BeginOperationDelegate onBeginAssignSplAssetDelegate;
+        
+        private EndOperationDelegate onEndAssignSplAssetDelegate;
+        
+        private System.Threading.SendOrPostCallback onAssignSplAssetCompletedDelegate;
+        
         private BeginOperationDelegate onBeginGetNameDelegate;
         
         private EndOperationDelegate onEndGetNameDelegate;
@@ -944,6 +1078,12 @@ namespace Client.WpfApplication.CqrsServiceReference {
         private EndOperationDelegate onEndGetDispatchablesDelegate;
         
         private System.Threading.SendOrPostCallback onGetDispatchablesCompletedDelegate;
+        
+        private BeginOperationDelegate onBeginGetSplAssetsDelegate;
+        
+        private EndOperationDelegate onEndGetSplAssetsDelegate;
+        
+        private System.Threading.SendOrPostCallback onGetSplAssetsCompletedDelegate;
         
         private BeginOperationDelegate onBeginGetListDelegate;
         
@@ -1018,6 +1158,8 @@ namespace Client.WpfApplication.CqrsServiceReference {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> CommitVersionCompleted;
         
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AssignSplAssetCompleted;
+        
         public event System.EventHandler<GetNameCompletedEventArgs> GetNameCompleted;
         
         public event System.EventHandler<GetSystemsCompletedEventArgs> GetSystemsCompleted;
@@ -1029,6 +1171,8 @@ namespace Client.WpfApplication.CqrsServiceReference {
         public event System.EventHandler<GetDispatchersCompletedEventArgs> GetDispatchersCompleted;
         
         public event System.EventHandler<GetDispatchablesCompletedEventArgs> GetDispatchablesCompleted;
+        
+        public event System.EventHandler<GetSplAssetsCompletedEventArgs> GetSplAssetsCompleted;
         
         public event System.EventHandler<GetListCompletedEventArgs> GetListCompleted;
         
@@ -1822,6 +1966,59 @@ namespace Client.WpfApplication.CqrsServiceReference {
                         id}, this.onEndCommitVersionDelegate, this.onCommitVersionCompletedDelegate, userState);
         }
         
+        public void AssignSplAsset(System.Guid id, long splElementId, string assetName) {
+            base.Channel.AssignSplAsset(id, splElementId, assetName);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginAssignSplAsset(System.Guid id, long splElementId, string assetName, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAssignSplAsset(id, splElementId, assetName, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndAssignSplAsset(System.IAsyncResult result) {
+            base.Channel.EndAssignSplAsset(result);
+        }
+        
+        private System.IAsyncResult OnBeginAssignSplAsset(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            long splElementId = ((long)(inValues[1]));
+            string assetName = ((string)(inValues[2]));
+            return this.BeginAssignSplAsset(id, splElementId, assetName, callback, asyncState);
+        }
+        
+        private object[] OnEndAssignSplAsset(System.IAsyncResult result) {
+            this.EndAssignSplAsset(result);
+            return null;
+        }
+        
+        private void OnAssignSplAssetCompleted(object state) {
+            if ((this.AssignSplAssetCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.AssignSplAssetCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void AssignSplAssetAsync(System.Guid id, long splElementId, string assetName) {
+            this.AssignSplAssetAsync(id, splElementId, assetName, null);
+        }
+        
+        public void AssignSplAssetAsync(System.Guid id, long splElementId, string assetName, object userState) {
+            if ((this.onBeginAssignSplAssetDelegate == null)) {
+                this.onBeginAssignSplAssetDelegate = new BeginOperationDelegate(this.OnBeginAssignSplAsset);
+            }
+            if ((this.onEndAssignSplAssetDelegate == null)) {
+                this.onEndAssignSplAssetDelegate = new EndOperationDelegate(this.OnEndAssignSplAsset);
+            }
+            if ((this.onAssignSplAssetCompletedDelegate == null)) {
+                this.onAssignSplAssetCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAssignSplAssetCompleted);
+            }
+            base.InvokeAsync(this.onBeginAssignSplAssetDelegate, new object[] {
+                        id,
+                        splElementId,
+                        assetName}, this.onEndAssignSplAssetDelegate, this.onAssignSplAssetCompletedDelegate, userState);
+        }
+        
         public string GetName(System.Guid id) {
             return base.Channel.GetName(id);
         }
@@ -2120,6 +2317,56 @@ namespace Client.WpfApplication.CqrsServiceReference {
             }
             base.InvokeAsync(this.onBeginGetDispatchablesDelegate, new object[] {
                         id}, this.onEndGetDispatchablesDelegate, this.onGetDispatchablesCompletedDelegate, userState);
+        }
+        
+        public Client.WpfApplication.CqrsServiceReference.SplAsset[] GetSplAssets(System.Guid id) {
+            return base.Channel.GetSplAssets(id);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginGetSplAssets(System.Guid id, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginGetSplAssets(id, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public Client.WpfApplication.CqrsServiceReference.SplAsset[] EndGetSplAssets(System.IAsyncResult result) {
+            return base.Channel.EndGetSplAssets(result);
+        }
+        
+        private System.IAsyncResult OnBeginGetSplAssets(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            return this.BeginGetSplAssets(id, callback, asyncState);
+        }
+        
+        private object[] OnEndGetSplAssets(System.IAsyncResult result) {
+            Client.WpfApplication.CqrsServiceReference.SplAsset[] retVal = this.EndGetSplAssets(result);
+            return new object[] {
+                    retVal};
+        }
+        
+        private void OnGetSplAssetsCompleted(object state) {
+            if ((this.GetSplAssetsCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.GetSplAssetsCompleted(this, new GetSplAssetsCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void GetSplAssetsAsync(System.Guid id) {
+            this.GetSplAssetsAsync(id, null);
+        }
+        
+        public void GetSplAssetsAsync(System.Guid id, object userState) {
+            if ((this.onBeginGetSplAssetsDelegate == null)) {
+                this.onBeginGetSplAssetsDelegate = new BeginOperationDelegate(this.OnBeginGetSplAssets);
+            }
+            if ((this.onEndGetSplAssetsDelegate == null)) {
+                this.onEndGetSplAssetsDelegate = new EndOperationDelegate(this.OnEndGetSplAssets);
+            }
+            if ((this.onGetSplAssetsCompletedDelegate == null)) {
+                this.onGetSplAssetsCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnGetSplAssetsCompleted);
+            }
+            base.InvokeAsync(this.onBeginGetSplAssetsDelegate, new object[] {
+                        id}, this.onEndGetSplAssetsDelegate, this.onGetSplAssetsCompletedDelegate, userState);
         }
         
         public Client.WpfApplication.CqrsServiceReference.DomainModelDto[] GetList() {

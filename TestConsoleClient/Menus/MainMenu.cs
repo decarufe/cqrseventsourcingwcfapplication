@@ -15,6 +15,7 @@ namespace TestConsoleClient.Menus
          Console.WriteLine(MainMenuResource.MenuItem_CreateArchitecture);
          Console.WriteLine(MainMenuResource.MenuItem_ViewSystems);
          Console.WriteLine(MainMenuResource.MenuItem_ViewDeployment);
+         Console.WriteLine(MainMenuResource.MenuItem_ViewBom);
          Console.WriteLine();
          Console.WriteLine(MainMenuResource.MenuItem_Exit);
          Console.WriteLine();
@@ -32,6 +33,9 @@ namespace TestConsoleClient.Menus
              break;
            case "3":
              ViewDeploymentMenu.Run();
+             break;
+           case "4":
+             ViewBomMenu.Run();
              break;
            case "q":
            case "Q":

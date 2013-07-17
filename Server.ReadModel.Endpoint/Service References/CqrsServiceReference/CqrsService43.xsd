@@ -82,6 +82,21 @@
     </xs:complexContent>
   </xs:complexType>
   <xs:element name="Dispatchable" nillable="true" type="tns:Dispatchable" />
+  <xs:complexType name="ArrayOfSplAsset">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="SplAsset" nillable="true" type="tns:SplAsset" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfSplAsset" nillable="true" type="tns:ArrayOfSplAsset" />
+  <xs:complexType name="SplAsset">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="ElementId" type="xs:long" />
+      <xs:element minOccurs="0" name="ElementName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ElementType" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AssetName" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="SplAsset" nillable="true" type="tns:SplAsset" />
   <xs:complexType name="ArrayOfDomainModelDto">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="DomainModelDto" nillable="true" type="tns:DomainModelDto" />

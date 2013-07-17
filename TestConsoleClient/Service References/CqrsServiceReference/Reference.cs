@@ -220,6 +220,99 @@ namespace TestConsoleClient.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
+    [System.Runtime.Serialization.DataContractAttribute(Name="SplAsset", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
+    [System.SerializableAttribute()]
+    public partial class SplAsset : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
+        
+        [System.NonSerializedAttribute()]
+        private System.Runtime.Serialization.ExtensionDataObject extensionDataField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private long ElementIdField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ElementNameField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string ElementTypeField;
+        
+        [System.Runtime.Serialization.OptionalFieldAttribute()]
+        private string AssetNameField;
+        
+        [global::System.ComponentModel.BrowsableAttribute(false)]
+        public System.Runtime.Serialization.ExtensionDataObject ExtensionData {
+            get {
+                return this.extensionDataField;
+            }
+            set {
+                this.extensionDataField = value;
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public long ElementId {
+            get {
+                return this.ElementIdField;
+            }
+            set {
+                if ((this.ElementIdField.Equals(value) != true)) {
+                    this.ElementIdField = value;
+                    this.RaisePropertyChanged("ElementId");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ElementName {
+            get {
+                return this.ElementNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ElementNameField, value) != true)) {
+                    this.ElementNameField = value;
+                    this.RaisePropertyChanged("ElementName");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute()]
+        public string ElementType {
+            get {
+                return this.ElementTypeField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.ElementTypeField, value) != true)) {
+                    this.ElementTypeField = value;
+                    this.RaisePropertyChanged("ElementType");
+                }
+            }
+        }
+        
+        [System.Runtime.Serialization.DataMemberAttribute(Order=3)]
+        public string AssetName {
+            get {
+                return this.AssetNameField;
+            }
+            set {
+                if ((object.ReferenceEquals(this.AssetNameField, value) != true)) {
+                    this.AssetNameField = value;
+                    this.RaisePropertyChanged("AssetName");
+                }
+            }
+        }
+        
+        public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
+        
+        protected void RaisePropertyChanged(string propertyName) {
+            System.ComponentModel.PropertyChangedEventHandler propertyChanged = this.PropertyChanged;
+            if ((propertyChanged != null)) {
+                propertyChanged(this, new System.ComponentModel.PropertyChangedEventArgs(propertyName));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.Runtime.Serialization", "4.0.0.0")]
     [System.Runtime.Serialization.DataContractAttribute(Name="DomainModelDto", Namespace="http://schemas.datacontract.org/2004/07/Server.Contracts.Data")]
     [System.SerializableAttribute()]
     public partial class DomainModelDto : object, System.Runtime.Serialization.IExtensibleDataObject, System.ComponentModel.INotifyPropertyChanged {
@@ -389,6 +482,9 @@ namespace TestConsoleClient.CqrsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/CommitVersion", ReplyAction="http://tempuri.org/ICqrsService/CommitVersionResponse")]
         void CommitVersion(System.Guid id);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignSplAsset", ReplyAction="http://tempuri.org/ICqrsService/AssignSplAssetResponse")]
+        void AssignSplAsset(System.Guid id, long splElementId, string assetName);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetName", ReplyAction="http://tempuri.org/ICqrsService/GetNameResponse")]
         string GetName(System.Guid id);
         
@@ -406,6 +502,9 @@ namespace TestConsoleClient.CqrsServiceReference {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetDispatchables", ReplyAction="http://tempuri.org/ICqrsService/GetDispatchablesResponse")]
         TestConsoleClient.CqrsServiceReference.Dispatchable[] GetDispatchables(System.Guid id);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetSplAssets", ReplyAction="http://tempuri.org/ICqrsService/GetSplAssetsResponse")]
+        TestConsoleClient.CqrsServiceReference.SplAsset[] GetSplAssets(System.Guid id);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/GetList", ReplyAction="http://tempuri.org/ICqrsService/GetListResponse")]
         TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList();
@@ -507,6 +606,10 @@ namespace TestConsoleClient.CqrsServiceReference {
             base.Channel.CommitVersion(id);
         }
         
+        public void AssignSplAsset(System.Guid id, long splElementId, string assetName) {
+            base.Channel.AssignSplAsset(id, splElementId, assetName);
+        }
+        
         public string GetName(System.Guid id) {
             return base.Channel.GetName(id);
         }
@@ -529,6 +632,10 @@ namespace TestConsoleClient.CqrsServiceReference {
         
         public TestConsoleClient.CqrsServiceReference.Dispatchable[] GetDispatchables(System.Guid id) {
             return base.Channel.GetDispatchables(id);
+        }
+        
+        public TestConsoleClient.CqrsServiceReference.SplAsset[] GetSplAssets(System.Guid id) {
+            return base.Channel.GetSplAssets(id);
         }
         
         public TestConsoleClient.CqrsServiceReference.DomainModelDto[] GetList() {

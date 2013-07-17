@@ -98,6 +98,12 @@
   <wsdl:message name="ICqrsService_CommitVersion_OutputMessage">
     <wsdl:part name="parameters" element="tns:CommitVersionResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignSplAsset_InputMessage">
+    <wsdl:part name="parameters" element="tns:AssignSplAsset" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_AssignSplAsset_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AssignSplAssetResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_GetName_InputMessage">
     <wsdl:part name="parameters" element="tns:GetName" />
   </wsdl:message>
@@ -133,6 +139,12 @@
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetDispatchables_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetDispatchablesResponse" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSplAssets_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetSplAssets" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_GetSplAssets_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetSplAssetsResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_GetList_InputMessage">
     <wsdl:part name="parameters" element="tns:GetList" />
@@ -219,6 +231,10 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/CommitVersion" message="tns:ICqrsService_CommitVersion_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/CommitVersionResponse" message="tns:ICqrsService_CommitVersion_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="AssignSplAsset">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignSplAsset" message="tns:ICqrsService_AssignSplAsset_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignSplAssetResponse" message="tns:ICqrsService_AssignSplAsset_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="GetName">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetName" message="tns:ICqrsService_GetName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetNameResponse" message="tns:ICqrsService_GetName_OutputMessage" />
@@ -242,6 +258,10 @@
     <wsdl:operation name="GetDispatchables">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchables" message="tns:ICqrsService_GetDispatchables_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetDispatchablesResponse" message="tns:ICqrsService_GetDispatchables_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetSplAssets">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetSplAssets" message="tns:ICqrsService_GetSplAssets_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/GetSplAssetsResponse" message="tns:ICqrsService_GetSplAssets_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="GetList">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/GetList" message="tns:ICqrsService_GetList_InputMessage" />
@@ -397,6 +417,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="AssignSplAsset">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AssignSplAsset" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
     <wsdl:operation name="GetName">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/GetName" style="document" />
       <wsdl:input>
@@ -444,6 +473,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetDispatchables">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/GetDispatchables" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetSplAssets">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/GetSplAssets" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
