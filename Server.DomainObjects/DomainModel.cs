@@ -665,6 +665,32 @@ namespace Server.DomainObjects
     }
     #endregion
 
+    public void AssignSplAsset(long splElementId, string assetName)
+    {
+      var splElement =
+        _state.SystemElements.OfType<SplSystemElement>().FirstOrDefault(element => element.Id == splElementId);
+      if (splElement == null)
+      {
+        throw new ArgumentException(String.Format("Spl Element {0} does not exist.", splElementId));
+      }
+
+      Apply(new SplAssetAssignedEvent
+      {
+        SplElementId = splElementId,
+        SplElementName = splElement.Name,
+        ElementType = splElement.GetType().ToString(),
+        AssetName = assetName,
+      });
+    }
+
+    [UsedImplicitly]
+    private void OnSplAssetAssigned(SplAssetAssignedEvent @event)
+    {
+      var splAsset = _state.SystemElements.OfType<SplSystemElement>().First(x => x.Id == @event.SplElementId);
+      splAsset.AssetName = @event.AssetName;
+      ComputeSnapshotRequirements(@event);
+    }
+
     #region Utilities
     private void RemoveSystemElement(SystemElement elementToRemove)
     {

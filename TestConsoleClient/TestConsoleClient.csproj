@@ -57,6 +57,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MainMenuResource.resx</DependentUpon>
     </Compile>
+    <Compile Include="Menus\ViewBomMenu.cs" />
     <Compile Include="Menus\ViewDeploymentMenu.cs" />
     <Compile Include="Menus\ViewSystemsMenu.cs" />
     <Compile Include="Program.cs" />
@@ -109,6 +110,9 @@
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.Pong.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
+    <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.SplAsset.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
     <None Include="Service References\CqrsServiceReference\TestConsoleClient.CqrsServiceReference.SystemEntity.datasource">

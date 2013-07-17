@@ -24,7 +24,8 @@ namespace Server.Engine.CommandHandlers
     IHandleCommands<AddDispatcherCommand>,
     IHandleCommands<RemoveDispatcherCommand>,
     IHandleCommands<AssignDispatcherToNodeCommand>,
-    IHandleCommands<CommitVersionCommand>
+    IHandleCommands<CommitVersionCommand>,
+    IHandleCommands<AssignSplAssetCommand>
   {
     private readonly IDomainRepository _repository;
 
@@ -300,6 +301,24 @@ namespace Server.Engine.CommandHandlers
       catch (AggregateRootNotFoundException)
       {
         DomainModel.Create(handlingContext.Command.Id, handlingContext.Command.Name);
+      }
+      catch (Exception e)
+      {
+        Debug.WriteLine(e);
+      }
+    }
+
+    public void Handle(ICommandHandlingContext<AssignSplAssetCommand> handlingContext)
+    {
+      try
+      {
+        var domainModel = _repository.GetById<DomainModel>(handlingContext.Command.Id);
+        if (domainModel != null)
+          domainModel.AssignSplAsset(handlingContext.Command.SplElementId, handlingContext.Command.AssetName);
+        else
+          throw new AggregateRootNotFoundException(handlingContext.Command.Id, typeof(DomainModel));
+
+        _repository.Save(domainModel);
       }
       catch (Exception e)
       {

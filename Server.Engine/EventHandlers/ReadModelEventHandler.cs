@@ -27,7 +27,8 @@ namespace Server.Engine.EventHandlers
     IHandleDomainEvents<DispatchableRemovedEvent>,
     IHandleDomainEvents<DispatcherAddedEvent>,
     IHandleDomainEvents<DispatcherAssignedEvent>,
-    IHandleDomainEvents<DispatcherRemovedEvent>
+    IHandleDomainEvents<DispatcherRemovedEvent>,
+    IHandleDomainEvents<SplAssetAssignedEvent>
   {
     public void Handle(DispatchableAddedEvent message)
     {
@@ -83,6 +84,11 @@ namespace Server.Engine.EventHandlers
         List<long> dispatchers = dispatcher.Dispatchables.ToList();
         dispatchers.Remove(dispatchers.First(x => x == message.Id));
         dispatcher.Dispatchables = dispatchers;
+      }
+      var splAsset = entity.SplAssets.FirstOrDefault(x => x.ElementId == message.Id);
+      if (splAsset != null)
+      {
+        entity.SplAssets.Remove(splAsset);
       }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
@@ -172,6 +178,7 @@ namespace Server.Engine.EventHandlers
         Executables = new List<Executable>(),
         Dispatchers = new List<Dispatcher>(),
         Dispatchables = new List<Dispatchable>(),
+        SplAssets = new List<SplAsset>(),
       };
       Persistance<ReadModelEntity>.Instance.Add(entity);
       UpdateLastEvent(message);
@@ -230,6 +237,11 @@ namespace Server.Engine.EventHandlers
         List<long> executables = node.Executables.ToList();
         executables.Remove(executables.First(x => x == message.Id));
         node.Executables = executables;
+      }
+      var splAsset = entity.SplAssets.FirstOrDefault(x => x.ElementId == message.Id);
+      if (splAsset != null)
+      {
+        entity.SplAssets.Remove(splAsset);
       }
       Persistance<ReadModelEntity>.Instance.Update(entity);
       UpdateLastEvent(message);
@@ -339,6 +351,7 @@ namespace Server.Engine.EventHandlers
         Executables = masterEntity.Executables,
         Dispatchables = masterEntity.Dispatchables,
         Dispatchers = masterEntity.Dispatchers,
+        SplAssets = masterEntity.SplAssets,
       };
       Persistance<ReadModelEntity>.Instance.Add(versionEntity);
       UpdateLastEvent(message);
@@ -365,6 +378,29 @@ namespace Server.Engine.EventHandlers
         readModelInfo.LastEvent = message.EventDate.ToUniversalTime();
         Persistance<ReadModelInfo>.Instance.Update(readModelInfo);
       }
+    }
+
+    public void Handle(SplAssetAssignedEvent message)
+    {
+      ReadModelEntity entity = Persistance<ReadModelEntity>.Instance.Get(message.AggregateRootId.ToString());
+      if (message.Sequence <= entity.LastEventSequence) return;
+      entity.LastEventSequence = message.Sequence;
+      SplAsset splAsset = entity.SplAssets.FirstOrDefault(x => x.ElementId == message.SplElementId);
+      if (splAsset == null)
+      {
+        splAsset = new SplAsset
+        {
+          ElementId =  message.SplElementId,
+          ElementName = message.SplElementName,
+          ElementType = message.ElementType,
+        };
+        entity.SplAssets.Add(splAsset);
+      }
+      splAsset.AssetName = message.AssetName;
+      Persistance<ReadModelEntity>.Instance.Update(entity);
+      UpdateLastEvent(message);
+      Console.WriteLine(Resource.StringFormat_Var0__Var1__Var2__Var3__Var4__Var5, message.GetType().Name, message.AggregateRootId,
+                        message.SplElementId,message.SplElementName, message.ElementType, message.AssetName);
     }
   }
 }
