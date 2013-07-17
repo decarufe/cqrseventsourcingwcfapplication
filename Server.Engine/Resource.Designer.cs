@@ -104,5 +104,14 @@ namespace Server.Engine {
                 return ResourceManager.GetString("StringFormat_Var0__Var1__Var2__Var3__Var4__Var5", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The Type {0} is reserved.
+        /// </summary>
+        internal static string TypeReservedErrorText {
+            get {
+                return ResourceManager.GetString("TypeReservedErrorText", resourceCulture);
+            }
+        }
     }
 }

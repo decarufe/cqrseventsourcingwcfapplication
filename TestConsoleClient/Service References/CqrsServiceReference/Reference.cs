@@ -440,23 +440,17 @@ namespace TestConsoleClient.CqrsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/SetName", ReplyAction="http://tempuri.org/ICqrsService/SetNameResponse")]
         void SetName(System.Guid id, string name);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveSystemElement", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemElementResponse")]
+        void RemoveSystemElement(System.Guid id, long elementId);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddSystem", ReplyAction="http://tempuri.org/ICqrsService/AddSystemResponse")]
         long AddSystem(System.Guid id, string name, long parentSystemId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveSystem", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemResponse")]
-        void RemoveSystem(System.Guid id, long systemId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddNode", ReplyAction="http://tempuri.org/ICqrsService/AddNodeResponse")]
         long AddNode(System.Guid id, string name, long parentSystemId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveNode", ReplyAction="http://tempuri.org/ICqrsService/RemoveNodeResponse")]
-        void RemoveNode(System.Guid id, long nodeId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddExecutable", ReplyAction="http://tempuri.org/ICqrsService/AddExecutableResponse")]
         long AddExecutable(System.Guid id, string name, long parentSystemId);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
-        void RemoveExecutable(System.Guid id, long executableId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
         void AssignExecutableToNode(System.Guid id, long executableId, long nodeId);
@@ -464,17 +458,14 @@ namespace TestConsoleClient.CqrsServiceReference {
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddDispatcher", ReplyAction="http://tempuri.org/ICqrsService/AddDispatcherResponse")]
         long AddDispatcher(System.Guid id, string name, long nodeId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatcher", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatcherResponse")]
-        void RemoveDispatcher(System.Guid id, long dispatcherId);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatcherToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatcherToNodeResponse")]
         void AssignDispatcherToNode(System.Guid id, long dispatcherId, long nodeId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddDispatchable", ReplyAction="http://tempuri.org/ICqrsService/AddDispatchableResponse")]
         long AddDispatchable(System.Guid id, string name, long parentSystemId);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatchable", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatchableResponse")]
-        void RemoveDispatchable(System.Guid id, long dispatchableId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddOtherSplElement", ReplyAction="http://tempuri.org/ICqrsService/AddOtherSplElementResponse")]
+        long AddOtherSplElement(System.Guid id, string name, string type, long parentSystemId);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcherResponse")]
         void AssignDispatchableToDispatcher(System.Guid id, long dispatchableId, long dispatcherId);
@@ -550,28 +541,20 @@ namespace TestConsoleClient.CqrsServiceReference {
             base.Channel.SetName(id, name);
         }
         
-        public long AddSystem(System.Guid id, string name, long parentSystemId) {
-            return base.Channel.AddSystem(id, name, parentSystemId);
+        public void RemoveSystemElement(System.Guid id, long elementId) {
+            base.Channel.RemoveSystemElement(id, elementId);
         }
         
-        public void RemoveSystem(System.Guid id, long systemId) {
-            base.Channel.RemoveSystem(id, systemId);
+        public long AddSystem(System.Guid id, string name, long parentSystemId) {
+            return base.Channel.AddSystem(id, name, parentSystemId);
         }
         
         public long AddNode(System.Guid id, string name, long parentSystemId) {
             return base.Channel.AddNode(id, name, parentSystemId);
         }
         
-        public void RemoveNode(System.Guid id, long nodeId) {
-            base.Channel.RemoveNode(id, nodeId);
-        }
-        
         public long AddExecutable(System.Guid id, string name, long parentSystemId) {
             return base.Channel.AddExecutable(id, name, parentSystemId);
-        }
-        
-        public void RemoveExecutable(System.Guid id, long executableId) {
-            base.Channel.RemoveExecutable(id, executableId);
         }
         
         public void AssignExecutableToNode(System.Guid id, long executableId, long nodeId) {
@@ -582,10 +565,6 @@ namespace TestConsoleClient.CqrsServiceReference {
             return base.Channel.AddDispatcher(id, name, nodeId);
         }
         
-        public void RemoveDispatcher(System.Guid id, long dispatcherId) {
-            base.Channel.RemoveDispatcher(id, dispatcherId);
-        }
-        
         public void AssignDispatcherToNode(System.Guid id, long dispatcherId, long nodeId) {
             base.Channel.AssignDispatcherToNode(id, dispatcherId, nodeId);
         }
@@ -594,8 +573,8 @@ namespace TestConsoleClient.CqrsServiceReference {
             return base.Channel.AddDispatchable(id, name, parentSystemId);
         }
         
-        public void RemoveDispatchable(System.Guid id, long dispatchableId) {
-            base.Channel.RemoveDispatchable(id, dispatchableId);
+        public long AddOtherSplElement(System.Guid id, string name, string type, long parentSystemId) {
+            return base.Channel.AddOtherSplElement(id, name, type, parentSystemId);
         }
         
         public void AssignDispatchableToDispatcher(System.Guid id, long dispatchableId, long dispatcherId) {

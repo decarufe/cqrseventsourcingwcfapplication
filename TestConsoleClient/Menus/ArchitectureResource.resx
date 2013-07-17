@@ -240,6 +240,9 @@
   <data name="Asset_Suffix" xml:space="preserve">
     <value> Asset</value>
   </data>
+  <data name="Database_Suffix" xml:space="preserve">
+    <value> DB</value>
+  </data>
   <data name="System3_1_1Disp1" xml:space="preserve">
     <value>s3.1.1 dispatchable1</value>
   </data>

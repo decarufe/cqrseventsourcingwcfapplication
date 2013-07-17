@@ -14,17 +14,17 @@
   <wsdl:message name="ICqrsService_SetName_OutputMessage">
     <wsdl:part name="parameters" element="tns:SetNameResponse" />
   </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystemElement_InputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystemElement" />
+  </wsdl:message>
+  <wsdl:message name="ICqrsService_RemoveSystemElement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:RemoveSystemElementResponse" />
+  </wsdl:message>
   <wsdl:message name="ICqrsService_AddSystem_InputMessage">
     <wsdl:part name="parameters" element="tns:AddSystem" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_AddSystem_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddSystemResponse" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveSystem_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveSystem" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveSystem_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveSystemResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_AddNode_InputMessage">
     <wsdl:part name="parameters" element="tns:AddNode" />
@@ -32,23 +32,11 @@
   <wsdl:message name="ICqrsService_AddNode_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddNodeResponse" />
   </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveNode_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveNode" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveNode_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveNodeResponse" />
-  </wsdl:message>
   <wsdl:message name="ICqrsService_AddExecutable_InputMessage">
     <wsdl:part name="parameters" element="tns:AddExecutable" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_AddExecutable_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddExecutableResponse" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveExecutable_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveExecutable" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveExecutable_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveExecutableResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_AssignExecutableToNode_InputMessage">
     <wsdl:part name="parameters" element="tns:AssignExecutableToNode" />
@@ -62,12 +50,6 @@
   <wsdl:message name="ICqrsService_AddDispatcher_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddDispatcherResponse" />
   </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveDispatcher_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveDispatcher" />
-  </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveDispatcher_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveDispatcherResponse" />
-  </wsdl:message>
   <wsdl:message name="ICqrsService_AssignDispatcherToNode_InputMessage">
     <wsdl:part name="parameters" element="tns:AssignDispatcherToNode" />
   </wsdl:message>
@@ -80,11 +62,11 @@
   <wsdl:message name="ICqrsService_AddDispatchable_OutputMessage">
     <wsdl:part name="parameters" element="tns:AddDispatchableResponse" />
   </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveDispatchable_InputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveDispatchable" />
+  <wsdl:message name="ICqrsService_AddOtherSplElement_InputMessage">
+    <wsdl:part name="parameters" element="tns:AddOtherSplElement" />
   </wsdl:message>
-  <wsdl:message name="ICqrsService_RemoveDispatchable_OutputMessage">
-    <wsdl:part name="parameters" element="tns:RemoveDispatchableResponse" />
+  <wsdl:message name="ICqrsService_AddOtherSplElement_OutputMessage">
+    <wsdl:part name="parameters" element="tns:AddOtherSplElementResponse" />
   </wsdl:message>
   <wsdl:message name="ICqrsService_AssignDispatchableToDispatcher_InputMessage">
     <wsdl:part name="parameters" element="tns:AssignDispatchableToDispatcher" />
@@ -175,29 +157,21 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/SetName" message="tns:ICqrsService_SetName_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/SetNameResponse" message="tns:ICqrsService_SetName_OutputMessage" />
     </wsdl:operation>
+    <wsdl:operation name="RemoveSystemElement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystemElement" message="tns:ICqrsService_RemoveSystemElement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystemElementResponse" message="tns:ICqrsService_RemoveSystemElement_OutputMessage" />
+    </wsdl:operation>
     <wsdl:operation name="AddSystem">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddSystem" message="tns:ICqrsService_AddSystem_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddSystemResponse" message="tns:ICqrsService_AddSystem_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoveSystem">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystem" message="tns:ICqrsService_RemoveSystem_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveSystemResponse" message="tns:ICqrsService_RemoveSystem_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AddNode">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddNode" message="tns:ICqrsService_AddNode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddNodeResponse" message="tns:ICqrsService_AddNode_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveNode">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveNode" message="tns:ICqrsService_RemoveNode_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveNodeResponse" message="tns:ICqrsService_RemoveNode_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="AddExecutable">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddExecutable" message="tns:ICqrsService_AddExecutable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddExecutableResponse" message="tns:ICqrsService_AddExecutable_OutputMessage" />
-    </wsdl:operation>
-    <wsdl:operation name="RemoveExecutable">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutable" message="tns:ICqrsService_RemoveExecutable_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveExecutableResponse" message="tns:ICqrsService_RemoveExecutable_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AssignExecutableToNode">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignExecutableToNode" message="tns:ICqrsService_AssignExecutableToNode_InputMessage" />
@@ -207,10 +181,6 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddDispatcher" message="tns:ICqrsService_AddDispatcher_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddDispatcherResponse" message="tns:ICqrsService_AddDispatcher_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveDispatcher">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatcher" message="tns:ICqrsService_RemoveDispatcher_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatcherResponse" message="tns:ICqrsService_RemoveDispatcher_OutputMessage" />
-    </wsdl:operation>
     <wsdl:operation name="AssignDispatcherToNode">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatcherToNode" message="tns:ICqrsService_AssignDispatcherToNode_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatcherToNodeResponse" message="tns:ICqrsService_AssignDispatcherToNode_OutputMessage" />
@@ -219,9 +189,9 @@
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddDispatchable" message="tns:ICqrsService_AddDispatchable_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddDispatchableResponse" message="tns:ICqrsService_AddDispatchable_OutputMessage" />
     </wsdl:operation>
-    <wsdl:operation name="RemoveDispatchable">
-      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatchable" message="tns:ICqrsService_RemoveDispatchable_InputMessage" />
-      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/RemoveDispatchableResponse" message="tns:ICqrsService_RemoveDispatchable_OutputMessage" />
+    <wsdl:operation name="AddOtherSplElement">
+      <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AddOtherSplElement" message="tns:ICqrsService_AddOtherSplElement_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/ICqrsService/AddOtherSplElementResponse" message="tns:ICqrsService_AddOtherSplElement_OutputMessage" />
     </wsdl:operation>
     <wsdl:operation name="AssignDispatchableToDispatcher">
       <wsdl:input wsaw:Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher" message="tns:ICqrsService_AssignDispatchableToDispatcher_InputMessage" />
@@ -291,8 +261,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="AddSystem">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddSystem" style="document" />
+    <wsdl:operation name="RemoveSystemElement">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveSystemElement" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -300,8 +270,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveSystem">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveSystem" style="document" />
+    <wsdl:operation name="AddSystem">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddSystem" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -318,26 +288,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveNode">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveNode" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="AddExecutable">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/AddExecutable" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
-    <wsdl:operation name="RemoveExecutable">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveExecutable" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>
@@ -363,15 +315,6 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveDispatcher">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveDispatcher" style="document" />
-      <wsdl:input>
-        <soap:body use="literal" />
-      </wsdl:input>
-      <wsdl:output>
-        <soap:body use="literal" />
-      </wsdl:output>
-    </wsdl:operation>
     <wsdl:operation name="AssignDispatcherToNode">
       <soap:operation soapAction="http://tempuri.org/ICqrsService/AssignDispatcherToNode" style="document" />
       <wsdl:input>
@@ -390,8 +333,8 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
-    <wsdl:operation name="RemoveDispatchable">
-      <soap:operation soapAction="http://tempuri.org/ICqrsService/RemoveDispatchable" style="document" />
+    <wsdl:operation name="AddOtherSplElement">
+      <soap:operation soapAction="http://tempuri.org/ICqrsService/AddOtherSplElement" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

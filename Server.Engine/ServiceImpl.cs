@@ -21,6 +21,7 @@ namespace Server.Engine
     private readonly IEventStore _eventStore;
     private readonly IServiceBus _serviceBus;
     private static Semaphore _lock = new Semaphore(1, 1);
+    private static List<string> _reservedTypes = new List<string> { "System", "Node", "Executable", "Dispatcher", "Dispatchable" }; 
 
     public ServiceImpl(ICommandBus commandBus, IEventStore eventStore, IServiceBus serviceBus, IEventBus eventBus)
     {
@@ -47,7 +48,7 @@ namespace Server.Engine
 
     public long AddSystem(Guid id, string name, long parentSystemId)
     {
-      _commandBus.Execute(new AddSystemCommand(id, name, parentSystemId));
+      _commandBus.Execute(new AddSystemElementCommand(id, name, "System", parentSystemId));
 
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
       var system = readModelEntity.Systems.FirstOrDefault(x => x.Name == name);
@@ -58,14 +59,9 @@ namespace Server.Engine
       return 0;
     }
 
-    public void RemoveSystem(Guid id, long systemId)
-    {
-      _commandBus.Send(new RemoveSystemCommand(id, systemId));
-    }
-
     public long AddNode(Guid id, string name, long parentSystemId)
     {
-      _commandBus.Send(new AddNodeCommand(id, name, parentSystemId));
+      _commandBus.Send(new AddSystemElementCommand(id, name, "Node", parentSystemId));
 
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
       var node = readModelEntity.Nodes.FirstOrDefault(x => x.Name == name);
@@ -76,14 +72,14 @@ namespace Server.Engine
       return 0;
     }
 
-    public void RemoveNode(Guid id, long nodeId)
+    public void RemoveSystemElement(Guid id, long elementId)
     {
-      _commandBus.Send(new RemoveNodeCommand(id, nodeId));
+      _commandBus.Send(new RemoveSystemElementCommand(id, elementId));
     }
 
     public long AddExecutable(Guid id, string name, long parentSystemId)
     {
-      _commandBus.Send(new AddExecutableCommand(id, name, parentSystemId));
+      _commandBus.Send(new AddSystemElementCommand(id, name, "Executable", parentSystemId));
 
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
       var executable = readModelEntity.Executables.FirstOrDefault(x => x.Name == name);
@@ -94,11 +90,6 @@ namespace Server.Engine
       return 0;
     }
 
-    public void RemoveExecutable(Guid id, long executableId)
-    {
-      _commandBus.Send(new RemoveExecutableCommand(id, executableId));
-    }
-
     public void AssignExecutableToNode(Guid id, long executableId, long nodeId)
     {
       _commandBus.Send(new AssignExecutableToNodeCommand(id, executableId, nodeId));
@@ -106,7 +97,7 @@ namespace Server.Engine
 
     public long AddDispatcher(Guid id, string name, long nodeId)
     {
-      _commandBus.Send(new AddDispatcherCommand(id, name, nodeId));
+      _commandBus.Send(new AddSystemElementCommand(id, name, "Dispatcher", nodeId));
 
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
       var dispatcher = readModelEntity.Dispatchers.FirstOrDefault(x => x.Name == name);
@@ -117,11 +108,6 @@ namespace Server.Engine
       return 0;
     }
 
-    public void RemoveDispatcher(Guid id, long dispatcherId)
-    {
-      _commandBus.Send(new RemoveDispatcherCommand(id, dispatcherId));
-    }
-
     public void AssignDispatcherToNode(Guid id, long dispatcherId, long nodeId)
     {
       _commandBus.Send(new AssignDispatcherToNodeCommand(id, dispatcherId, nodeId));
@@ -129,7 +115,7 @@ namespace Server.Engine
 
     public long AddDispatchable(Guid id, string name, long parentSystemId)
     {
-      _commandBus.Send(new AddDispatchableCommand(id, name, parentSystemId));
+      _commandBus.Send(new AddSystemElementCommand(id, name, "Dispatchable", parentSystemId));
 
       ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
       var dispatchable = readModelEntity.Dispatchables.FirstOrDefault(x => x.Name == name);
@@ -140,9 +126,22 @@ namespace Server.Engine
       return 0;
     }
 
-    public void RemoveDispatchable(Guid id, long dispatchableId)
+    public long AddOtherSplElement(Guid id, string name, string type, long parentSystemId)
     {
-      _commandBus.Send(new RemoveDispatchableCommand(id, dispatchableId));
+      if (_reservedTypes.Any(x => x == type))
+      {
+        throw new ArgumentException(Resource.TypeReservedErrorText, type);
+      }
+
+      _commandBus.Send(new AddSystemElementCommand(id, name, type, parentSystemId));
+
+      ReadModelEntity readModelEntity = Persistance<ReadModelEntity>.Instance.Get(id.ToString());
+      var splElement = readModelEntity.OtherSplElements.FirstOrDefault(x => x.Name == name);
+      if (splElement != null)
+      {
+        return splElement.Id;
+      }
+      return 0;
     }
 
     public void AssignDispatchableToDispatcher(Guid id, long dispatchableId, long dispatcherId)

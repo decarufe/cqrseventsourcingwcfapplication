@@ -79,6 +79,15 @@ namespace TestConsoleClient.Menus {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  DB.
+        /// </summary>
+        internal static string Database_Suffix {
+            get {
+                return ResourceManager.GetString("Database_Suffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to dispatcher1.
         /// </summary>
         internal static string Dispatcher1 {

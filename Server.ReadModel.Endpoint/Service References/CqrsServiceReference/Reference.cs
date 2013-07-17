@@ -445,6 +445,14 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         void EndSetName(System.IAsyncResult result);
         
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveSystemElement", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemElementResponse")]
+        void RemoveSystemElement(System.Guid id, long elementId);
+        
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveSystemElement", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemElementResponse")]
+        System.IAsyncResult BeginRemoveSystemElement(System.Guid id, long elementId, System.AsyncCallback callback, object asyncState);
+        
+        void EndRemoveSystemElement(System.IAsyncResult result);
+        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddSystem", ReplyAction="http://tempuri.org/ICqrsService/AddSystemResponse")]
         long AddSystem(System.Guid id, string name, long parentSystemId);
         
@@ -452,14 +460,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         System.IAsyncResult BeginAddSystem(System.Guid id, string name, long parentSystemId, System.AsyncCallback callback, object asyncState);
         
         long EndAddSystem(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveSystem", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemResponse")]
-        void RemoveSystem(System.Guid id, long systemId);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveSystem", ReplyAction="http://tempuri.org/ICqrsService/RemoveSystemResponse")]
-        System.IAsyncResult BeginRemoveSystem(System.Guid id, long systemId, System.AsyncCallback callback, object asyncState);
-        
-        void EndRemoveSystem(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddNode", ReplyAction="http://tempuri.org/ICqrsService/AddNodeResponse")]
         long AddNode(System.Guid id, string name, long parentSystemId);
@@ -469,14 +469,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         long EndAddNode(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveNode", ReplyAction="http://tempuri.org/ICqrsService/RemoveNodeResponse")]
-        void RemoveNode(System.Guid id, long nodeId);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveNode", ReplyAction="http://tempuri.org/ICqrsService/RemoveNodeResponse")]
-        System.IAsyncResult BeginRemoveNode(System.Guid id, long nodeId, System.AsyncCallback callback, object asyncState);
-        
-        void EndRemoveNode(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddExecutable", ReplyAction="http://tempuri.org/ICqrsService/AddExecutableResponse")]
         long AddExecutable(System.Guid id, string name, long parentSystemId);
         
@@ -484,14 +476,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         System.IAsyncResult BeginAddExecutable(System.Guid id, string name, long parentSystemId, System.AsyncCallback callback, object asyncState);
         
         long EndAddExecutable(System.IAsyncResult result);
-        
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
-        void RemoveExecutable(System.Guid id, long executableId);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveExecutable", ReplyAction="http://tempuri.org/ICqrsService/RemoveExecutableResponse")]
-        System.IAsyncResult BeginRemoveExecutable(System.Guid id, long executableId, System.AsyncCallback callback, object asyncState);
-        
-        void EndRemoveExecutable(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignExecutableToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignExecutableToNodeResponse")]
         void AssignExecutableToNode(System.Guid id, long executableId, long nodeId);
@@ -509,14 +493,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         long EndAddDispatcher(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatcher", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatcherResponse")]
-        void RemoveDispatcher(System.Guid id, long dispatcherId);
-        
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveDispatcher", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatcherResponse")]
-        System.IAsyncResult BeginRemoveDispatcher(System.Guid id, long dispatcherId, System.AsyncCallback callback, object asyncState);
-        
-        void EndRemoveDispatcher(System.IAsyncResult result);
-        
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatcherToNode", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatcherToNodeResponse")]
         void AssignDispatcherToNode(System.Guid id, long dispatcherId, long nodeId);
         
@@ -533,13 +509,13 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         long EndAddDispatchable(System.IAsyncResult result);
         
-        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/RemoveDispatchable", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatchableResponse")]
-        void RemoveDispatchable(System.Guid id, long dispatchableId);
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AddOtherSplElement", ReplyAction="http://tempuri.org/ICqrsService/AddOtherSplElementResponse")]
+        long AddOtherSplElement(System.Guid id, string name, string type, long parentSystemId);
         
-        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/RemoveDispatchable", ReplyAction="http://tempuri.org/ICqrsService/RemoveDispatchableResponse")]
-        System.IAsyncResult BeginRemoveDispatchable(System.Guid id, long dispatchableId, System.AsyncCallback callback, object asyncState);
+        [System.ServiceModel.OperationContractAttribute(AsyncPattern=true, Action="http://tempuri.org/ICqrsService/AddOtherSplElement", ReplyAction="http://tempuri.org/ICqrsService/AddOtherSplElementResponse")]
+        System.IAsyncResult BeginAddOtherSplElement(System.Guid id, string name, string type, long parentSystemId, System.AsyncCallback callback, object asyncState);
         
-        void EndRemoveDispatchable(System.IAsyncResult result);
+        long EndAddOtherSplElement(System.IAsyncResult result);
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcher", ReplyAction="http://tempuri.org/ICqrsService/AssignDispatchableToDispatcherResponse")]
         void AssignDispatchableToDispatcher(System.Guid id, long dispatchableId, long dispatcherId);
@@ -755,6 +731,25 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    public partial class AddOtherSplElementCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
+        
+        private object[] results;
+        
+        public AddOtherSplElementCompletedEventArgs(object[] results, System.Exception exception, bool cancelled, object userState) : 
+                base(exception, cancelled, userState) {
+            this.results = results;
+        }
+        
+        public long Result {
+            get {
+                base.RaiseExceptionIfNecessary();
+                return ((long)(this.results[0]));
+            }
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public partial class GetNameCompletedEventArgs : System.ComponentModel.AsyncCompletedEventArgs {
         
         private object[] results;
@@ -953,17 +948,17 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onSetNameCompletedDelegate;
         
+        private BeginOperationDelegate onBeginRemoveSystemElementDelegate;
+        
+        private EndOperationDelegate onEndRemoveSystemElementDelegate;
+        
+        private System.Threading.SendOrPostCallback onRemoveSystemElementCompletedDelegate;
+        
         private BeginOperationDelegate onBeginAddSystemDelegate;
         
         private EndOperationDelegate onEndAddSystemDelegate;
         
         private System.Threading.SendOrPostCallback onAddSystemCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginRemoveSystemDelegate;
-        
-        private EndOperationDelegate onEndRemoveSystemDelegate;
-        
-        private System.Threading.SendOrPostCallback onRemoveSystemCompletedDelegate;
         
         private BeginOperationDelegate onBeginAddNodeDelegate;
         
@@ -971,23 +966,11 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onAddNodeCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRemoveNodeDelegate;
-        
-        private EndOperationDelegate onEndRemoveNodeDelegate;
-        
-        private System.Threading.SendOrPostCallback onRemoveNodeCompletedDelegate;
-        
         private BeginOperationDelegate onBeginAddExecutableDelegate;
         
         private EndOperationDelegate onEndAddExecutableDelegate;
         
         private System.Threading.SendOrPostCallback onAddExecutableCompletedDelegate;
-        
-        private BeginOperationDelegate onBeginRemoveExecutableDelegate;
-        
-        private EndOperationDelegate onEndRemoveExecutableDelegate;
-        
-        private System.Threading.SendOrPostCallback onRemoveExecutableCompletedDelegate;
         
         private BeginOperationDelegate onBeginAssignExecutableToNodeDelegate;
         
@@ -1001,12 +984,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onAddDispatcherCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRemoveDispatcherDelegate;
-        
-        private EndOperationDelegate onEndRemoveDispatcherDelegate;
-        
-        private System.Threading.SendOrPostCallback onRemoveDispatcherCompletedDelegate;
-        
         private BeginOperationDelegate onBeginAssignDispatcherToNodeDelegate;
         
         private EndOperationDelegate onEndAssignDispatcherToNodeDelegate;
@@ -1019,11 +996,11 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         private System.Threading.SendOrPostCallback onAddDispatchableCompletedDelegate;
         
-        private BeginOperationDelegate onBeginRemoveDispatchableDelegate;
+        private BeginOperationDelegate onBeginAddOtherSplElementDelegate;
         
-        private EndOperationDelegate onEndRemoveDispatchableDelegate;
+        private EndOperationDelegate onEndAddOtherSplElementDelegate;
         
-        private System.Threading.SendOrPostCallback onRemoveDispatchableCompletedDelegate;
+        private System.Threading.SendOrPostCallback onAddOtherSplElementCompletedDelegate;
         
         private BeginOperationDelegate onBeginAssignDispatchableToDispatcherDelegate;
         
@@ -1130,29 +1107,23 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> SetNameCompleted;
         
-        public event System.EventHandler<AddSystemCompletedEventArgs> AddSystemCompleted;
+        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveSystemElementCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveSystemCompleted;
+        public event System.EventHandler<AddSystemCompletedEventArgs> AddSystemCompleted;
         
         public event System.EventHandler<AddNodeCompletedEventArgs> AddNodeCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveNodeCompleted;
-        
         public event System.EventHandler<AddExecutableCompletedEventArgs> AddExecutableCompleted;
-        
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveExecutableCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AssignExecutableToNodeCompleted;
         
         public event System.EventHandler<AddDispatcherCompletedEventArgs> AddDispatcherCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveDispatcherCompleted;
-        
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AssignDispatcherToNodeCompleted;
         
         public event System.EventHandler<AddDispatchableCompletedEventArgs> AddDispatchableCompleted;
         
-        public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> RemoveDispatchableCompleted;
+        public event System.EventHandler<AddOtherSplElementCompletedEventArgs> AddOtherSplElementCompleted;
         
         public event System.EventHandler<System.ComponentModel.AsyncCompletedEventArgs> AssignDispatchableToDispatcherCompleted;
         
@@ -1233,6 +1204,57 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         name}, this.onEndSetNameDelegate, this.onSetNameCompletedDelegate, userState);
         }
         
+        public void RemoveSystemElement(System.Guid id, long elementId) {
+            base.Channel.RemoveSystemElement(id, elementId);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public System.IAsyncResult BeginRemoveSystemElement(System.Guid id, long elementId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginRemoveSystemElement(id, elementId, callback, asyncState);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        public void EndRemoveSystemElement(System.IAsyncResult result) {
+            base.Channel.EndRemoveSystemElement(result);
+        }
+        
+        private System.IAsyncResult OnBeginRemoveSystemElement(object[] inValues, System.AsyncCallback callback, object asyncState) {
+            System.Guid id = ((System.Guid)(inValues[0]));
+            long elementId = ((long)(inValues[1]));
+            return this.BeginRemoveSystemElement(id, elementId, callback, asyncState);
+        }
+        
+        private object[] OnEndRemoveSystemElement(System.IAsyncResult result) {
+            this.EndRemoveSystemElement(result);
+            return null;
+        }
+        
+        private void OnRemoveSystemElementCompleted(object state) {
+            if ((this.RemoveSystemElementCompleted != null)) {
+                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
+                this.RemoveSystemElementCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+            }
+        }
+        
+        public void RemoveSystemElementAsync(System.Guid id, long elementId) {
+            this.RemoveSystemElementAsync(id, elementId, null);
+        }
+        
+        public void RemoveSystemElementAsync(System.Guid id, long elementId, object userState) {
+            if ((this.onBeginRemoveSystemElementDelegate == null)) {
+                this.onBeginRemoveSystemElementDelegate = new BeginOperationDelegate(this.OnBeginRemoveSystemElement);
+            }
+            if ((this.onEndRemoveSystemElementDelegate == null)) {
+                this.onEndRemoveSystemElementDelegate = new EndOperationDelegate(this.OnEndRemoveSystemElement);
+            }
+            if ((this.onRemoveSystemElementCompletedDelegate == null)) {
+                this.onRemoveSystemElementCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveSystemElementCompleted);
+            }
+            base.InvokeAsync(this.onBeginRemoveSystemElementDelegate, new object[] {
+                        id,
+                        elementId}, this.onEndRemoveSystemElementDelegate, this.onRemoveSystemElementCompletedDelegate, userState);
+        }
+        
         public long AddSystem(System.Guid id, string name, long parentSystemId) {
             return base.Channel.AddSystem(id, name, parentSystemId);
         }
@@ -1285,57 +1307,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         id,
                         name,
                         parentSystemId}, this.onEndAddSystemDelegate, this.onAddSystemCompletedDelegate, userState);
-        }
-        
-        public void RemoveSystem(System.Guid id, long systemId) {
-            base.Channel.RemoveSystem(id, systemId);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginRemoveSystem(System.Guid id, long systemId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveSystem(id, systemId, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public void EndRemoveSystem(System.IAsyncResult result) {
-            base.Channel.EndRemoveSystem(result);
-        }
-        
-        private System.IAsyncResult OnBeginRemoveSystem(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Guid id = ((System.Guid)(inValues[0]));
-            long systemId = ((long)(inValues[1]));
-            return this.BeginRemoveSystem(id, systemId, callback, asyncState);
-        }
-        
-        private object[] OnEndRemoveSystem(System.IAsyncResult result) {
-            this.EndRemoveSystem(result);
-            return null;
-        }
-        
-        private void OnRemoveSystemCompleted(object state) {
-            if ((this.RemoveSystemCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveSystemCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RemoveSystemAsync(System.Guid id, long systemId) {
-            this.RemoveSystemAsync(id, systemId, null);
-        }
-        
-        public void RemoveSystemAsync(System.Guid id, long systemId, object userState) {
-            if ((this.onBeginRemoveSystemDelegate == null)) {
-                this.onBeginRemoveSystemDelegate = new BeginOperationDelegate(this.OnBeginRemoveSystem);
-            }
-            if ((this.onEndRemoveSystemDelegate == null)) {
-                this.onEndRemoveSystemDelegate = new EndOperationDelegate(this.OnEndRemoveSystem);
-            }
-            if ((this.onRemoveSystemCompletedDelegate == null)) {
-                this.onRemoveSystemCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveSystemCompleted);
-            }
-            base.InvokeAsync(this.onBeginRemoveSystemDelegate, new object[] {
-                        id,
-                        systemId}, this.onEndRemoveSystemDelegate, this.onRemoveSystemCompletedDelegate, userState);
         }
         
         public long AddNode(System.Guid id, string name, long parentSystemId) {
@@ -1392,57 +1363,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         parentSystemId}, this.onEndAddNodeDelegate, this.onAddNodeCompletedDelegate, userState);
         }
         
-        public void RemoveNode(System.Guid id, long nodeId) {
-            base.Channel.RemoveNode(id, nodeId);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginRemoveNode(System.Guid id, long nodeId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveNode(id, nodeId, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public void EndRemoveNode(System.IAsyncResult result) {
-            base.Channel.EndRemoveNode(result);
-        }
-        
-        private System.IAsyncResult OnBeginRemoveNode(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Guid id = ((System.Guid)(inValues[0]));
-            long nodeId = ((long)(inValues[1]));
-            return this.BeginRemoveNode(id, nodeId, callback, asyncState);
-        }
-        
-        private object[] OnEndRemoveNode(System.IAsyncResult result) {
-            this.EndRemoveNode(result);
-            return null;
-        }
-        
-        private void OnRemoveNodeCompleted(object state) {
-            if ((this.RemoveNodeCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveNodeCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RemoveNodeAsync(System.Guid id, long nodeId) {
-            this.RemoveNodeAsync(id, nodeId, null);
-        }
-        
-        public void RemoveNodeAsync(System.Guid id, long nodeId, object userState) {
-            if ((this.onBeginRemoveNodeDelegate == null)) {
-                this.onBeginRemoveNodeDelegate = new BeginOperationDelegate(this.OnBeginRemoveNode);
-            }
-            if ((this.onEndRemoveNodeDelegate == null)) {
-                this.onEndRemoveNodeDelegate = new EndOperationDelegate(this.OnEndRemoveNode);
-            }
-            if ((this.onRemoveNodeCompletedDelegate == null)) {
-                this.onRemoveNodeCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveNodeCompleted);
-            }
-            base.InvokeAsync(this.onBeginRemoveNodeDelegate, new object[] {
-                        id,
-                        nodeId}, this.onEndRemoveNodeDelegate, this.onRemoveNodeCompletedDelegate, userState);
-        }
-        
         public long AddExecutable(System.Guid id, string name, long parentSystemId) {
             return base.Channel.AddExecutable(id, name, parentSystemId);
         }
@@ -1495,57 +1415,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         id,
                         name,
                         parentSystemId}, this.onEndAddExecutableDelegate, this.onAddExecutableCompletedDelegate, userState);
-        }
-        
-        public void RemoveExecutable(System.Guid id, long executableId) {
-            base.Channel.RemoveExecutable(id, executableId);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginRemoveExecutable(System.Guid id, long executableId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveExecutable(id, executableId, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public void EndRemoveExecutable(System.IAsyncResult result) {
-            base.Channel.EndRemoveExecutable(result);
-        }
-        
-        private System.IAsyncResult OnBeginRemoveExecutable(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Guid id = ((System.Guid)(inValues[0]));
-            long executableId = ((long)(inValues[1]));
-            return this.BeginRemoveExecutable(id, executableId, callback, asyncState);
-        }
-        
-        private object[] OnEndRemoveExecutable(System.IAsyncResult result) {
-            this.EndRemoveExecutable(result);
-            return null;
-        }
-        
-        private void OnRemoveExecutableCompleted(object state) {
-            if ((this.RemoveExecutableCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveExecutableCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RemoveExecutableAsync(System.Guid id, long executableId) {
-            this.RemoveExecutableAsync(id, executableId, null);
-        }
-        
-        public void RemoveExecutableAsync(System.Guid id, long executableId, object userState) {
-            if ((this.onBeginRemoveExecutableDelegate == null)) {
-                this.onBeginRemoveExecutableDelegate = new BeginOperationDelegate(this.OnBeginRemoveExecutable);
-            }
-            if ((this.onEndRemoveExecutableDelegate == null)) {
-                this.onEndRemoveExecutableDelegate = new EndOperationDelegate(this.OnEndRemoveExecutable);
-            }
-            if ((this.onRemoveExecutableCompletedDelegate == null)) {
-                this.onRemoveExecutableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveExecutableCompleted);
-            }
-            base.InvokeAsync(this.onBeginRemoveExecutableDelegate, new object[] {
-                        id,
-                        executableId}, this.onEndRemoveExecutableDelegate, this.onRemoveExecutableCompletedDelegate, userState);
         }
         
         public void AssignExecutableToNode(System.Guid id, long executableId, long nodeId) {
@@ -1655,57 +1524,6 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         nodeId}, this.onEndAddDispatcherDelegate, this.onAddDispatcherCompletedDelegate, userState);
         }
         
-        public void RemoveDispatcher(System.Guid id, long dispatcherId) {
-            base.Channel.RemoveDispatcher(id, dispatcherId);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginRemoveDispatcher(System.Guid id, long dispatcherId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveDispatcher(id, dispatcherId, callback, asyncState);
-        }
-        
-        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public void EndRemoveDispatcher(System.IAsyncResult result) {
-            base.Channel.EndRemoveDispatcher(result);
-        }
-        
-        private System.IAsyncResult OnBeginRemoveDispatcher(object[] inValues, System.AsyncCallback callback, object asyncState) {
-            System.Guid id = ((System.Guid)(inValues[0]));
-            long dispatcherId = ((long)(inValues[1]));
-            return this.BeginRemoveDispatcher(id, dispatcherId, callback, asyncState);
-        }
-        
-        private object[] OnEndRemoveDispatcher(System.IAsyncResult result) {
-            this.EndRemoveDispatcher(result);
-            return null;
-        }
-        
-        private void OnRemoveDispatcherCompleted(object state) {
-            if ((this.RemoveDispatcherCompleted != null)) {
-                InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveDispatcherCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
-            }
-        }
-        
-        public void RemoveDispatcherAsync(System.Guid id, long dispatcherId) {
-            this.RemoveDispatcherAsync(id, dispatcherId, null);
-        }
-        
-        public void RemoveDispatcherAsync(System.Guid id, long dispatcherId, object userState) {
-            if ((this.onBeginRemoveDispatcherDelegate == null)) {
-                this.onBeginRemoveDispatcherDelegate = new BeginOperationDelegate(this.OnBeginRemoveDispatcher);
-            }
-            if ((this.onEndRemoveDispatcherDelegate == null)) {
-                this.onEndRemoveDispatcherDelegate = new EndOperationDelegate(this.OnEndRemoveDispatcher);
-            }
-            if ((this.onRemoveDispatcherCompletedDelegate == null)) {
-                this.onRemoveDispatcherCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveDispatcherCompleted);
-            }
-            base.InvokeAsync(this.onBeginRemoveDispatcherDelegate, new object[] {
-                        id,
-                        dispatcherId}, this.onEndRemoveDispatcherDelegate, this.onRemoveDispatcherCompletedDelegate, userState);
-        }
-        
         public void AssignDispatcherToNode(System.Guid id, long dispatcherId, long nodeId) {
             base.Channel.AssignDispatcherToNode(id, dispatcherId, nodeId);
         }
@@ -1813,55 +1631,60 @@ namespace Server.ReadModel.Endpoint.CqrsServiceReference {
                         parentSystemId}, this.onEndAddDispatchableDelegate, this.onAddDispatchableCompletedDelegate, userState);
         }
         
-        public void RemoveDispatchable(System.Guid id, long dispatchableId) {
-            base.Channel.RemoveDispatchable(id, dispatchableId);
+        public long AddOtherSplElement(System.Guid id, string name, string type, long parentSystemId) {
+            return base.Channel.AddOtherSplElement(id, name, type, parentSystemId);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public System.IAsyncResult BeginRemoveDispatchable(System.Guid id, long dispatchableId, System.AsyncCallback callback, object asyncState) {
-            return base.Channel.BeginRemoveDispatchable(id, dispatchableId, callback, asyncState);
+        public System.IAsyncResult BeginAddOtherSplElement(System.Guid id, string name, string type, long parentSystemId, System.AsyncCallback callback, object asyncState) {
+            return base.Channel.BeginAddOtherSplElement(id, name, type, parentSystemId, callback, asyncState);
         }
         
         [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
-        public void EndRemoveDispatchable(System.IAsyncResult result) {
-            base.Channel.EndRemoveDispatchable(result);
+        public long EndAddOtherSplElement(System.IAsyncResult result) {
+            return base.Channel.EndAddOtherSplElement(result);
         }
         
-        private System.IAsyncResult OnBeginRemoveDispatchable(object[] inValues, System.AsyncCallback callback, object asyncState) {
+        private System.IAsyncResult OnBeginAddOtherSplElement(object[] inValues, System.AsyncCallback callback, object asyncState) {
             System.Guid id = ((System.Guid)(inValues[0]));
-            long dispatchableId = ((long)(inValues[1]));
-            return this.BeginRemoveDispatchable(id, dispatchableId, callback, asyncState);
+            string name = ((string)(inValues[1]));
+            string type = ((string)(inValues[2]));
+            long parentSystemId = ((long)(inValues[3]));
+            return this.BeginAddOtherSplElement(id, name, type, parentSystemId, callback, asyncState);
         }
         
-        private object[] OnEndRemoveDispatchable(System.IAsyncResult result) {
-            this.EndRemoveDispatchable(result);
-            return null;
+        private object[] OnEndAddOtherSplElement(System.IAsyncResult result) {
+            long retVal = this.EndAddOtherSplElement(result);
+            return new object[] {
+                    retVal};
         }
         
-        private void OnRemoveDispatchableCompleted(object state) {
-            if ((this.RemoveDispatchableCompleted != null)) {
+        private void OnAddOtherSplElementCompleted(object state) {
+            if ((this.AddOtherSplElementCompleted != null)) {
                 InvokeAsyncCompletedEventArgs e = ((InvokeAsyncCompletedEventArgs)(state));
-                this.RemoveDispatchableCompleted(this, new System.ComponentModel.AsyncCompletedEventArgs(e.Error, e.Cancelled, e.UserState));
+                this.AddOtherSplElementCompleted(this, new AddOtherSplElementCompletedEventArgs(e.Results, e.Error, e.Cancelled, e.UserState));
             }
         }
         
-        public void RemoveDispatchableAsync(System.Guid id, long dispatchableId) {
-            this.RemoveDispatchableAsync(id, dispatchableId, null);
+        public void AddOtherSplElementAsync(System.Guid id, string name, string type, long parentSystemId) {
+            this.AddOtherSplElementAsync(id, name, type, parentSystemId, null);
         }
         
-        public void RemoveDispatchableAsync(System.Guid id, long dispatchableId, object userState) {
-            if ((this.onBeginRemoveDispatchableDelegate == null)) {
-                this.onBeginRemoveDispatchableDelegate = new BeginOperationDelegate(this.OnBeginRemoveDispatchable);
+        public void AddOtherSplElementAsync(System.Guid id, string name, string type, long parentSystemId, object userState) {
+            if ((this.onBeginAddOtherSplElementDelegate == null)) {
+                this.onBeginAddOtherSplElementDelegate = new BeginOperationDelegate(this.OnBeginAddOtherSplElement);
             }
-            if ((this.onEndRemoveDispatchableDelegate == null)) {
-                this.onEndRemoveDispatchableDelegate = new EndOperationDelegate(this.OnEndRemoveDispatchable);
+            if ((this.onEndAddOtherSplElementDelegate == null)) {
+                this.onEndAddOtherSplElementDelegate = new EndOperationDelegate(this.OnEndAddOtherSplElement);
             }
-            if ((this.onRemoveDispatchableCompletedDelegate == null)) {
-                this.onRemoveDispatchableCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnRemoveDispatchableCompleted);
+            if ((this.onAddOtherSplElementCompletedDelegate == null)) {
+                this.onAddOtherSplElementCompletedDelegate = new System.Threading.SendOrPostCallback(this.OnAddOtherSplElementCompleted);
             }
-            base.InvokeAsync(this.onBeginRemoveDispatchableDelegate, new object[] {
+            base.InvokeAsync(this.onBeginAddOtherSplElementDelegate, new object[] {
                         id,
-                        dispatchableId}, this.onEndRemoveDispatchableDelegate, this.onRemoveDispatchableCompletedDelegate, userState);
+                        name,
+                        type,
+                        parentSystemId}, this.onEndAddOtherSplElementDelegate, this.onAddOtherSplElementCompletedDelegate, userState);
         }
         
         public void AssignDispatchableToDispatcher(System.Guid id, long dispatchableId, long dispatcherId) {

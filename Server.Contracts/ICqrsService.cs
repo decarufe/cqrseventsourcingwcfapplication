@@ -13,22 +13,16 @@ namespace Server.Contracts
     void SetName(Guid id, string name);
 
     [OperationContract]
-    long AddSystem(Guid id, string name, long parentSystemId);
+    void RemoveSystemElement(Guid id, long elementId);
 
     [OperationContract]
-    void RemoveSystem(Guid id, long systemId);
+    long AddSystem(Guid id, string name, long parentSystemId);
 
     [OperationContract]
     long AddNode(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveNode(Guid id, long nodeId);
-
-    [OperationContract]
     long AddExecutable(Guid id, string name, long parentSystemId);
-
-    [OperationContract]
-    void RemoveExecutable(Guid id, long executableId);
 
     [OperationContract]
     void AssignExecutableToNode(Guid id, long executableId, long nodeId);
@@ -37,16 +31,13 @@ namespace Server.Contracts
     long AddDispatcher(Guid id, string name, long nodeId);
 
     [OperationContract]
-    void RemoveDispatcher(Guid id, long dispatcherId);
-
-    [OperationContract]
     void AssignDispatcherToNode(Guid id, long dispatcherId, long nodeId);
 
     [OperationContract]
     long AddDispatchable(Guid id, string name, long parentSystemId);
 
     [OperationContract]
-    void RemoveDispatchable(Guid id, long dispatchableId);
+    long AddOtherSplElement(Guid id, string name, string type, long parentSystemId);
 
     [OperationContract]
     void AssignDispatchableToDispatcher(Guid id, long dispatchableId, long dispatcherId);

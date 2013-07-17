@@ -132,4 +132,7 @@
   <data name="StringFormat_Var0__Var1__Var2__Var3__Var4__Var5" xml:space="preserve">
     <value>{0}: {1}, {2}, {3}, {4}, {5}</value>
   </data>
+  <data name="TypeReservedErrorText" xml:space="preserve">
+    <value>The Type {0} is reserved</value>
+  </data>
 </root>
