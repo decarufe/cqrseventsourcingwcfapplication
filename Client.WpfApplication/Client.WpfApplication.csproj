@@ -189,10 +189,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Server.Contracts\Server.Contracts.csproj">
-      <Project>{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025}</Project>
-      <Name>Server.Contracts</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{471C2A0B-8862-41B1-A5C3-EA7238E58020}</Project>
       <Name>Utils</Name>

@@ -33,12 +33,12 @@ namespace Server.Engine
       //   BsonClassMap.RegisterClassMap<DomainModelCreatedEvent>();
       //   BsonClassMap.RegisterClassMap<NameChangedEvent>();
       //   ...
-      Assembly eventsAssembly = typeof (ICqrsService).Assembly;
+      Assembly eventsAssembly = typeof(ICqrsService).Assembly;
       var types = (from t in eventsAssembly.GetTypes()
-                  where (t.IsPublic || t.IsNestedPublic)
-                        && t.IsClass
-                        && t != typeof(ReadModelInfo) // Remove ReadModelInfo since it seems to already be registred
-                  select t).ToList();
+                   where (t.IsPublic || t.IsNestedPublic)
+                         && t.IsClass
+                         && t != typeof(ReadModelInfo) // Remove ReadModelInfo since it seems to already be registred
+                   select t).ToList();
 
       Assembly domainAssembly = typeof(DomainModel).Assembly;
       types.AddRange((from t in domainAssembly.GetTypes()
@@ -55,7 +55,14 @@ namespace Server.Engine
       foreach (var type in types)
       {
         MethodInfo map = mapper.MakeGenericMethod(new[] { type });
-        map.Invoke(null, null);
+        try
+        {
+          map.Invoke(null, null);
+        }
+        catch (Exception e)
+        {
+          Console.WriteLine("Cannot map {0}: {1}",type.FullName , e);
+        }
       }
 
       // End of mapping
