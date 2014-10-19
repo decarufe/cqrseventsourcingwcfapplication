@@ -1,6 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2010
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Wcf", "Server.Wcf\Server.Wcf.csproj", "{23CA0520-53C2-4086-80E6-1593EA662F09}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Engine", "Server.Engine\Server.Engine.csproj", "{EAC90361-73E0-4E01-9699-8D6FA0CA5F83}"
@@ -32,6 +34,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client.WpfApplication", "Cl
 	ProjectSection(ProjectDependencies) = postProject
 		{23CA0520-53C2-4086-80E6-1593EA662F09} = {23CA0520-53C2-4086-80E6-1593EA662F09}
 	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Client", "Client", "{ED4805F9-C089-4396-9103-A802DCE6BC01}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Server", "Server", "{C08FF791-CDAD-44AF-BE50-8DBCA9C06144}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -126,6 +132,15 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{23CA0520-53C2-4086-80E6-1593EA662F09} = {C08FF791-CDAD-44AF-BE50-8DBCA9C06144}
+		{EAC90361-73E0-4E01-9699-8D6FA0CA5F83} = {C08FF791-CDAD-44AF-BE50-8DBCA9C06144}
+		{BFAF71DA-7097-4D26-AFC3-5F44FD9D7025} = {C08FF791-CDAD-44AF-BE50-8DBCA9C06144}
+		{ACD2B77C-23EB-4066-88BC-2E5FB166B0A9} = {C08FF791-CDAD-44AF-BE50-8DBCA9C06144}
+		{36B93017-5622-4EF6-8AA1-F9BE221A06DF} = {ED4805F9-C089-4396-9103-A802DCE6BC01}
+		{5DA0FCFF-CE08-4486-955F-8A46FD6E489E} = {C08FF791-CDAD-44AF-BE50-8DBCA9C06144}
+		{DFC93D57-033E-43FE-B7EF-86DA9265C1B8} = {ED4805F9-C089-4396-9103-A802DCE6BC01}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35;packages\Unity.Interception.2.1.505.2\lib\NET35
