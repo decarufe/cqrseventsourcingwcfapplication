@@ -33,5 +33,11 @@ namespace Client.WpfApplication
     }
 
     public event EventHandler CanExecuteChanged;
+
+    protected virtual void OnCanExecuteChanged()
+    {
+      var handler = CanExecuteChanged;
+      if (handler != null) handler(this, EventArgs.Empty);
+    }
   }
 }
